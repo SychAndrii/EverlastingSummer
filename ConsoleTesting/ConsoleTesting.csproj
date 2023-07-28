@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Database\**" />
+    <EmbeddedResource Remove="Models\Database\**" />
+    <None Remove="Models\Database\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.9">
       <PrivateAssets>all</PrivateAssets>
@@ -20,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Models\Database\School.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Database\" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,9 @@
 ﻿using ConsoleTesting;
-using ConsoleTesting.Models.Database;
 using ConsoleTesting.Models;
 using Microsoft.EntityFrameworkCore;
 using ConsoleTesting.EverlastingSummerModels.Base;
-using ConsoleTesting.EverlastingSummerModels;
 using ConsoleTesting.EverlastingSummerModels.Scenes;
+using ConsoleTesting.Models.Player;
 
 namespace Program
 {

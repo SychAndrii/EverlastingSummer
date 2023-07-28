@@ -1,11 +1,12 @@
-﻿using ConsoleTesting.EverlastingSummerModels.Base;
+﻿using ConsoleTesting.EverlastingSummerModels;
+using ConsoleTesting.EverlastingSummerModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.EverlastingSummerModels
+namespace ConsoleTesting.Models.Player
 {
     public class Player
     {

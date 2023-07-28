@@ -1,6 +1,5 @@
 ﻿using ConsoleTesting.EverlastingSummerModels.Scenes;
 using ConsoleTesting.Models;
-using ConsoleTesting.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

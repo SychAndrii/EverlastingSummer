@@ -1,3 +1,0 @@
-﻿REG:First Scene,This is the first scene!
-REG:Standard Scene 1,This is the second scene!
-REG:Final Scene,This is the final scene!

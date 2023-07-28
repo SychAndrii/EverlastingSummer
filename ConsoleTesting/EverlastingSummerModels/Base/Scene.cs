@@ -10,6 +10,7 @@ namespace ConsoleTesting.EverlastingSummerModels.Base
     public abstract class Scene
     {
         public IEnumerable<Transition>? Transitions { get; set; } = null;
+        public int Id { get; set; }
         public abstract void Show();
 
         protected Scene(IEnumerable<Transition>? transitions)

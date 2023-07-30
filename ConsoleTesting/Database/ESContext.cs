@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Conditions;
+using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Scenes;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,6 +19,8 @@ namespace ConsoleTesting.Database
         public DbSet<Condition> Conditions { get; set; } = null!;
         public DbSet<MadeChoicesCondition> MadeChoicesConditions { get; set; } = null!;
         public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
+        public virtual DbSet<PlayerEndingProgress> PlayerEndings { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,13 +28,35 @@ namespace ConsoleTesting.Database
             ConfiguringChoice(modelBuilder);
             ConfiguringEnding(modelBuilder);
             ConfiguringConditions(modelBuilder);
+            ConfiguringPlayer(modelBuilder);
             //ConfiguringScene(modelBuilder);
+        }
+
+        private void ConfiguringPlayer(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<PlayerEndingProgress>()
+                .HasKey(p => p.EndingId);
+
+            modelBuilder
+                .Entity<PlayerEndingProgress>()
+                .HasOne(pep => pep.Ending)
+                .WithOne()
+                .HasForeignKey<PlayerEndingProgress>(pep => pep.EndingId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         private void ConfiguringScene(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Scene>().Property(c => c.Id).HasField("_Id");
-            modelBuilder.Entity<Scene>().UseTpcMappingStrategy();
+            modelBuilder
+                .Entity<Scene>()
+                .Property(c => c.Id)
+                .HasField("_Id");
+
+            modelBuilder
+                .Entity<Scene>()
+                .UseTpcMappingStrategy();
         }
 
         private void ConfiguringConditions(ModelBuilder modelBuilder)
@@ -53,13 +78,23 @@ namespace ConsoleTesting.Database
 
         private void ConfiguringChoice(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Choice>().Property(c => c.Id).HasField("_Id");
+            modelBuilder
+                .Entity<Choice>()
+                .Property(c => c.Id)
+                .HasField("_Id");
         }
 
         private void ConfiguringEnding(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Ending>().Property(c => c.Id).HasField("_Id");
-            modelBuilder.Entity<Ending>().HasIndex(e => e.Name).IsUnique();
+            modelBuilder
+                .Entity<Ending>()
+                .Property(c => c.Id)
+                .HasField("_Id");
+
+            modelBuilder
+                .Entity<Ending>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

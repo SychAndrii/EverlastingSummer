@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.Conditions
 {
-    [NotMapped]
     public class EndingPointsCondition : Condition
     {
         public int PointsRequired { get; set; }

@@ -22,7 +22,7 @@ namespace Program
 
                 EndingPointsCondition endingPointsCondition = new EndingPointsCondition();
                 endingPointsCondition.Ending = end1;
-                endingPointsCondition.PointsRequired = -3;
+                endingPointsCondition.PointsRequired = 4;
                 context.EndingPointsConditions.Add(endingPointsCondition);
 
                 context.SaveChanges();

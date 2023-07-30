@@ -8,12 +8,30 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.SceneParts
 {
+    /// <summary>
+    /// Represents a connection between two scenes. You can see it as an arrow, which goes from one scene to another.
+    /// Scene, to which arrow is directed, is the next scene. May have conditions, which may forbid 
+    /// transition to the next scene if condnitions are not satisfied.
+    /// </summary>
     public class Transition
     {
-
         private readonly Guid _Id;
         public Guid Id { get => _Id; }
-        public IEnumerable<Condition> Conditions { get; set; }
+
+        /// <summary>
+        /// Conditions, which may prevent transition from happening.
+        /// </summary>
+        /// <example>
+        /// My next scene displays a character shooting from a pistol.
+        /// To go to the next scene, I need two conditions:
+        /// 1) I have picked up a pistol at home in the previous scenes.
+        /// 2) I have put ammo into my pistol in the previous scenes.
+        /// </example>
+        public IEnumerable<Condition>? Conditions { get; set; }
+
+        /// <summary>
+        /// Next scene.
+        /// </summary>
         public Scene TargetScene { get; set; }
     }
 }

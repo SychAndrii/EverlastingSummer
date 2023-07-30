@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.Scenes
 {
+    /// <summary>
+    /// Represents a scene with text, characters, background. Nothing which influences a story.
+    /// </summary>
+    /// <remarks>
+    /// Imagine a scene in Everlasting Summer with no choice.
+    /// </remarks>
     public class StandardScene : SwitchableScene
     {
         public string Dialogue { get; set; }

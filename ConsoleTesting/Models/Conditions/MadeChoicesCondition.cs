@@ -9,8 +9,16 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.Conditions
 {
+    /// <summary>
+    /// Condition, which will allow to pass through a transition to the next scene 
+    /// if player has made certain choices throughout the game.
+    /// </summary>
     public class MadeChoicesCondition : Condition
     {
+        /// <summary>
+        /// List of choices which user must have made by the time he reached current <see cref="SceneParts.Transition"/>
+        /// transition in order to move to the next scene (<see cref="SceneParts.Transition.TargetScene"/>)
+        /// </summary>
         public IEnumerable<Choice> Choices { get; set; }
 
         public MadeChoicesCondition()

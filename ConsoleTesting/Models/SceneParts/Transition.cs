@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.Models
+namespace ConsoleTesting.Models.SceneParts
 {
     [NotMapped]
     public class Transition

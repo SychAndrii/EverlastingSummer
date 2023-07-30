@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace ConsoleTesting.Database
         public DbSet<Ending> Endings { get; set; } = null!;
         public DbSet<Condition> Conditions { get; set; } = null!;
         public DbSet<MadeChoicesCondition> MadeChoicesConditions { get; set; } = null!;
+        public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,9 +36,19 @@ namespace ConsoleTesting.Database
 
         private void ConfiguringConditions(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Condition>().Property(c => c.Id).HasField("_Id");
-            modelBuilder.Entity<Condition>().UseTpcMappingStrategy();
-            modelBuilder.Entity<MadeChoicesCondition>().UseTpcMappingStrategy();
+            modelBuilder
+                .Entity<Condition>()
+                .UseTpcMappingStrategy()
+                .Property(c => c.Id).HasField("_Id");
+
+            modelBuilder
+                .Entity<MadeChoicesCondition>()
+                .UseTpcMappingStrategy();
+
+            modelBuilder
+                .Entity<EndingPointsCondition>()
+                .UseTpcMappingStrategy()
+                .ToTable(b => b.HasCheckConstraint("Points_bigger_than_0", "PointsRequired > 0"));
         }
 
         private void ConfiguringChoice(ModelBuilder modelBuilder)

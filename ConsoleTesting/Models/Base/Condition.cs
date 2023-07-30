@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Models.Conditions;
+using ConsoleTesting.Models.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace ConsoleTesting.Models.Base
     { 
         private readonly Guid _Id;
         public Guid Id { get => _Id; }
-        public abstract bool CanTransit(Player player);
+        public abstract bool CanTransit(SingletonPlayer player);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Player;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,7 +18,7 @@ namespace ConsoleTesting.Models.Conditions
             Choices = new List<Choice>();
         }
 
-        public override bool CanTransit(Player player)
+        public override bool CanTransit(SingletonPlayer player)
         {
             return Choices.Intersect(player.Choices).Count() == player.Choices.Count();
         }

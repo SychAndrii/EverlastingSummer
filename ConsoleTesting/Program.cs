@@ -16,27 +16,25 @@ namespace Program
             {
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                Choice choice = new Choice("Choice 1");
-                Choice choice2 = new Choice("Choice 3");
-                context.Choices.AddRange(choice, choice2);
-                MadeChoicesCondition madeChoicesCondition = new MadeChoicesCondition();
-                madeChoicesCondition.Choices = new List<Choice>()
-                {
-                    choice, choice2
-                };
-                context.MadeChoicesConditions.AddRange(madeChoicesCondition);
+                Ending end1 = new Ending("Ending 1");
+                Ending end2 = new Ending("Ending 2");
+                context.Endings.AddRange(end1, end2);
+
+                EndingPointsCondition endingPointsCondition = new EndingPointsCondition();
+                endingPointsCondition.Ending = end1;
+                endingPointsCondition.PointsRequired = -3;
+                context.EndingPointsConditions.Add(endingPointsCondition);
+
                 context.SaveChanges();
             }
 
             using (ESContext context = new ESContext())
             {
-                var madeChoicesCondition = context.MadeChoicesConditions.Include(c => c.Choices).FirstOrDefault();
-                if(madeChoicesCondition != null)
+                var endingPointsEnding = context.EndingPointsConditions.Include(c => c.Ending).FirstOrDefault();
+                if(endingPointsEnding != null )
                 {
-                    foreach(Choice choice in madeChoicesCondition.Choices)
-                    {
-                        Console.WriteLine(choice.Text);
-                    }
+                    Console.WriteLine(endingPointsEnding.Ending);
+                    Console.WriteLine(endingPointsEnding.PointsRequired);
                 }
             }
         }

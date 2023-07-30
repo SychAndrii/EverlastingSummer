@@ -1,5 +1,5 @@
 ﻿using ConsoleTesting.Models.Base;
-using ConsoleTesting.Models.Endings;
+using ConsoleTesting.Models.Player;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,36 +12,17 @@ namespace ConsoleTesting.Models.Conditions
     [NotMapped]
     public class EndingPointsCondition : Condition
     {
-        public EndingPoints TargetEnding { get; }
-        public Operation Comparison { get; }
-        public enum Operation
+        public int PointsRequired { get; set; }
+        public Ending Ending { get; set; }
+
+        public override bool CanTransit(SingletonPlayer player)
         {
-            LESS,
-            BIGGER,
-            EQUAL,
-            NOT_EQUAL,
-        }
-
-        public EndingPointsCondition(int requiredPoints, Ending ending, Operation operation)
-        {
-            TargetEnding = new EndingPoints(ending, requiredPoints);
-            Comparison = operation;
-        }
-
-        public override bool CanTransit(Player player)
-        {
-            var playerPoints = player.Endings.First(end => end.Ending.Equals(TargetEnding));
-
-            if (playerPoints == null)
-                return false;
-
-            if (Comparison == Operation.LESS)
-                return playerPoints.Points < TargetEnding.Points;
-            if (Comparison == Operation.BIGGER)
-                return playerPoints.Points > TargetEnding.Points;
-            if (Comparison == Operation.NOT_EQUAL)
-                return playerPoints.Points != TargetEnding.Points;
-            return playerPoints.Points == TargetEnding.Points;
+            var playerProgressOfEnding = player.EndingProgresses.Where(ep => ep.Ending == Ending).FirstOrDefault();
+            if (playerProgressOfEnding != null)
+            {
+                return playerProgressOfEnding.CurrentPoints == PointsRequired;
+            }
+            return false;
         }
     }
 }

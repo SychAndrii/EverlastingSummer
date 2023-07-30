@@ -1,5 +1,4 @@
 ﻿using ConsoleTesting.Models.Base;
-using ConsoleTesting.Models.Endings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,13 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.Models
+namespace ConsoleTesting.Models.Player
 {
     [NotMapped]
-    public class Player
+    public class SingletonPlayer
     {
-        public ICollection<EndingPoints> Endings { get; set; }
         public ICollection<Choice> Choices { get; set; }
-
+        public ICollection<PlayerEndingProgress> EndingProgresses { get; set; }
     }
 }

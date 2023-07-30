@@ -1,4 +1,4 @@
-﻿using ConsoleTesting.Models;
+﻿using ConsoleTesting.Models.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace ConsoleTesting.EverlastingSummerModels.Controllers
             
         }
 
-        public void NextScene(Player player)
+        public void NextScene(SingletonPlayer player)
         {
 
         }

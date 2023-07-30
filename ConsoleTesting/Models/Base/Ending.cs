@@ -25,7 +25,7 @@ namespace ConsoleTesting.Models.Base
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return HashCode.Combine(Name, Id);
         }
     }
 }

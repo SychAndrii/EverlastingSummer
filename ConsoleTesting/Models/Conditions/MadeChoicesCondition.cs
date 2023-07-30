@@ -1,20 +1,20 @@
-﻿using ConsoleTesting.EverlastingSummerModels.Base;
-using ConsoleTesting.Models.Player;
+﻿using ConsoleTesting.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.EverlastingSummerModels.Conditions
+namespace ConsoleTesting.Models.Conditions
 {
     public class MadeChoicesCondition : Condition
     {
-        public IEnumerable<Choice> Choices { get; }
+        public IEnumerable<Choice> Choices { get; set; }
 
-        public MadeChoicesCondition(IEnumerable<Choice> choices)
+        public MadeChoicesCondition()
         {
-            Choices = choices;
+            Choices = new List<Choice>();
         }
 
         public override bool CanTransit(Player player)

@@ -1,14 +1,16 @@
-﻿using System;
+﻿using ConsoleTesting.Models.Conditions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleTesting.Models.Player;
 
-namespace ConsoleTesting.EverlastingSummerModels.Base
+namespace ConsoleTesting.Models.Base
 {
     public abstract class Condition
-    {
+    { 
+        private readonly Guid _Id;
+        public Guid Id { get => _Id; }
         public abstract bool CanTransit(Player player);
     }
 }

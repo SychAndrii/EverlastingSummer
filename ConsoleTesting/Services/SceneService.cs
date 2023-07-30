@@ -1,4 +1,4 @@
-﻿using ConsoleTesting.EverlastingSummerModels.Base;
+﻿using ConsoleTesting.Models.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;

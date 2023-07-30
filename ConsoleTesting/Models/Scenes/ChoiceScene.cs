@@ -1,12 +1,15 @@
-﻿using ConsoleTesting.EverlastingSummerModels.Base;
+﻿using ConsoleTesting.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.EverlastingSummerModels.Scenes
+namespace ConsoleTesting.Models.Scenes
 {
+    /*
+    [NotMapped]
     public class ChoiceScene : Scene
     {
         public IEnumerable<Choice> Choices { get; }
@@ -26,4 +29,5 @@ namespace ConsoleTesting.EverlastingSummerModels.Scenes
             }
         }
     }
+    */
 }

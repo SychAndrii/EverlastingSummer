@@ -1,9 +1,10 @@
 ﻿using ConsoleTesting;
 using ConsoleTesting.Models;
 using Microsoft.EntityFrameworkCore;
-using ConsoleTesting.EverlastingSummerModels.Base;
-using ConsoleTesting.EverlastingSummerModels.Scenes;
-using ConsoleTesting.Models.Player;
+using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Scenes;
+using ConsoleTesting.Database;
+using ConsoleTesting.Models.Conditions;
 
 namespace Program
 {
@@ -11,31 +12,32 @@ namespace Program
     {
         public static void Main(string[] args)
         {
-            Player player = new Player();
-            Scene lastScene;
-            Scene scene1 = new StandardScene("This is the end!");
-            Scene scene2 = new StandardScene("This is a scene before the end!");
-            scene2.Transitions = new List<Transition>()
+            using (ESContext context = new ESContext()) 
             {
-                new Transition(scene1)
-            };
-            Scene scene3 = new StandardScene("This is beginning!");
-            scene3.Transitions = new List<Transition>()
-            {
-                new Transition(scene2)
-            };
-            lastScene = scene1;
-
-            Scene currentScene = scene3;
-
-            while (true)
-            {
-                currentScene.Show();
-                if(currentScene == lastScene)
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+                Choice choice = new Choice("Choice 1");
+                Choice choice2 = new Choice("Choice 3");
+                context.Choices.AddRange(choice, choice2);
+                MadeChoicesCondition madeChoicesCondition = new MadeChoicesCondition();
+                madeChoicesCondition.Choices = new List<Choice>()
                 {
-                    break;
+                    choice, choice2
+                };
+                context.MadeChoicesConditions.AddRange(madeChoicesCondition);
+                context.SaveChanges();
+            }
+
+            using (ESContext context = new ESContext())
+            {
+                var madeChoicesCondition = context.MadeChoicesConditions.Include(c => c.Choices).FirstOrDefault();
+                if(madeChoicesCondition != null)
+                {
+                    foreach(Choice choice in madeChoicesCondition.Choices)
+                    {
+                        Console.WriteLine(choice.Text);
+                    }
                 }
-                currentScene = currentScene.Transitions.FirstOrDefault().TargetScene;
             }
         }
     }

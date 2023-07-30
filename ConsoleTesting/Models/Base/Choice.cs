@@ -1,15 +1,19 @@
-﻿using System;
+﻿using ConsoleTesting.Models.Conditions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.EverlastingSummerModels.Base
+namespace ConsoleTesting.Models.Base
 {
     public class Choice
     {
-        public string Text { get; }
-        public int Id { get; }
+        public string Text { get; set; }
+
+        private readonly Guid _Id = Guid.NewGuid();
+        public Guid Id { get => _Id; }
+        public IEnumerable<MadeChoicesCondition>? MadeChoicesConditions { get; set; }
 
         public Choice(string text)
         {
@@ -24,6 +28,11 @@ namespace ConsoleTesting.EverlastingSummerModels.Base
         public override bool Equals(object? obj)
         {
             return obj is Choice c && c.Id == Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Text, Id);
         }
     }
 }

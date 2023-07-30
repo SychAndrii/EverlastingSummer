@@ -1,12 +1,14 @@
-﻿using ConsoleTesting.EverlastingSummerModels.Base;
+﻿using ConsoleTesting.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.EverlastingSummerModels.Scenes
+namespace ConsoleTesting.Models
 {
+    [NotMapped]
     public class Transition
     {
         public Condition? Condition { get; }

@@ -1,13 +1,15 @@
-﻿using ConsoleTesting.EverlastingSummerModels.Base;
-using ConsoleTesting.Models.Player;
+﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Endings;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.EverlastingSummerModels.Conditions
+namespace ConsoleTesting.Models.Conditions
 {
+    [NotMapped]
     public class EndingPointsCondition : Condition
     {
         public EndingPoints TargetEnding { get; }
@@ -30,12 +32,12 @@ namespace ConsoleTesting.EverlastingSummerModels.Conditions
         {
             var playerPoints = player.Endings.First(end => end.Ending.Equals(TargetEnding));
 
-            if(playerPoints == null)
+            if (playerPoints == null)
                 return false;
 
             if (Comparison == Operation.LESS)
                 return playerPoints.Points < TargetEnding.Points;
-            if(Comparison == Operation.BIGGER)
+            if (Comparison == Operation.BIGGER)
                 return playerPoints.Points > TargetEnding.Points;
             if (Comparison == Operation.NOT_EQUAL)
                 return playerPoints.Points != TargetEnding.Points;

@@ -1,7 +1,9 @@
-﻿using ConsoleTesting.EverlastingSummerModels.Base;
+﻿using ConsoleTesting.Models.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ConsoleTesting.EverlastingSummerModels
+namespace ConsoleTesting.Models.Endings
 {
+    [NotMapped]
     public class EndingPoints
     {
         public Ending Ending { get; set; }

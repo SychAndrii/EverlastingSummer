@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleTesting.EverlastingSummerModels.Base;
+using ConsoleTesting.Models.Base;
 
-namespace ConsoleTesting.EverlastingSummerModels.Endings
+namespace ConsoleTesting.Models.Endings
 {
+    [NotMapped]
     public class EndingsContainer
     {
         public IEnumerable<Ending> Endings { get; }

@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.SceneParts
 {
-    [NotMapped]
     public class Transition
     {
-        public Condition? Condition { get; }
-        public Scene TargetScene { get; }
 
-        public Transition(Scene targetScene, Condition? condition = null)
-        {
-            TargetScene = targetScene;
-            Condition = condition;
-        }
+        private readonly Guid _Id;
+        public Guid Id { get => _Id; }
+        public IEnumerable<Condition> Conditions { get; set; }
+        public Scene TargetScene { get; set; }
     }
 }

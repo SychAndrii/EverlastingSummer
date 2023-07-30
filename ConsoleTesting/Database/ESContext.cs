@@ -1,6 +1,7 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Player;
+using ConsoleTesting.Models.SceneParts;
 using ConsoleTesting.Models.Scenes;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,7 +21,10 @@ namespace ConsoleTesting.Database
         public DbSet<MadeChoicesCondition> MadeChoicesConditions { get; set; } = null!;
         public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
         public virtual DbSet<PlayerEndingProgress> PlayerEndings { get; set; } = null!;
-
+        public DbSet<Scene> Scenes { get; set; } = null!;
+        public DbSet<ChoiceScene> ChoiceScenes { get; set; } = null!;
+        public DbSet<StandardScene> StandardScenes { get; set; } = null!;
+        public DbSet<Transition> Transitions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,7 +33,15 @@ namespace ConsoleTesting.Database
             ConfiguringEnding(modelBuilder);
             ConfiguringConditions(modelBuilder);
             ConfiguringPlayer(modelBuilder);
-            //ConfiguringScene(modelBuilder);
+            ConfiguringTransitions(modelBuilder);
+            ConfiguringScenes(modelBuilder);
+        }
+
+        private void ConfiguringTransitions(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Transition>()
+                .Property("Id").HasField("_Id");
         }
 
         private void ConfiguringPlayer(ModelBuilder modelBuilder)
@@ -47,7 +59,7 @@ namespace ConsoleTesting.Database
                 .OnDelete(DeleteBehavior.Cascade);
         }
 
-        private void ConfiguringScene(ModelBuilder modelBuilder)
+        private void ConfiguringScenes(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Entity<Scene>()
@@ -56,6 +68,14 @@ namespace ConsoleTesting.Database
 
             modelBuilder
                 .Entity<Scene>()
+                .UseTpcMappingStrategy();
+
+            modelBuilder
+                .Entity<ChoiceScene>()
+                .UseTpcMappingStrategy();
+
+            modelBuilder
+                .Entity<StandardScene>()
                 .UseTpcMappingStrategy();
         }
 

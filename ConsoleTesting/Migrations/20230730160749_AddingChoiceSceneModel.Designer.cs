@@ -3,6 +3,7 @@ using System;
 using ConsoleTesting.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleTesting.Migrations
 {
     [DbContext(typeof(ESContext))]
-    partial class ESContextModelSnapshot : ModelSnapshot
+    [Migration("20230730160749_AddingChoiceSceneModel")]
+    partial class AddingChoiceSceneModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -123,17 +126,12 @@ namespace ConsoleTesting.Migrations
                     b.Property<Guid?>("ChoiceSceneId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("StandardSceneId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("TargetSceneId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChoiceSceneId");
-
-                    b.HasIndex("StandardSceneId");
 
                     b.HasIndex("TargetSceneId");
 
@@ -170,17 +168,6 @@ namespace ConsoleTesting.Migrations
                     b.HasBaseType("ConsoleTesting.Models.Base.Scene");
 
                     b.ToTable("ChoiceScenes");
-                });
-
-            modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
-                {
-                    b.HasBaseType("ConsoleTesting.Models.Base.Scene");
-
-                    b.Property<string>("Dialogue")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.ToTable("StandardScenes");
                 });
 
             modelBuilder.Entity("ChoiceMadeChoicesCondition", b =>
@@ -229,10 +216,6 @@ namespace ConsoleTesting.Migrations
                         .WithMany("Transitions")
                         .HasForeignKey("ChoiceSceneId");
 
-                    b.HasOne("ConsoleTesting.Models.Scenes.StandardScene", null)
-                        .WithMany("Transitions")
-                        .HasForeignKey("StandardSceneId");
-
                     b.HasOne("ConsoleTesting.Models.Base.Scene", "TargetScene")
                         .WithMany()
                         .HasForeignKey("TargetSceneId")
@@ -262,11 +245,6 @@ namespace ConsoleTesting.Migrations
                 {
                     b.Navigation("Choices");
 
-                    b.Navigation("Transitions");
-                });
-
-            modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
-                {
                     b.Navigation("Transitions");
                 });
 #pragma warning restore 612, 618

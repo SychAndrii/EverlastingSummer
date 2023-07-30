@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.SceneParts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,16 +9,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.Scenes
 {
-    /*
-    [NotMapped]
-    public class ChoiceScene : Scene
+    public class ChoiceScene : SwitchableScene
     {
-        public IEnumerable<Choice> Choices { get; }
-
-        public ChoiceScene(IEnumerable<Choice> choices, IEnumerable<Transition>? transitions = null) : base(transitions)
-        {
-            Choices = choices;
-        }
+        public IEnumerable<Choice> Choices { get; set; }
 
         public override void Show()
         {
@@ -29,5 +23,4 @@ namespace ConsoleTesting.Models.Scenes
             }
         }
     }
-    */
 }

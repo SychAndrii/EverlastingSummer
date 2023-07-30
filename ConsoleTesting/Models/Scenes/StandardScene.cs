@@ -8,13 +8,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.Scenes
 {
-    /*
-    [NotMapped]
-    public class StandardScene : Scene
+    public class StandardScene : SwitchableScene
     {
-        public string Dialogue { get; }
+        public string Dialogue { get; set; }
 
-        public StandardScene(string dialogue, IEnumerable<Transition>? transitions = null) : base(transitions)
+        public StandardScene(string dialogue)
         {
             Dialogue = dialogue;
         }
@@ -24,5 +22,4 @@ namespace ConsoleTesting.Models.Scenes
             Console.WriteLine(Dialogue);
         }
     }
-    */
 }

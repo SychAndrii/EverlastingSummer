@@ -3,6 +3,7 @@ using System;
 using ConsoleTesting.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleTesting.Migrations
 {
     [DbContext(typeof(ESContext))]
-    partial class ESContextModelSnapshot : ModelSnapshot
+    [Migration("20230731195224_AddedCharacterAndDialogueModels")]
+    partial class AddedCharacterAndDialogueModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -93,20 +96,7 @@ namespace ConsoleTesting.Migrations
                     b.UseTpcMappingStrategy();
                 });
 
-            modelBuilder.Entity("ConsoleTesting.Models.Base.Scene", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable((string)null);
-
-                    b.UseTpcMappingStrategy();
-                });
-
-            modelBuilder.Entity("ConsoleTesting.Models.Base.State", b =>
+            modelBuilder.Entity("ConsoleTesting.Models.Base.Ending", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,7 +111,20 @@ namespace ConsoleTesting.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("States");
+                    b.ToTable("Endings");
+                });
+
+            modelBuilder.Entity("ConsoleTesting.Models.Base.Scene", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable((string)null);
+
+                    b.UseTpcMappingStrategy();
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Player.User", b =>
@@ -135,9 +138,9 @@ namespace ConsoleTesting.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ConsoleTesting.Models.Player.UserStateProgress", b =>
+            modelBuilder.Entity("ConsoleTesting.Models.Player.UserEndingProgress", b =>
                 {
-                    b.Property<Guid>("StateId")
+                    b.Property<Guid>("EndingId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("CurrentPoints")
@@ -146,11 +149,11 @@ namespace ConsoleTesting.Migrations
                     b.Property<Guid?>("UserId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("StateId");
+                    b.HasKey("EndingId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserStates");
+                    b.ToTable("UserEndings");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.SceneParts.SideEffect", b =>
@@ -197,7 +200,7 @@ namespace ConsoleTesting.Migrations
                     b.ToTable("Transitions");
                 });
 
-            modelBuilder.Entity("DB.Models.Characters.DialogueCharacter", b =>
+            modelBuilder.Entity("DB.Models.TextSwitcher.Character", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -207,30 +210,17 @@ namespace ConsoleTesting.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("StandardSceneId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("DialogueCharacters");
-                });
+                    b.HasIndex("StandardSceneId");
 
-            modelBuilder.Entity("DB.Models.Characters.SpriteCharacter", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SpritePath")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SpritePath")
-                        .IsUnique();
-
-                    b.ToTable("SpriteCharacters");
+                    b.ToTable("Characters");
                 });
 
             modelBuilder.Entity("DB.Models.TextSwitcher.Dialogue", b =>
@@ -251,21 +241,6 @@ namespace ConsoleTesting.Migrations
                     b.HasIndex("CharacterId");
 
                     b.ToTable("Dialogues");
-                });
-
-            modelBuilder.Entity("SpriteCharacterStandardScene", b =>
-                {
-                    b.Property<Guid>("CharactersId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StandardScenesId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("CharactersId", "StandardScenesId");
-
-                    b.HasIndex("StandardScenesId");
-
-                    b.ToTable("SpriteCharacterStandardScene");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Animations.SceneColor", b =>
@@ -386,19 +361,19 @@ namespace ConsoleTesting.Migrations
                         .HasForeignKey("TransitionId");
                 });
 
-            modelBuilder.Entity("ConsoleTesting.Models.Player.UserStateProgress", b =>
+            modelBuilder.Entity("ConsoleTesting.Models.Player.UserEndingProgress", b =>
                 {
-                    b.HasOne("ConsoleTesting.Models.Base.State", "State")
+                    b.HasOne("ConsoleTesting.Models.Base.Ending", "Ending")
                         .WithOne()
-                        .HasForeignKey("ConsoleTesting.Models.Player.UserStateProgress", "StateId")
+                        .HasForeignKey("ConsoleTesting.Models.Player.UserEndingProgress", "EndingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ConsoleTesting.Models.Player.User", null)
-                        .WithMany("StateProgresses")
+                        .WithMany("EndingProgresses")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("State");
+                    b.Navigation("Ending");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.SceneParts.SideEffect", b =>
@@ -427,33 +402,25 @@ namespace ConsoleTesting.Migrations
                     b.Navigation("TargetScene");
                 });
 
+            modelBuilder.Entity("DB.Models.TextSwitcher.Character", b =>
+                {
+                    b.HasOne("ConsoleTesting.Models.Scenes.StandardScene", null)
+                        .WithMany("Characters")
+                        .HasForeignKey("StandardSceneId");
+                });
+
             modelBuilder.Entity("DB.Models.TextSwitcher.Dialogue", b =>
                 {
-                    b.HasOne("DB.Models.Characters.DialogueCharacter", "Character")
+                    b.HasOne("DB.Models.TextSwitcher.Character", "Character")
                         .WithMany()
                         .HasForeignKey("CharacterId");
 
                     b.Navigation("Character");
                 });
 
-            modelBuilder.Entity("SpriteCharacterStandardScene", b =>
-                {
-                    b.HasOne("DB.Models.Characters.SpriteCharacter", null)
-                        .WithMany()
-                        .HasForeignKey("CharactersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ConsoleTesting.Models.Scenes.StandardScene", null)
-                        .WithMany()
-                        .HasForeignKey("StandardScenesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ConsoleTesting.Models.Conditions.EndingPointsCondition", b =>
                 {
-                    b.HasOne("ConsoleTesting.Models.Base.State", "Ending")
+                    b.HasOne("ConsoleTesting.Models.Base.Ending", "Ending")
                         .WithMany()
                         .HasForeignKey("EndingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -475,7 +442,7 @@ namespace ConsoleTesting.Migrations
 
             modelBuilder.Entity("ConsoleTesting.Models.Transit.EndingModifier", b =>
                 {
-                    b.HasOne("ConsoleTesting.Models.Base.State", "Ending")
+                    b.HasOne("ConsoleTesting.Models.Base.Ending", "Ending")
                         .WithMany()
                         .HasForeignKey("EndingId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -496,7 +463,7 @@ namespace ConsoleTesting.Migrations
                 {
                     b.Navigation("Choices");
 
-                    b.Navigation("StateProgresses");
+                    b.Navigation("EndingProgresses");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Transit.Transition", b =>
@@ -515,6 +482,8 @@ namespace ConsoleTesting.Migrations
 
             modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
                 {
+                    b.Navigation("Characters");
+
                     b.Navigation("Transitions");
                 });
 

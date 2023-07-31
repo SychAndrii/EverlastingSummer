@@ -3,6 +3,7 @@ using System;
 using ConsoleTesting.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleTesting.Migrations
 {
     [DbContext(typeof(ESContext))]
-    partial class ESContextModelSnapshot : ModelSnapshot
+    [Migration("20230731200514_AddedSpriteCharacterModel")]
+    partial class AddedSpriteCharacterModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -225,10 +228,15 @@ namespace ConsoleTesting.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("StandardSceneId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SpritePath")
                         .IsUnique();
+
+                    b.HasIndex("StandardSceneId");
 
                     b.ToTable("SpriteCharacters");
                 });
@@ -251,21 +259,6 @@ namespace ConsoleTesting.Migrations
                     b.HasIndex("CharacterId");
 
                     b.ToTable("Dialogues");
-                });
-
-            modelBuilder.Entity("SpriteCharacterStandardScene", b =>
-                {
-                    b.Property<Guid>("CharactersId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("StandardScenesId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("CharactersId", "StandardScenesId");
-
-                    b.HasIndex("StandardScenesId");
-
-                    b.ToTable("SpriteCharacterStandardScene");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Animations.SceneColor", b =>
@@ -427,6 +420,13 @@ namespace ConsoleTesting.Migrations
                     b.Navigation("TargetScene");
                 });
 
+            modelBuilder.Entity("DB.Models.Characters.SpriteCharacter", b =>
+                {
+                    b.HasOne("ConsoleTesting.Models.Scenes.StandardScene", null)
+                        .WithMany("Characters")
+                        .HasForeignKey("StandardSceneId");
+                });
+
             modelBuilder.Entity("DB.Models.TextSwitcher.Dialogue", b =>
                 {
                     b.HasOne("DB.Models.Characters.DialogueCharacter", "Character")
@@ -434,21 +434,6 @@ namespace ConsoleTesting.Migrations
                         .HasForeignKey("CharacterId");
 
                     b.Navigation("Character");
-                });
-
-            modelBuilder.Entity("SpriteCharacterStandardScene", b =>
-                {
-                    b.HasOne("DB.Models.Characters.SpriteCharacter", null)
-                        .WithMany()
-                        .HasForeignKey("CharactersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ConsoleTesting.Models.Scenes.StandardScene", null)
-                        .WithMany()
-                        .HasForeignKey("StandardScenesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Conditions.EndingPointsCondition", b =>
@@ -515,6 +500,8 @@ namespace ConsoleTesting.Migrations
 
             modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
                 {
+                    b.Navigation("Characters");
+
                     b.Navigation("Transitions");
                 });
 

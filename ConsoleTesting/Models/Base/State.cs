@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace ConsoleTesting.Models.Base
 {
     /// <summary>
-    /// Represents different endings inside of your game. Example: Good Ending, Bad Ending.
+    /// Represents different states inside of your game. Example: Good Ending, Bad Ending.
     /// </summary>
     /// <example>
     /// Bad Ending, Good Ending, Moderate Ending etc.
     /// </example>
-    public class Ending
+    public class State
     { 
         public string Name { get; set; }
 
@@ -21,7 +21,7 @@ namespace ConsoleTesting.Models.Base
 
         public override bool Equals(object? obj)
         {
-            return obj is Ending e && e.Id == Id;
+            return obj is State e && e.Id == Id;
         }
 
         public override int GetHashCode()

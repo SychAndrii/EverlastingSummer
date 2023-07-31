@@ -11,7 +11,7 @@ namespace ConsoleTesting.Models.Conditions
 {
     /// <summary>
     /// Condition, which will allow to pass through a transition to the next scene 
-    /// if player has collected enough ending points for an <see cref="Base.Ending"/> instance.
+    /// if player has collected enough ending points for an <see cref="Base.State"/> instance.
     /// </summary>
     public class EndingPointsCondition : Condition
     {
@@ -25,11 +25,11 @@ namespace ConsoleTesting.Models.Conditions
         /// Player must collect at least <see cref="PointsRequired"/> points for this ending
         /// to move to the next scene.
         /// </summary>
-        public Ending Ending { get; set; }
+        public State Ending { get; set; }
 
         public override bool CanTransit(User player)
         {
-            var playerProgressOfEnding = player.EndingProgresses.Where(ep => ep.Ending == Ending).FirstOrDefault();
+            var playerProgressOfEnding = player.StateProgresses.Where(ep => ep.State == Ending).FirstOrDefault();
             if (playerProgressOfEnding != null)
             {
                 return playerProgressOfEnding.CurrentPoints == PointsRequired;

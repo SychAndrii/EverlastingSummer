@@ -1,4 +1,6 @@
 ﻿using ConsoleTesting.Models.Base;
+using DB.Models.Characters;
+using DB.Models.TextSwitcher;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,12 +18,8 @@ namespace ConsoleTesting.Models.Scenes
     /// </remarks>
     public class StandardScene : SwitchableScene
     {
-        public string Dialogue { get; set; }
-
-        public StandardScene(string dialogue)
-        {
-            Dialogue = dialogue;
-        }
+        public Dialogue Dialogue { get; set; }
+        public IEnumerable<SpriteCharacter>? Characters { get; set; }
 
         public override void Show()
         {

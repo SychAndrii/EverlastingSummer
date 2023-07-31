@@ -5,6 +5,8 @@ using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.SceneParts;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
+using DB.Models.Characters;
+using DB.Models.TextSwitcher;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,11 +20,11 @@ namespace ConsoleTesting.Database
     public class ESContext : DbContext
     {
         public DbSet<Choice> Choices { get; set; } = null!;
-        public DbSet<Ending> Endings { get; set; } = null!;
+        public DbSet<State> States { get; set; } = null!;
         public DbSet<Condition> Conditions { get; set; } = null!;
         public DbSet<MadeChoicesCondition> MadeChoicesConditions { get; set; } = null!;
         public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
-        public virtual DbSet<UserEndingProgress> UserEndings { get; set; } = null!;
+        public virtual DbSet<UserStateProgress> UserStates { get; set; } = null!;
         public DbSet<Scene> Scenes { get; set; } = null!;
         public DbSet<ChoiceScene> ChoiceScenes { get; set; } = null!;
         public DbSet<StandardScene> StandardScenes { get; set; } = null!;
@@ -32,6 +34,10 @@ namespace ConsoleTesting.Database
         public DbSet<Sequence> Sequences { get; set; } = null!;
         public DbSet<SideEffect> SideEffects { get; set; } = null!;
         public DbSet<SceneColor> SceneColors { get; set; } = null!;
+        public DbSet<DialogueCharacter> DialogueCharacters { get; set; } = null!;
+        public DbSet<SpriteCharacter> SpriteCharacters { get; set; } = null!;
+        public DbSet<Dialogue> Dialogues { get; set; } = null!;
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,6 +51,32 @@ namespace ConsoleTesting.Database
             ConfiguringScenes(modelBuilder);
             ConfiguringSideEffects(modelBuilder);
             ConfiguringAnimation(modelBuilder);
+            ConfiguringSceneParts(modelBuilder);
+        }
+
+        private void ConfiguringSceneParts(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Dialogue>()
+                .Property("Id").HasField("_Id");
+
+            modelBuilder
+                .Entity<DialogueCharacter>()
+                .Property("Id").HasField("_Id");
+
+            modelBuilder
+                .Entity<DialogueCharacter>()
+                .HasIndex(e => e.Name)
+                .IsUnique();
+
+            modelBuilder
+                .Entity<SpriteCharacter>()
+                .Property("Id").HasField("_Id");
+
+            modelBuilder
+                .Entity<SpriteCharacter>()
+                .HasIndex(s => s.SpritePath)
+                .IsUnique();
         }
 
         private void ConfiguringAnimation(ModelBuilder modelBuilder)
@@ -90,14 +122,14 @@ namespace ConsoleTesting.Database
                 .HasField("_Id");
 
             modelBuilder
-                .Entity<UserEndingProgress>()
-                .HasKey(p => p.EndingId);
+                .Entity<UserStateProgress>()
+                .HasKey(p => p.StateId);
 
             modelBuilder
-                .Entity<UserEndingProgress>()
-                .HasOne(pep => pep.Ending)
+                .Entity<UserStateProgress>()
+                .HasOne(pep => pep.State)
                 .WithOne()
-                .HasForeignKey<UserEndingProgress>(pep => pep.EndingId)
+                .HasForeignKey<UserStateProgress>(pep => pep.StateId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
@@ -150,12 +182,12 @@ namespace ConsoleTesting.Database
         private void ConfiguringEnding(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<Ending>()
+                .Entity<State>()
                 .Property(c => c.Id)
                 .HasField("_Id");
 
             modelBuilder
-                .Entity<Ending>()
+                .Entity<State>()
                 .HasIndex(e => e.Name)
                 .IsUnique();
         }

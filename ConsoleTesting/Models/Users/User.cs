@@ -24,8 +24,8 @@ namespace ConsoleTesting.Models.Player
         public Guid Id { get => _Id; }
 
         /// <summary>
-        /// Player's progress for various endings. See <see cref="UserEndingProgress"/> for more info.
+        /// Player's progress for various states. See <see cref="UserStateProgress"/> for more info.
         /// </summary>
-        public ICollection<UserEndingProgress> EndingProgresses { get; set; }
+        public ICollection<UserStateProgress> StateProgresses { get; set; }
     }
 }

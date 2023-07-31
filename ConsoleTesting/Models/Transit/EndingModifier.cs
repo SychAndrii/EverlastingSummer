@@ -11,14 +11,14 @@ namespace ConsoleTesting.Models.Transit
 {
     public class EndingModifier : SideEffect
     {
-        public Ending Ending { get; set; }
+        public State Ending { get; set; }
         public int Points { get; set; }
         public User User { get; set; }
 
         public override void Execute()
         {
-            var playerProgressEnding = User.EndingProgresses
-                .Where(progress => progress.Ending.Equals(Ending))
+            var playerProgressEnding = User.StateProgresses
+                .Where(progress => progress.State.Equals(Ending))
                 .FirstOrDefault();
 
             if(playerProgressEnding != null)

@@ -13,18 +13,22 @@ namespace GameBuilder
         public static void Main(string[] args) 
         {
             using ESContext context = new ESContext();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            var res = GameBuilderController.AddDialogueCharacter(
-                CharacterFactory.Instance.CreateDialogueCharacter("Mary")    
-            ).Result;
+            var c1 = CreateCharacter("Adrian");
+            var c2 = CreateCharacter("Mary");
+            var c3 = CreateCharacter("Old Man");
+            var c4 = CreateCharacter("Ghost");
 
-            var res2 = GameBuilderController.AddDialogueCharacter(
-                CharacterFactory.Instance.CreateDialogueCharacter("Marina")
-            ).Result;
 
-            Console.WriteLine(res);
-            Console.WriteLine(res2);
+        }
+
+        private static async Task<DialogueCharacter?> CreateCharacter(string names)
+        {
+            return await GameBuilderController.AddDialogueCharacter(
+                CharacterFactory.Instance.CreateDialogueCharacter("Old Man")
+            );
         }
     }
 }

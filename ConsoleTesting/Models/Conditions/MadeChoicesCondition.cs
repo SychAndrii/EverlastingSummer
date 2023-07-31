@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Player;
+using ConsoleTesting.Models.Transit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,8 +17,8 @@ namespace ConsoleTesting.Models.Conditions
     public class MadeChoicesCondition : Condition
     {
         /// <summary>
-        /// List of choices which user must have made by the time he reached current <see cref="SceneParts.Transition"/>
-        /// transition in order to move to the next scene (<see cref="SceneParts.Transition.TargetScene"/>)
+        /// List of choices which user must have made by the time he reached current <see cref="Transit.Transition"/>
+        /// transition in order to move to the next scene (<see cref="Transition.TargetScene"/>)
         /// </summary>
         public IEnumerable<Choice> Choices { get; set; }
 
@@ -26,7 +27,7 @@ namespace ConsoleTesting.Models.Conditions
             Choices = new List<Choice>();
         }
 
-        public override bool CanTransit(SingletonPlayer player)
+        public override bool CanTransit(User player)
         {
             return Choices.Intersect(player.Choices).Count() == player.Choices.Count();
         }

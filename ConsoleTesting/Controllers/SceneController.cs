@@ -14,7 +14,7 @@ namespace ConsoleTesting.EverlastingSummerModels.Controllers
             
         }
 
-        public void NextScene(SingletonPlayer player)
+        public void NextScene(User player)
         {
 
         }

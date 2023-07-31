@@ -1,8 +1,10 @@
-﻿using ConsoleTesting.Models.Base;
+﻿using ConsoleTesting.Models.Animations;
+using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.SceneParts;
 using ConsoleTesting.Models.Scenes;
+using ConsoleTesting.Models.Transit;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,11 +22,17 @@ namespace ConsoleTesting.Database
         public DbSet<Condition> Conditions { get; set; } = null!;
         public DbSet<MadeChoicesCondition> MadeChoicesConditions { get; set; } = null!;
         public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
-        public virtual DbSet<PlayerEndingProgress> PlayerEndings { get; set; } = null!;
+        public virtual DbSet<UserEndingProgress> PlayerEndings { get; set; } = null!;
         public DbSet<Scene> Scenes { get; set; } = null!;
         public DbSet<ChoiceScene> ChoiceScenes { get; set; } = null!;
         public DbSet<StandardScene> StandardScenes { get; set; } = null!;
         public DbSet<Transition> Transitions { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<EndingModifier> EndingModifiers { get; set; } = null!;
+        public DbSet<Sequence> Sequences { get; set; } = null!;
+        public DbSet<SideEffect> SideEffects { get; set; } = null!;
+        public DbSet<SceneColor> SceneColors { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,9 +40,39 @@ namespace ConsoleTesting.Database
             ConfiguringChoice(modelBuilder);
             ConfiguringEnding(modelBuilder);
             ConfiguringConditions(modelBuilder);
-            ConfiguringPlayer(modelBuilder);
+            ConfiguringUsers(modelBuilder);
             ConfiguringTransitions(modelBuilder);
             ConfiguringScenes(modelBuilder);
+            ConfiguringSideEffects(modelBuilder);
+            ConfiguringAnimation(modelBuilder);
+        }
+
+        private void ConfiguringAnimation(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Animation>()
+                .UseTpcMappingStrategy()
+                .Property("Id").HasField("_Id");
+
+            modelBuilder
+                .Entity<SceneColor>()
+                .UseTpcMappingStrategy();
+        }
+
+        private void ConfiguringSideEffects(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<SideEffect>()
+                .UseTpcMappingStrategy()
+                .Property("Id").HasField("_Id");
+
+            modelBuilder
+                .Entity<EndingModifier>()
+                .UseTpcMappingStrategy();
+
+            modelBuilder
+                .Entity<Sequence>()
+                .UseTpcMappingStrategy();
         }
 
         private void ConfiguringTransitions(ModelBuilder modelBuilder)
@@ -44,17 +82,22 @@ namespace ConsoleTesting.Database
                 .Property("Id").HasField("_Id");
         }
 
-        private void ConfiguringPlayer(ModelBuilder modelBuilder)
+        private void ConfiguringUsers(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<PlayerEndingProgress>()
+                .Entity<User>()
+                .Property("Id")
+                .HasField("_Id");
+
+            modelBuilder
+                .Entity<UserEndingProgress>()
                 .HasKey(p => p.EndingId);
 
             modelBuilder
-                .Entity<PlayerEndingProgress>()
+                .Entity<UserEndingProgress>()
                 .HasOne(pep => pep.Ending)
                 .WithOne()
-                .HasForeignKey<PlayerEndingProgress>(pep => pep.EndingId)
+                .HasForeignKey<UserEndingProgress>(pep => pep.EndingId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

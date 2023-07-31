@@ -27,7 +27,7 @@ namespace ConsoleTesting.Models.Conditions
         /// </summary>
         public Ending Ending { get; set; }
 
-        public override bool CanTransit(SingletonPlayer player)
+        public override bool CanTransit(User player)
         {
             var playerProgressOfEnding = player.EndingProgresses.Where(ep => ep.Ending == Ending).FirstOrDefault();
             if (playerProgressOfEnding != null)

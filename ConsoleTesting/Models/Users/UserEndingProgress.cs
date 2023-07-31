@@ -16,7 +16,7 @@ namespace ConsoleTesting.Models.Player
     /// To get Bad Ending, you need to get at least 5 points for Bad Ending.
     /// To get Good Ending, you need to get at least 10 points for Good Ending.
     /// </example>
-    public class PlayerEndingProgress
+    public class UserEndingProgress
     {
         /// <summary>
         /// Current amount of points player has collected throughout the game for <see cref="Ending"/> ending.

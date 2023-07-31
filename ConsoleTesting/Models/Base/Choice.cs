@@ -11,7 +11,7 @@ namespace ConsoleTesting.Models.Base
     /// A choice made in choice scenes. Choice scenes are described by <see cref="Scenes.ChoiceScene"/> class.
     /// </summary>
     /// <remarks>
-    /// Each time a choice is made by a player, they are stored inside of <see cref="Player.SingletonPlayer.Choices"/> 
+    /// Each time a choice is made by a player, they are stored inside of <see cref="Player.User.Choices"/> 
     /// class.
     /// </remarks>
     public class Choice

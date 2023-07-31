@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.SceneParts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.Models.SceneParts
+namespace ConsoleTesting.Models.Transit
 {
     /// <summary>
     /// Represents a connection between two scenes. You can see it as an arrow, which goes from one scene to another.
@@ -17,6 +18,8 @@ namespace ConsoleTesting.Models.SceneParts
     {
         private readonly Guid _Id;
         public Guid Id { get => _Id; }
+
+        public IEnumerable<SideEffect>? SideEffects { get; set; }
 
         /// <summary>
         /// Conditions, which may prevent transition from happening.

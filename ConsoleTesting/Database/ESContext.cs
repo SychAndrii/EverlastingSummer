@@ -22,7 +22,7 @@ namespace ConsoleTesting.Database
         public DbSet<Condition> Conditions { get; set; } = null!;
         public DbSet<MadeChoicesCondition> MadeChoicesConditions { get; set; } = null!;
         public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
-        public virtual DbSet<UserEndingProgress> PlayerEndings { get; set; } = null!;
+        public virtual DbSet<UserEndingProgress> UserEndings { get; set; } = null!;
         public DbSet<Scene> Scenes { get; set; } = null!;
         public DbSet<ChoiceScene> ChoiceScenes { get; set; } = null!;
         public DbSet<StandardScene> StandardScenes { get; set; } = null!;

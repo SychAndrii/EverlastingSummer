@@ -22,6 +22,13 @@ namespace ConsoleTesting.Models.Transit
         public IEnumerable<SideEffect>? SideEffects { get; set; }
 
         /// <summary>
+        /// Next scene.
+        /// </summary>
+        
+        public Guid TargetSceneId { get; set; }
+        public Scene TargetScene { get; set; }
+
+        /// <summary>
         /// Conditions, which may prevent transition from happening.
         /// </summary>
         /// <example>
@@ -31,10 +38,5 @@ namespace ConsoleTesting.Models.Transit
         /// 2) I have put ammo into my pistol in the previous scenes.
         /// </example>
         public IEnumerable<Condition>? Conditions { get; set; }
-
-        /// <summary>
-        /// Next scene.
-        /// </summary>
-        public Scene TargetScene { get; set; }
     }
 }

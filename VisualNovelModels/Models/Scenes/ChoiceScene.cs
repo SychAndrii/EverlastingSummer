@@ -13,7 +13,7 @@ namespace ConsoleTesting.Models.Scenes
     /// Represents a scene, which displays a list of choices to choose from. Once a choice is selected, 
     /// a transition to the next scene will happen.
     /// </summary>
-    public class ChoiceScene : SwitchableScene
+    public class ChoiceScene : Scene
     {
         public IEnumerable<Choice> Choices { get; set; }
 

@@ -28,7 +28,7 @@ namespace GameBuilder.Controllers
             return await SceneService.AddScene(scene);
         }
 
-        public static async Task<SwitchableScene?> AddTransition(SwitchableScene scene, Transition transition)
+        public static async Task<Scene?> AddTransition(Scene scene, Transition transition)
         {
             return await SceneService.AddTransition(scene, transition);
         }

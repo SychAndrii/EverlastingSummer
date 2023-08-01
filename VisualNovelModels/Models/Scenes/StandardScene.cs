@@ -16,7 +16,7 @@ namespace ConsoleTesting.Models.Scenes
     /// <remarks>
     /// Imagine a scene in Everlasting Summer with no choice.
     /// </remarks>
-    public class StandardScene : SwitchableScene
+    public class StandardScene : Scene
     {
         public Dialogue Dialogue { get; set; }
         

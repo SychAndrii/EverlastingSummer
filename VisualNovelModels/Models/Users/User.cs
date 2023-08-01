@@ -1,6 +1,5 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Base;
-using ConsoleTesting.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

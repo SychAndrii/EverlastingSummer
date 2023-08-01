@@ -1,6 +1,8 @@
 ﻿using ConsoleTesting.Database;
+using ConsoleTesting.Models.Base;
 using ConsoleTesting.Services;
 using DB.Models.Characters;
+using DB.Models.TextSwitcher;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,19 +12,19 @@ using System.Threading.Tasks;
 
 namespace DB.Services
 {
-    public class DialogueCharactersService
+    public class CharacterService
     {
-        private static DialogueCharactersService _Instance;
-        public static DialogueCharactersService Instance
+        private static CharacterService _Instance;
+        public static CharacterService Instance
         {
             get
             {
                 if (_Instance == null)
-                    _Instance = new DialogueCharactersService();
+                    _Instance = new CharacterService();
                 return _Instance;
             }
         }
-        private DialogueCharactersService() { }
+        private CharacterService() { }
 
         /// <summary>
         /// Tries to add a character to the database. If not successful, returns null.

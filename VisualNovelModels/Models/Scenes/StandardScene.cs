@@ -19,8 +19,7 @@ namespace ConsoleTesting.Models.Scenes
     public class StandardScene : SwitchableScene
     {
         public Dialogue Dialogue { get; set; }
-        public IEnumerable<SpriteCharacter>? Characters { get; set; }
-
+        
         public override void Show()
         {
             Console.WriteLine(Dialogue);

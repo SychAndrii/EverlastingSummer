@@ -26,6 +26,7 @@ namespace ConsoleTesting.Database
         public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
         public virtual DbSet<UserStateProgress> UserStates { get; set; } = null!;
         public DbSet<Scene> Scenes { get; set; } = null!;
+        public DbSet<SwitchableScene> SwitchableScenes { get; set; } = null!;
         public DbSet<ChoiceScene> ChoiceScenes { get; set; } = null!;
         public DbSet<StandardScene> StandardScenes { get; set; } = null!;
         public DbSet<Transition> Transitions { get; set; } = null!;
@@ -140,6 +141,10 @@ namespace ConsoleTesting.Database
                 .Entity<Scene>()
                 .Property(c => c.Id)
                 .HasField("_Id");
+
+            modelBuilder
+                .Entity<SwitchableScene>()
+                .UseTpcMappingStrategy();
 
             modelBuilder
                 .Entity<Scene>()

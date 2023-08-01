@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleTesting.Models.Transit;
+using DB.Models.Characters;
 
 namespace ConsoleTesting.Models.Base
 {
@@ -21,5 +22,6 @@ namespace ConsoleTesting.Models.Base
         /// <see cref="Transition"/> for more concrete description of Transition class.
         /// </remarks>
         public IEnumerable<Transition>? Transitions { get; set; } = null;
+        public IEnumerable<SpriteCharacter>? Characters { get; set; }
     }
 }

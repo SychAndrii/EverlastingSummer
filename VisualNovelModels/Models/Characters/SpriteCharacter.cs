@@ -18,6 +18,11 @@ namespace DB.Models.Characters
         /// </summary>
         public IEnumerable<StandardScene> StandardScenes { get; set; }
 
+        /// <summary>
+        /// Is required for many-to-many relationship in the database.
+        /// </summary>
+        public IEnumerable<ChoiceScene> ChoiceScenes { get; set; }
+
         public string SpritePath { get; set; }
     }
 }

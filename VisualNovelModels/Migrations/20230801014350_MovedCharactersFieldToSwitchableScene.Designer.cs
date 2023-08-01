@@ -3,6 +3,7 @@ using System;
 using ConsoleTesting.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleTesting.Migrations
 {
     [DbContext(typeof(ESContext))]
-    partial class ESContextModelSnapshot : ModelSnapshot
+    [Migration("20230801014350_MovedCharactersFieldToSwitchableScene")]
+    partial class MovedCharactersFieldToSwitchableScene
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -30,6 +33,21 @@ namespace ConsoleTesting.Migrations
                     b.HasIndex("MadeChoicesConditionsId");
 
                     b.ToTable("ChoiceMadeChoicesCondition");
+                });
+
+            modelBuilder.Entity("ChoiceSceneSpriteCharacter", b =>
+                {
+                    b.Property<Guid>("CharactersId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ChoiceScenesId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CharactersId", "ChoiceScenesId");
+
+                    b.HasIndex("ChoiceScenesId");
+
+                    b.ToTable("ChoiceSceneSpriteCharacter");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Base.Animation", b =>
@@ -177,7 +195,10 @@ namespace ConsoleTesting.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("SwitchableSceneId")
+                    b.Property<Guid?>("ChoiceSceneId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("StandardSceneId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("TargetSceneId")
@@ -185,7 +206,9 @@ namespace ConsoleTesting.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SwitchableSceneId");
+                    b.HasIndex("ChoiceSceneId");
+
+                    b.HasIndex("StandardSceneId");
 
                     b.HasIndex("TargetSceneId");
 
@@ -220,15 +243,10 @@ namespace ConsoleTesting.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("SwitchableSceneId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SpritePath")
                         .IsUnique();
-
-                    b.HasIndex("SwitchableSceneId");
 
                     b.ToTable("SpriteCharacters");
                 });
@@ -251,6 +269,21 @@ namespace ConsoleTesting.Migrations
                     b.HasIndex("CharacterId");
 
                     b.ToTable("Dialogues");
+                });
+
+            modelBuilder.Entity("SpriteCharacterStandardScene", b =>
+                {
+                    b.Property<Guid>("CharactersId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("StandardScenesId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CharactersId", "StandardScenesId");
+
+                    b.HasIndex("StandardScenesId");
+
+                    b.ToTable("SpriteCharacterStandardScene");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Animations.SceneColor", b =>
@@ -285,11 +318,23 @@ namespace ConsoleTesting.Migrations
                     b.ToTable("MadeChoicesConditions");
                 });
 
-            modelBuilder.Entity("ConsoleTesting.Models.Base.SwitchableScene", b =>
+            modelBuilder.Entity("ConsoleTesting.Models.Scenes.ChoiceScene", b =>
                 {
                     b.HasBaseType("ConsoleTesting.Models.Base.Scene");
 
-                    b.ToTable((string)null);
+                    b.ToTable("ChoiceScenes");
+                });
+
+            modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
+                {
+                    b.HasBaseType("ConsoleTesting.Models.Base.Scene");
+
+                    b.Property<Guid>("DialogueId")
+                        .HasColumnType("TEXT");
+
+                    b.HasIndex("DialogueId");
+
+                    b.ToTable("StandardScenes");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Transit.EndingModifier", b =>
@@ -319,35 +364,6 @@ namespace ConsoleTesting.Migrations
                     b.ToTable("Sequences");
                 });
 
-            modelBuilder.Entity("ConsoleTesting.Models.Scenes.ChoiceScene", b =>
-                {
-                    b.HasBaseType("ConsoleTesting.Models.Base.SwitchableScene");
-
-                    b.Property<Guid?>("SpriteCharacterId")
-                        .HasColumnType("TEXT");
-
-                    b.HasIndex("SpriteCharacterId");
-
-                    b.ToTable("ChoiceScenes");
-                });
-
-            modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
-                {
-                    b.HasBaseType("ConsoleTesting.Models.Base.SwitchableScene");
-
-                    b.Property<Guid>("DialogueId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("SpriteCharacterId")
-                        .HasColumnType("TEXT");
-
-                    b.HasIndex("DialogueId");
-
-                    b.HasIndex("SpriteCharacterId");
-
-                    b.ToTable("StandardScenes");
-                });
-
             modelBuilder.Entity("ChoiceMadeChoicesCondition", b =>
                 {
                     b.HasOne("ConsoleTesting.Models.Base.Choice", null)
@@ -359,6 +375,21 @@ namespace ConsoleTesting.Migrations
                     b.HasOne("ConsoleTesting.Models.Conditions.MadeChoicesCondition", null)
                         .WithMany()
                         .HasForeignKey("MadeChoicesConditionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ChoiceSceneSpriteCharacter", b =>
+                {
+                    b.HasOne("DB.Models.Characters.SpriteCharacter", null)
+                        .WithMany()
+                        .HasForeignKey("CharactersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConsoleTesting.Models.Scenes.ChoiceScene", null)
+                        .WithMany()
+                        .HasForeignKey("ChoiceScenesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -412,9 +443,13 @@ namespace ConsoleTesting.Migrations
 
             modelBuilder.Entity("ConsoleTesting.Models.Transit.Transition", b =>
                 {
-                    b.HasOne("ConsoleTesting.Models.Base.SwitchableScene", null)
+                    b.HasOne("ConsoleTesting.Models.Scenes.ChoiceScene", null)
                         .WithMany("Transitions")
-                        .HasForeignKey("SwitchableSceneId");
+                        .HasForeignKey("ChoiceSceneId");
+
+                    b.HasOne("ConsoleTesting.Models.Scenes.StandardScene", null)
+                        .WithMany("Transitions")
+                        .HasForeignKey("StandardSceneId");
 
                     b.HasOne("ConsoleTesting.Models.Base.Scene", "TargetScene")
                         .WithMany()
@@ -423,13 +458,6 @@ namespace ConsoleTesting.Migrations
                         .IsRequired();
 
                     b.Navigation("TargetScene");
-                });
-
-            modelBuilder.Entity("DB.Models.Characters.SpriteCharacter", b =>
-                {
-                    b.HasOne("ConsoleTesting.Models.Base.SwitchableScene", null)
-                        .WithMany("Characters")
-                        .HasForeignKey("SwitchableSceneId");
                 });
 
             modelBuilder.Entity("DB.Models.TextSwitcher.Dialogue", b =>
@@ -441,6 +469,21 @@ namespace ConsoleTesting.Migrations
                     b.Navigation("Character");
                 });
 
+            modelBuilder.Entity("SpriteCharacterStandardScene", b =>
+                {
+                    b.HasOne("DB.Models.Characters.SpriteCharacter", null)
+                        .WithMany()
+                        .HasForeignKey("CharactersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConsoleTesting.Models.Scenes.StandardScene", null)
+                        .WithMany()
+                        .HasForeignKey("StandardScenesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ConsoleTesting.Models.Conditions.EndingPointsCondition", b =>
                 {
                     b.HasOne("ConsoleTesting.Models.Base.State", "Ending")
@@ -450,6 +493,17 @@ namespace ConsoleTesting.Migrations
                         .IsRequired();
 
                     b.Navigation("Ending");
+                });
+
+            modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
+                {
+                    b.HasOne("DB.Models.TextSwitcher.Dialogue", "Dialogue")
+                        .WithMany()
+                        .HasForeignKey("DialogueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dialogue");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Transit.EndingModifier", b =>
@@ -471,28 +525,6 @@ namespace ConsoleTesting.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ConsoleTesting.Models.Scenes.ChoiceScene", b =>
-                {
-                    b.HasOne("DB.Models.Characters.SpriteCharacter", null)
-                        .WithMany("ChoiceScenes")
-                        .HasForeignKey("SpriteCharacterId");
-                });
-
-            modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
-                {
-                    b.HasOne("DB.Models.TextSwitcher.Dialogue", "Dialogue")
-                        .WithMany()
-                        .HasForeignKey("DialogueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DB.Models.Characters.SpriteCharacter", null)
-                        .WithMany("StandardScenes")
-                        .HasForeignKey("SpriteCharacterId");
-
-                    b.Navigation("Dialogue");
-                });
-
             modelBuilder.Entity("ConsoleTesting.Models.Player.User", b =>
                 {
                     b.Navigation("Choices");
@@ -507,28 +539,21 @@ namespace ConsoleTesting.Migrations
                     b.Navigation("SideEffects");
                 });
 
-            modelBuilder.Entity("DB.Models.Characters.SpriteCharacter", b =>
+            modelBuilder.Entity("ConsoleTesting.Models.Scenes.ChoiceScene", b =>
                 {
-                    b.Navigation("ChoiceScenes");
+                    b.Navigation("Choices");
 
-                    b.Navigation("StandardScenes");
+                    b.Navigation("Transitions");
                 });
 
-            modelBuilder.Entity("ConsoleTesting.Models.Base.SwitchableScene", b =>
+            modelBuilder.Entity("ConsoleTesting.Models.Scenes.StandardScene", b =>
                 {
-                    b.Navigation("Characters");
-
                     b.Navigation("Transitions");
                 });
 
             modelBuilder.Entity("ConsoleTesting.Models.Transit.Sequence", b =>
                 {
                     b.Navigation("Animations");
-                });
-
-            modelBuilder.Entity("ConsoleTesting.Models.Scenes.ChoiceScene", b =>
-                {
-                    b.Navigation("Choices");
                 });
 #pragma warning restore 612, 618
         }

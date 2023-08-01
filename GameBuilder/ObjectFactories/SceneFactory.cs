@@ -24,5 +24,20 @@ namespace GameBuilder.Factories
                 return instance;
             } 
         }
+
+        public StandardScene CreateStandardScene(string dialogueText, DialogueCharacter? dialogueCharacter = null, IEnumerable<SpriteCharacter>? characters = null)
+        {
+            Dialogue dialogue = new Dialogue
+            {
+                Text = dialogueText,
+                Character = dialogueCharacter,
+            };
+
+            return new StandardScene
+            {
+                Dialogue = dialogue,
+                Characters = characters
+            };
+        }
     }
 }

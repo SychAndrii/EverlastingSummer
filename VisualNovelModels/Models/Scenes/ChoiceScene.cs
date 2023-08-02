@@ -1,4 +1,5 @@
-﻿using ConsoleTesting.Models.Base;
+﻿using ConsoleTesting.Database;
+using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.SceneParts;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Visitors;
 
 namespace ConsoleTesting.Models.Scenes
 {
@@ -25,6 +27,11 @@ namespace ConsoleTesting.Models.Scenes
             {
                 Console.WriteLine($"\t{index++}) {choice}");
             }
+        }
+
+        public override async Task Accept(ISceneVisitor visitor, ESContext context)
+        {
+            await visitor.Visit(this, context);
         }
     }
 }

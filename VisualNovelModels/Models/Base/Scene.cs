@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Visitors;
 
 namespace ConsoleTesting.Models.Base
 {
@@ -35,6 +36,7 @@ namespace ConsoleTesting.Models.Base
         private readonly Guid _Id = Guid.NewGuid();
         public Guid Id { get => _Id; }
         public abstract void Show();
+        public abstract Task Accept(ISceneVisitor visitor, ESContext eSContext);
 
         private Transition? GetPossibleConditionalTransition(User user)
         {

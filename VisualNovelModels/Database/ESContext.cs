@@ -112,6 +112,18 @@ namespace ConsoleTesting.Database
             modelBuilder
                 .Entity<Transition>()
                 .Property("Id").HasField("_Id");
+
+            modelBuilder.Entity<Transition>()
+                .HasOne(t => t.SourceScene)
+                .WithMany(s => s.Transitions)
+                .HasForeignKey(t => t.SourceSceneId)
+                .OnDelete(DeleteBehavior.Restrict); // Необходимо для предотвращения циклических зависимостей при удалении
+
+            modelBuilder.Entity<Transition>()
+                .HasOne(t => t.TargetScene)
+                .WithOne() // Указываем, что у целевой сцены нет обратной связи
+                .HasForeignKey<Transition>(t => t.TargetSceneId)
+                .OnDelete(DeleteBehavior.Restrict); // Необходимо для предотвращения циклических зависимостей при удалении
         }
 
         private void ConfiguringUsers(ModelBuilder modelBuilder)

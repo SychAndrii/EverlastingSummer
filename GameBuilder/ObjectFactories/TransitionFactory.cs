@@ -26,15 +26,11 @@ namespace GameBuilder.ObjectFactories
             }
         }
 
-        public Transition CreateTransition(Scene targetScene, IEnumerable<SideEffect>? sideEffects = null, IEnumerable<Condition>? conditions = null)
-        {
-            return CreateTransition(targetScene, conditions, sideEffects);
-        }
-
-        public Transition CreateTransition(Scene targetScene, IEnumerable<Condition>? conditions = null, IEnumerable<SideEffect>? sideEffects = null)
+        public Transition CreateTransition(Scene sourceScene, Scene targetScene, IEnumerable<Condition>? conditions = null, IEnumerable<SideEffect>? sideEffects = null)
         {
             return new Transition()
             {
+                SourceScene = sourceScene,
                 TargetScene = targetScene,
                 SideEffects = sideEffects,
                 Conditions = conditions

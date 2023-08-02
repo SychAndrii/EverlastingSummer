@@ -21,10 +21,13 @@ namespace ConsoleTesting.Models.Transit
 
         public IEnumerable<SideEffect>? SideEffects { get; set; }
 
+        public Guid SourceSceneId { get; set; }
+        public Scene SourceScene { get; set; }
+
         /// <summary>
         /// Next scene.
         /// </summary>
-        
+
         public Guid TargetSceneId { get; set; }
         public Scene TargetScene { get; set; }
 

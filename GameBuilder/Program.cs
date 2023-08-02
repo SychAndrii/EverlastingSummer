@@ -24,22 +24,38 @@ namespace GameBuilder
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            var c1 = CreateCharacter("Adrian").Result;
-            var c2 = CreateCharacter("Mary").Result;
-            var c3 = CreateCharacter("Old Man").Result;
-            var c4 = CreateCharacter("Ghost").Result;
+            var adrian = CreateCharacter("Adrian").Result;
+            var mary = CreateCharacter("Mary").Result;
+            var oldMan = CreateCharacter("Old Man").Result;
+            var ghost = CreateCharacter("Ghost").Result;
 
-            Scene? beginningScene = CreateStandardScene(
-                "Adrian arrives in the small mysterious town of Somber, where the fog seems to be eternal. Upon arrival, he checks into a local hotel, where he meets Mary, the owner of the hotel."
+            Scene? scene1 = CreateStandardScene(
+                "It's a small town called Somber. Always deserted streets, always the same faces. But today I'm the one who shows up."
                 ).Result;
 
             Scene? scene2 = CreateStandardScene(
-                "You know, Adrian, there is a legend about a house in our city. The house that no one can find... It is full of secrets and mysteries. I think you will be interested.", 
-                c2).Result;
+                "Hello, young man. My name is Mary. Welcome to Somber.",
+                mary).Result;
 
-            beginningScene = AddTransition(beginningScene!, scene2!).Result;
+            Scene? scene3 = CreateStandardScene(
+                "Hello, Mary. I'm Adrian. Nice to meet you.",
+                adrian).Result;
 
-            Scene? currentScene = beginningScene;
+            Scene? scene4 = CreateStandardScene(
+                "Mary, with genuine interest, begins to tell a story about a house that no one can find."
+                ).Result;
+
+            Scene? scene5 = CreateStandardScene(
+                "You know, Adrian, there's a story about a house that lurks in the woods. Some say it's cursed...",
+                mary).Result;
+
+            AddTransition(scene1!, scene2!).Wait();
+            AddTransition(scene2!, scene3!).Wait();
+            AddTransition(scene3!, scene4!).Wait();
+            AddTransition(scene4!, scene5!).Wait();
+
+
+            Scene? currentScene = scene1;
             Transition? transitionToNextScene = null;
 
             while(true)
@@ -68,7 +84,7 @@ namespace GameBuilder
 
         private static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, IEnumerable<Condition>? conditions = null, IEnumerable<SideEffect>? sideEffects = null)
         {
-            var transition = TransitionFactory.Instance.CreateTransition(targetScene, conditions, sideEffects);
+            var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions, sideEffects);
             return await GameBuilderController.AddTransition(modifiableScene, transition);
 
         }

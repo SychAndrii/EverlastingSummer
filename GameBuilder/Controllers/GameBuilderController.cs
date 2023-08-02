@@ -5,6 +5,7 @@ using ConsoleTesting.Services;
 using DB.Models.Characters;
 using DB.Models.TextSwitcher;
 using DB.Services;
+using GameBuilder.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,9 @@ namespace GameBuilder.Controllers
 {
     public static class GameBuilderController
     {
-        private static SceneService SceneService = SceneService.Instance;
         private static CharacterService DialogueCharactersService = CharacterService.Instance;
+        private static SceneService SceneService = SceneService.Instance;
+        private static ChoiceService ChoiceService = ChoiceService.Instance;
 
         public static async Task<DialogueCharacter?> AddDialogueCharacter(DialogueCharacter dialogueCharacter)
         {
@@ -26,6 +28,11 @@ namespace GameBuilder.Controllers
         public static async Task<Scene?> AddScene(Scene scene)
         {
             return await SceneService.AddScene(scene);
+        }
+
+        public static async Task<Choice?> AddChoice(Choice choice)
+        {
+            return await ChoiceService.AddChoice(choice);
         }
 
         public static async Task<Scene?> AddTransition(Scene scene, Transition transition)

@@ -1,4 +1,5 @@
-﻿using ConsoleTesting.Models.Base;
+﻿using ConsoleTesting.Database;
+using ConsoleTesting.Models.Base;
 using DB.Models.Characters;
 using DB.Models.TextSwitcher;
 using System;
@@ -7,6 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Visitors;
 
 namespace ConsoleTesting.Models.Scenes
 {
@@ -23,6 +25,11 @@ namespace ConsoleTesting.Models.Scenes
         public override void Show()
         {
             Console.WriteLine(Dialogue);
+        }
+
+        public override async Task Accept(ISceneVisitor visitor, ESContext eSContext)
+        {
+            await visitor.Visit(this, eSContext);
         }
     }
 }

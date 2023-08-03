@@ -14,11 +14,13 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Scenes;
 
 namespace ConsoleTesting.Database
 {
     public class ESContext : DbContext
     {
+        public DbSet<FirstScene> FirstScene { get; set; }
         public DbSet<Choice> Choices { get; set; } = null!;
         public DbSet<State> States { get; set; } = null!;
         public DbSet<Condition> Conditions { get; set; } = null!;
@@ -52,6 +54,18 @@ namespace ConsoleTesting.Database
             ConfiguringSideEffects(modelBuilder);
             ConfiguringAnimation(modelBuilder);
             ConfiguringSceneParts(modelBuilder);
+            ConfiguringFirstScene(modelBuilder);
+        }
+
+        private void ConfiguringFirstScene(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<FirstScene>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id)
+                    .HasDefaultValue(true)
+                    .ValueGeneratedNever();
+            });
         }
 
         private void ConfiguringSceneParts(ModelBuilder modelBuilder)

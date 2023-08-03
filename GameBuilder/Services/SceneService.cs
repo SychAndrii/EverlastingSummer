@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Scenes;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace ConsoleTesting.Services
@@ -30,21 +31,42 @@ namespace ConsoleTesting.Services
                 return _Instance;
             }
         }
+
+        private async Task<Scene?> AddFirstScene(Scene scene, ESContext context)
+        {
+            try
+            {
+                await context.FirstScene.AddAsync(
+                new FirstScene
+                   {
+                       Scene = scene
+                   }
+                );
+                await context.SaveChangesAsync();
+                return scene;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<Scene?> AddScene(Scene scene)
         {
             using ESContext eSContext = new ESContext();
             try
             {
-                if(scene is ChoiceScene)
-                {
-                    await Console.Out.WriteLineAsync();
-                }
                 eSContext.Scenes.Add(scene);
-
                 var sceneAddedVisitor = SceneAddedVisitor.Instance;
                 await scene.Accept(sceneAddedVisitor, eSContext);
-
                 await eSContext.SaveChangesAsync();
+
+                var firstScene = await GetFirstScene();
+                if (firstScene == null)
+                {
+                    await AddFirstScene(scene, eSContext);
+                }
+
                 return scene;
             }
             catch (Exception)
@@ -69,6 +91,15 @@ namespace ConsoleTesting.Services
             {
                 return null;
             }
+        }
+
+        internal async Task<Scene?> GetFirstScene()
+        {
+            using ESContext context = new ESContext();
+            return (await context
+                    .FirstScene
+                    .FirstOrDefaultAsync(s => s.Id == true))
+                    ?.Scene;
         }
     }
 }

@@ -39,5 +39,10 @@ namespace GameBuilder.Controllers
         {
             return await SceneService.AddTransition(scene, transition);
         }
+
+        internal static async Task<Scene?> GetFirstScene()
+        {
+            return await SceneService.GetFirstScene();
+        }
     }
 }

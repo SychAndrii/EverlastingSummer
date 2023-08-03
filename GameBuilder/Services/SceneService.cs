@@ -6,6 +6,7 @@ using DB.Models.Characters;
 using DB.Models.TextSwitcher;
 using GameBuilder.Helpers;
 using GameBuilder.Visitors;
+using GameBuilderAPI.Visitors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System;
@@ -54,19 +55,13 @@ namespace ConsoleTesting.Services
         public async Task<Scene?> AddScene(Scene scene)
         {
             using ESContext eSContext = new ESContext();
+
             try
             {
                 eSContext.Scenes.Add(scene);
                 var sceneAddedVisitor = SceneAddedVisitor.Instance;
                 await scene.Accept(sceneAddedVisitor, eSContext);
                 await eSContext.SaveChangesAsync();
-
-                var firstScene = await GetFirstScene();
-                if (firstScene == null)
-                {
-                    await AddFirstScene(scene, eSContext);
-                }
-
                 return scene;
             }
             catch (Exception)
@@ -85,6 +80,13 @@ namespace ConsoleTesting.Services
                 context.Scenes.Attach(transition.TargetScene);
                 await context.Transitions.AddAsync(transition);
                 await context.SaveChangesAsync();
+
+                var firstScene = await FindFirstScene(context);
+                if (firstScene == null)
+                {
+                    await AddFirstScene(modifiedScene, context);
+                }
+
                 return modifiedScene;
             }
             catch (Exception e)
@@ -93,13 +95,50 @@ namespace ConsoleTesting.Services
             }
         }
 
+        private async Task<Scene?> FindFirstScene(ESContext context)
+        {
+            var scene = (await context
+                    .FirstScene
+                    .FromSqlRaw("SELECT * FROM FirstScene WHERE Id = 1")
+                    .Include(fs => fs.Scene)
+                    .FirstOrDefaultAsync())?.Scene;
+
+            return scene;
+        }
+
+        private async Task LoadSceneDependencies(ESContext context)
+        {
+            var task1 = context.Scenes
+                .Include(s => s.Characters)
+                .Include(s => s.Transitions)
+                .ThenInclude(t => t.TargetScene)
+                .ToListAsync();
+
+            var task2 = context.ChoiceScenes
+            .Include(s => s.Choices)
+            .ToListAsync();
+
+
+            var task3 = context.StandardScenes
+                .Include(s => s.Dialogue)
+                .ThenInclude(d => d.Character)
+                .ToListAsync();
+
+            await Task.WhenAll(task1, task2, task3);
+
+        }
+
         internal async Task<Scene?> GetFirstScene()
         {
             using ESContext context = new ESContext();
-            return (await context
-                    .FirstScene
-                    .FirstOrDefaultAsync(s => s.Id == true))
-                    ?.Scene;
+
+            await LoadSceneDependencies(context);
+            var scene = await FindFirstScene(context);
+
+            if (scene == null)
+                return null;
+
+            return scene;
         }
     }
 }

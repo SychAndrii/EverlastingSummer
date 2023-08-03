@@ -11,7 +11,6 @@ namespace VisualNovelModels.Models.Scenes
 {
     public class FirstScene
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public bool Id { get; set; } = true;
         public Scene? Scene { get; set; }
     }

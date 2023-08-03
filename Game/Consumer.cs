@@ -1,15 +1,14 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Transit;
-using GameConstructor;
 
 namespace GameBuilder
 {
-    public class GameConsumer
+    public class Consumer
     {
         public static void Main(string[] args)
         {
-            Scene? currentScene = GameConstructor.GameBuilder.Construct().Result;
+            Scene? currentScene = Builder.Build().Result;
             Transition? transitionToNextScene = null;
 
             while (true)

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameBuilderAPI", "GameBuild
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualNovelModels", "VisualNovelModels\VisualNovelModels.csproj", "{8696AF00-44FB-46A4-B40F-5146B4C97F5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameConstructor", "GameConstructor\GameConstructor.csproj", "{256F0F8A-916E-4904-A72F-488CABF6A0B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBuilderAPIConsumer", "GameBuilderAPIConsumer\GameBuilderAPIConsumer.csproj", "{267D9E62-35FD-48F1-BF57-333B217AEC6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{8696AF00-44FB-46A4-B40F-5146B4C97F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8696AF00-44FB-46A4-B40F-5146B4C97F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8696AF00-44FB-46A4-B40F-5146B4C97F5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{256F0F8A-916E-4904-A72F-488CABF6A0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{256F0F8A-916E-4904-A72F-488CABF6A0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{256F0F8A-916E-4904-A72F-488CABF6A0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{256F0F8A-916E-4904-A72F-488CABF6A0B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{267D9E62-35FD-48F1-BF57-333B217AEC6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{267D9E62-35FD-48F1-BF57-333B217AEC6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{267D9E62-35FD-48F1-BF57-333B217AEC6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{267D9E62-35FD-48F1-BF57-333B217AEC6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,7 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2A678455-E532-4F22-B654-FE18AE6C51DA} = {C97E0692-480D-4D8B-96E4-DBE725AC660F}
 		{9F3333CD-BAAF-41FC-A34B-324ABB5EFCC4} = {C97E0692-480D-4D8B-96E4-DBE725AC660F}
-		{256F0F8A-916E-4904-A72F-488CABF6A0B8} = {C97E0692-480D-4D8B-96E4-DBE725AC660F}
+		{267D9E62-35FD-48F1-BF57-333B217AEC6E} = {C97E0692-480D-4D8B-96E4-DBE725AC660F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A7C05DE4-231A-4571-A8FB-2603FF419028}

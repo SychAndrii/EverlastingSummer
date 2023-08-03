@@ -29,6 +29,7 @@ namespace GameBuilder.Services
             try
             {
                 await context.Choices.AddAsync(c);
+                await context.SaveChangesAsync();   
                 return c;
             }
             catch (Exception)

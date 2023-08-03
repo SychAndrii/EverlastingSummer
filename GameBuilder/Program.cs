@@ -54,6 +54,12 @@ namespace GameBuilder
             AddTransition(scene3!, scene4!).Wait();
             AddTransition(scene4!, scene5!).Wait();
 
+            Choice scene6Choice1 = CreateChoice("That sounds fascinating, Mary. Tell me more.").Result;
+            Choice scene6Choice2 = CreateChoice("Interesting... But I'd like to know more about the city and its people.").Result;
+
+            Scene? scene6 = CreateChoiceScene(scene6Choice1, scene6Choice2).Result;
+
+            AddTransition(scene5!, scene6!).Wait();
 
             Scene? currentScene = scene1;
             Transition? transitionToNextScene = null;
@@ -68,21 +74,35 @@ namespace GameBuilder
             }
         }
 
-        private static async Task<DialogueCharacter?> CreateCharacter(string name)
+        public static async Task<DialogueCharacter?> CreateCharacter(string name)
         {
             return await GameBuilderController.AddDialogueCharacter(
                 CharacterFactory.Instance.CreateDialogueCharacter(name)
             );
         }
 
-        private static async Task<StandardScene?> CreateStandardScene(string dialogueText, DialogueCharacter? character = null, IEnumerable<SpriteCharacter>? characters = null)
+        public static async Task<Choice?> CreateChoice(string text)
+        {
+            return await GameBuilderController.AddChoice(
+                ChoiceFactory.Instance.CreateChoice(text)
+            );
+        }
+
+        public static async Task<ChoiceScene?> CreateChoiceScene(params Choice[] choices)
+        {
+            return (ChoiceScene?)await GameBuilderController.AddScene(
+                SceneFactory.Instance.CreateChoiceScene(choices)
+            );
+        }
+
+        public static async Task<StandardScene?> CreateStandardScene(string dialogueText, DialogueCharacter? character = null, IEnumerable<SpriteCharacter>? characters = null)
         {
             return (StandardScene?)await GameBuilderController.AddScene(
                 SceneFactory.Instance.CreateStandardScene(dialogueText, character, characters)
             );
         }
 
-        private static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, IEnumerable<Condition>? conditions = null, IEnumerable<SideEffect>? sideEffects = null)
+        public static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, IEnumerable<Condition>? conditions = null, IEnumerable<SideEffect>? sideEffects = null)
         {
             var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions, sideEffects);
             return await GameBuilderController.AddTransition(modifiableScene, transition);

@@ -17,7 +17,7 @@ namespace ConsoleTesting.Models.Player
         /// <summary>
         /// Choices, which player has made throughout the game.
         /// </summary>
-        public ICollection<Choice> Choices { get; set; }
+        public ICollection<Choice>? Choices { get; set; }
 
         private readonly Guid _Id;
         public Guid Id { get => _Id; }

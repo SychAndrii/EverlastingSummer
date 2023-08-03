@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Models.Conditions;
+using ConsoleTesting.Models.Scenes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,17 @@ namespace ConsoleTesting.Models.Base
     {
         public string Text { get; set; }
 
-        private readonly Guid _Id = Guid.NewGuid();
+        private readonly Guid _Id;
         public Guid Id { get => _Id; }
 
         /// <summary>
         /// This field is required for many-to-many relationship with Choices table in the
-        /// database described by <see cref="Conditions.MadeChoicesCondition"/> class.
+        /// database described by <see cref="MadeChoicesCondition"/> class.
         /// </summary>
         public IEnumerable<MadeChoicesCondition>? MadeChoicesConditions { get; set; }
+
+        public ChoiceScene? ChoiceScene { get; set; }
+        public Guid? ChoiceSceneId { get; set; }
 
         public Choice(string text)
         {

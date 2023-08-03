@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace GameBuilder.Controllers
 {
-    public static class GameBuilderController
+    internal static class GameBuilderController
     {
         private static CharacterService DialogueCharactersService = CharacterService.Instance;
         private static SceneService SceneService = SceneService.Instance;
@@ -25,14 +25,14 @@ namespace GameBuilder.Controllers
             return await DialogueCharactersService.AddCharacter(dialogueCharacter);
         }
 
-        public static async Task<Scene?> AddScene(Scene scene)
-        {
-            return await SceneService.AddScene(scene);
-        }
-
         public static async Task<Choice?> AddChoice(Choice choice)
         {
             return await ChoiceService.AddChoice(choice);
+        }
+
+        public static async Task<Scene?> AddScene(Scene scene)
+        {
+            return await SceneService.AddScene(scene);
         }
 
         public static async Task<Scene?> AddTransition(Scene scene, Transition transition)

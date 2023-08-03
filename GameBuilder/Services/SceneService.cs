@@ -35,6 +35,10 @@ namespace ConsoleTesting.Services
             using ESContext eSContext = new ESContext();
             try
             {
+                if(scene is ChoiceScene)
+                {
+                    await Console.Out.WriteLineAsync();
+                }
                 eSContext.Scenes.Add(scene);
 
                 var sceneAddedVisitor = SceneAddedVisitor.Instance;

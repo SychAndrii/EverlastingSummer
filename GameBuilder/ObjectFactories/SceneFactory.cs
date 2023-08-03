@@ -1,4 +1,5 @@
-﻿using ConsoleTesting.Models.Scenes;
+﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Scenes;
 using DB.Models.Characters;
 using DB.Models.TextSwitcher;
 using System;
@@ -37,6 +38,14 @@ namespace GameBuilder.Factories
             {
                 Dialogue = dialogue,
                 Characters = characters
+            };
+        }
+
+        public ChoiceScene CreateChoiceScene(IEnumerable<Choice> choices)
+        {
+            return new ChoiceScene
+            {
+                Choices = choices
             };
         }
     }

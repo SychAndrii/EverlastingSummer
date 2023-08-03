@@ -3,6 +3,7 @@ using System;
 using ConsoleTesting.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleTesting.Migrations
 {
     [DbContext(typeof(ESContext))]
-    partial class ESContextModelSnapshot : ModelSnapshot
+    [Migration("20230803002020_TestingChoiceSceneFieldInChoiceModel")]
+    partial class TestingChoiceSceneFieldInChoiceModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.9");
@@ -56,7 +59,7 @@ namespace ConsoleTesting.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ChoiceSceneId")
+                    b.Property<Guid>("ChoiceSceneId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
@@ -368,7 +371,9 @@ namespace ConsoleTesting.Migrations
                 {
                     b.HasOne("ConsoleTesting.Models.Scenes.ChoiceScene", "ChoiceScene")
                         .WithMany("Choices")
-                        .HasForeignKey("ChoiceSceneId");
+                        .HasForeignKey("ChoiceSceneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ConsoleTesting.Models.Player.User", null)
                         .WithMany("Choices")

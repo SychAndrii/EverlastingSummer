@@ -21,15 +21,14 @@ namespace ConsoleTesting.Models.Scenes
     public class StandardScene : Scene
     {
         public Dialogue Dialogue { get; set; }
-        
-        public override void Show()
-        {
-            Console.WriteLine(Dialogue);
-        }
-
-        public override async Task Accept(ISceneVisitor visitor, ESContext eSContext)
+        public override async Task AcceptDBVisitor(ISceneVisitorDB visitor, ESContext eSContext)
         {
             await visitor.Visit(this, eSContext);
+        }
+
+        public override async Task AcceptVisitor(ISceneVisitor visitor)
+        {
+            await visitor.Visit(this);
         }
     }
 }

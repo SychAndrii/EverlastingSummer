@@ -12,7 +12,7 @@ using VisualNovelModels.Visitors;
 
 namespace GameBuilderAPI.Visitors
 {
-    internal class LoadDependenciesVisitor : ISceneVisitor
+    internal class LoadDependenciesVisitor : ISceneVisitorDB
     {
         public async Task Visit(StandardScene scene, ESContext context)
         {

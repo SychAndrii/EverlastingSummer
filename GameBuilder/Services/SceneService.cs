@@ -60,7 +60,7 @@ namespace ConsoleTesting.Services
             {
                 eSContext.Scenes.Add(scene);
                 var sceneAddedVisitor = SceneAddedVisitor.Instance;
-                await scene.Accept(sceneAddedVisitor, eSContext);
+                await scene.AcceptDBVisitor(sceneAddedVisitor, eSContext);
                 await eSContext.SaveChangesAsync();
                 return scene;
             }

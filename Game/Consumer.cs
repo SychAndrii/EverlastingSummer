@@ -1,6 +1,10 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Transit;
+using GameConsumer.Models;
+using GameConsumer.Visitors;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using VisualNovelModels.Visitors;
 
 namespace GameBuilder
 {
@@ -8,16 +12,12 @@ namespace GameBuilder
     {
         public static void Main(string[] args)
         {
-            Scene? currentScene = Builder.Build().Result;
-            Transition? transitionToNextScene = null;
+            Scene? currentScene = null;
+            ISceneVisitor invokeViewVisitor = new InvokeViewVisitor();
 
-            while (true)
+            while ((currentScene = SceneModel.GetNextScene()) != null)
             {
-                currentScene?.Show();
-                transitionToNextScene = currentScene?.GetPossibleTransition(new User());
-                if (transitionToNextScene == null)
-                    break;
-                currentScene = transitionToNextScene.TargetScene;
+                currentScene.AcceptVisitor(invokeViewVisitor);
             }
 
         }

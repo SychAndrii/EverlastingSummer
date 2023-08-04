@@ -19,19 +19,14 @@ namespace ConsoleTesting.Models.Scenes
     {
         public IEnumerable<Choice> Choices { get; set; }
 
-        public override void Show()
-        {
-            Console.WriteLine("Choose your destiny:\n");
-            int index = 1;
-            foreach (Choice choice in Choices)
-            {
-                Console.WriteLine($"\t{index++}) {choice}");
-            }
-        }
-
-        public override async Task Accept(ISceneVisitor visitor, ESContext context)
+        public override async Task AcceptDBVisitor(ISceneVisitorDB visitor, ESContext context)
         {
             await visitor.Visit(this, context);
+        }
+
+        public override async Task AcceptVisitor(ISceneVisitor visitor)
+        {
+            await visitor.Visit(this);
         }
     }
 }

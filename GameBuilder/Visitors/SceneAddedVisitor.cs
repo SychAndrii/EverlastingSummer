@@ -11,7 +11,7 @@ using VisualNovelModels.Visitors;
 
 namespace GameBuilder.Visitors
 {
-    internal class SceneAddedVisitor : ISceneVisitor
+    internal class SceneAddedVisitor : ISceneVisitorDB
     {
         private static SceneAddedVisitor _Instance;
 

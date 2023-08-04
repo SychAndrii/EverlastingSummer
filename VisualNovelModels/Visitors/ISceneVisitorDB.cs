@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace VisualNovelModels.Visitors
 {
-    public interface ISceneVisitor
+    public interface ISceneVisitorDB
     {
-        Task Visit(StandardScene scene);
-        Task Visit(ChoiceScene scene);
+        Task Visit(StandardScene scene, ESContext context);
+        Task Visit(ChoiceScene scene, ESContext context);
 
         // Add new types of Visit functions if there are any new types of scenes.
     }

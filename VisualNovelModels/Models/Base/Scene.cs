@@ -35,8 +35,8 @@ namespace ConsoleTesting.Models.Base
     {
         private readonly Guid _Id = Guid.NewGuid();
         public Guid Id { get => _Id; }
-        public abstract void Show();
-        public abstract Task Accept(ISceneVisitor visitor, ESContext eSContext);
+        public abstract Task AcceptVisitor(ISceneVisitor visitor);
+        public abstract Task AcceptDBVisitor(ISceneVisitorDB visitor, ESContext eSContext);
 
         private Transition? GetPossibleConditionalTransition(User user)
         {

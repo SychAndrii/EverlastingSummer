@@ -10,7 +10,7 @@ namespace GameConsumer.Views.SceneShow
 {
     internal class ChoiceSceneShowStrategy : SceneShowStrategy<ChoiceScene>
     {
-        public override void Show(ChoiceScene scene)
+        public void Show(ChoiceScene scene)
         {
             var index = 1;
             foreach (var item in scene.Choices)

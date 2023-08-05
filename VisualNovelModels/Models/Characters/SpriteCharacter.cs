@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DB.Models.Characters
 {
+    /// <summary>
+    /// Represents an image of a character, who is displayed on the screen.
+    /// </summary>
     public class SpriteCharacter
     {
         private readonly Guid _Id;

@@ -109,17 +109,18 @@ namespace ConsoleTesting.Services
         private async Task LoadSceneDependencies(ESContext context)
         {
             var task1 = context.Scenes
-                .Include(s => s.Characters)
                 .Include(s => s.Transitions)
                 .ThenInclude(t => t.TargetScene)
                 .ToListAsync();
 
             var task2 = context.ChoiceScenes
+            .Include(s => s.Characters)
             .Include(s => s.Choices)
             .ToListAsync();
 
 
             var task3 = context.StandardScenes
+                .Include(s => s.Characters)
                 .Include(s => s.Dialogue)
                 .ThenInclude(d => d.Character)
                 .ToListAsync();

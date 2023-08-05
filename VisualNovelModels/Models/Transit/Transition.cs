@@ -1,5 +1,4 @@
 ﻿using ConsoleTesting.Models.Base;
-using ConsoleTesting.Models.SceneParts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,8 +17,6 @@ namespace ConsoleTesting.Models.Transit
     {
         private readonly Guid _Id;
         public Guid Id { get => _Id; }
-
-        public IEnumerable<SideEffect>? SideEffects { get; set; }
 
         public Guid SourceSceneId { get; set; }
         public Scene SourceScene { get; set; }

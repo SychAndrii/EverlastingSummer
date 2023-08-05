@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Base;
 using VisualNovelModels.Visitors;
 
 namespace ConsoleTesting.Models.Scenes
@@ -18,7 +19,7 @@ namespace ConsoleTesting.Models.Scenes
     /// <remarks>
     /// Imagine a scene in Everlasting Summer with no choice.
     /// </remarks>
-    public class StandardScene : Scene
+    public class StandardScene : SpriteCharactersScene
     {
         public Dialogue Dialogue { get; set; }
         public override async Task AcceptDBVisitor(ISceneVisitorDB visitor, ESContext eSContext)

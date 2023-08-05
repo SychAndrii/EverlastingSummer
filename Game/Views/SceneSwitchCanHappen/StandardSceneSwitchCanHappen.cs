@@ -10,7 +10,7 @@ namespace GameConsumer.Views.SceneSwitchCanHappen
 {
     internal class StandardSceneSwitchCanHappen : SceneSwitchCanHappenStrategy<StandardScene>
     {
-        public override bool CanSwitch(string userInput, StandardScene scene)
+        public bool CanSwitch(string userInput, StandardScene scene)
         {
             return userInput == "";
         }

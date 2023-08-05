@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace GameConsumer.Base
 {
-    internal abstract class SceneInputStrategy<T>
+    interface SceneInputStrategy<in T>
         where T : Scene
     {
 
-        public abstract string AskForInput(T scene);
+        string AskForInput(T scene);
     }
 }

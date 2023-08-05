@@ -1,11 +1,11 @@
 ﻿using ConsoleTesting.Database;
-using ConsoleTesting.Models.Base;
 using DB.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder.Services
 {

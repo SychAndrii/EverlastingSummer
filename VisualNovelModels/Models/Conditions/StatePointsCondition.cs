@@ -13,7 +13,7 @@ namespace ConsoleTesting.Models.Conditions
     /// Condition, which will allow to pass through a transition to the next scene 
     /// if player has collected enough ending points for an <see cref="Base.State"/> instance.
     /// </summary>
-    public class EndingPointsCondition : Condition
+    public class StatePointsCondition : Condition
     {
         /// <summary>
         /// Player must collect at least this amount of points for <see cref="Ending"/>

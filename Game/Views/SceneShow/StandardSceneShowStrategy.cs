@@ -10,7 +10,7 @@ namespace GameConsumer.Views.SceneShow
 {
     internal class StandardSceneShowStrategy : SceneShowStrategy<StandardScene>
     {
-        public override void Show(StandardScene scene)
+        public void Show(StandardScene scene)
         {
             string userInput;
             if (scene.Dialogue.Character != null)

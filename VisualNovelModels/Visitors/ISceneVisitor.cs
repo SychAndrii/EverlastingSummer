@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace VisualNovelModels.Visitors
 {
+    /// <summary>
+    /// A visitor for adding certain behavior to different scenes.
+    /// </summary>
+    /// <remarks>
+    /// See <see cref="https://refactoring.guru/design-patterns/visitor"/> (Visitor pattern).
+    /// </remarks>
     public interface ISceneVisitor
     {
         Task Visit(StandardScene scene);

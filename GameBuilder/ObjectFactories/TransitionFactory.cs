@@ -1,5 +1,4 @@
 ﻿using ConsoleTesting.Models.Base;
-using ConsoleTesting.Models.SceneParts;
 using ConsoleTesting.Models.Transit;
 using GameBuilder.Factories;
 using System;
@@ -26,13 +25,12 @@ namespace GameBuilder.ObjectFactories
             }
         }
 
-        public Transition CreateTransition(Scene sourceScene, Scene targetScene, IEnumerable<Condition>? conditions = null, IEnumerable<SideEffect>? sideEffects = null)
+        public Transition CreateTransition(Scene sourceScene, Scene targetScene, IEnumerable<Condition>? conditions = null)
         {
             return new Transition()
             {
                 SourceScene = sourceScene,
                 TargetScene = targetScene,
-                SideEffects = sideEffects,
                 Conditions = conditions
             };
         }

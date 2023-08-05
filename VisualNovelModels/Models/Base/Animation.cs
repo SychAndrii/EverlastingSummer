@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleTesting.Models.Base
 {
+    /// <summary>
+    /// Base type for different types of animations.
+    /// </summary>
+    /// <example>
+    /// Screen gradually becoming black, characters moving on the scene.
+    /// </example>
     public abstract class Animation
     {
 

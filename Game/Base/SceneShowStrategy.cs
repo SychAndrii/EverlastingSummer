@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameConsumer.Base
 {
-    internal abstract class SceneShowStrategy<T>
+    interface SceneShowStrategy<in T>
         where T : Scene
     {
         public abstract void Show(T scene);

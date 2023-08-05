@@ -10,7 +10,7 @@ namespace GameConsumer.Views.SceneInput
 {
     internal class ChoiceSceneInputStrategy : SceneInputStrategy<ChoiceScene>
     {
-        public override string AskForInput(ChoiceScene scene)
+        public string AskForInput(ChoiceScene scene)
         {
             Console.Write("Choose: ");
             return Console.ReadLine();

@@ -1,7 +1,6 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Player;
-using ConsoleTesting.Models.SceneParts;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using DB.Models.Characters;
@@ -13,6 +12,7 @@ using GameBuilder.ObjectFactories;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Linq;
+using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder
 {
@@ -53,9 +53,9 @@ namespace GameBuilder
             );
         }
 
-        public static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, IEnumerable<Condition>? conditions = null, IEnumerable<SideEffect>? sideEffects = null)
+        public static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, IEnumerable<Condition>? conditions = null)
         {
-            var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions, sideEffects);
+            var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions);
             return await GameBuilderController.AddTransition(modifiableScene, transition);
 
         }

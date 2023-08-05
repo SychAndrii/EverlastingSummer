@@ -1,11 +1,11 @@
-﻿using ConsoleTesting.Models.Base;
-using DB.Models.Characters;
+﻿using DB.Models.Characters;
 using GameBuilder.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder.ObjectFactories
 {

@@ -2,7 +2,6 @@
 using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Player;
-using ConsoleTesting.Models.SceneParts;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using DB.Models.Characters;
@@ -14,6 +13,8 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Base;
+using VisualNovelModels.Models.Choices;
 using VisualNovelModels.Models.Scenes;
 
 namespace ConsoleTesting.Database
@@ -25,28 +26,25 @@ namespace ConsoleTesting.Database
         public DbSet<State> States { get; set; } = null!;
         public DbSet<Condition> Conditions { get; set; } = null!;
         public DbSet<MadeChoicesCondition> MadeChoicesConditions { get; set; } = null!;
-        public DbSet<EndingPointsCondition> EndingPointsConditions { get; set; } = null!;
+        public DbSet<StatePointsCondition> EndingPointsConditions { get; set; } = null!;
         public virtual DbSet<UserStateProgress> UserStates { get; set; } = null!;
         public DbSet<Scene> Scenes { get; set; } = null!;
+        public DbSet<SpriteCharactersScene> SpriteCharactersScenes { get; set; } = null!;
         public DbSet<ChoiceScene> ChoiceScenes { get; set; } = null!;
         public DbSet<StandardScene> StandardScenes { get; set; } = null!;
         public DbSet<Transition> Transitions { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
-        public DbSet<EndingModifier> EndingModifiers { get; set; } = null!;
-        public DbSet<Sequence> Sequences { get; set; } = null!;
-        public DbSet<SideEffect> SideEffects { get; set; } = null!;
+        public DbSet<StateModifier> EndingModifiers { get; set; } = null!;
         public DbSet<SceneColor> SceneColors { get; set; } = null!;
         public DbSet<DialogueCharacter> DialogueCharacters { get; set; } = null!;
         public DbSet<SpriteCharacter> SpriteCharacters { get; set; } = null!;
         public DbSet<Dialogue> Dialogues { get; set; } = null!;
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             ConfiguringChoice(modelBuilder);
-            ConfiguringEnding(modelBuilder);
+            ConfiguringState(modelBuilder);
             ConfiguringConditions(modelBuilder);
             ConfiguringUsers(modelBuilder);
             ConfiguringTransitions(modelBuilder);
@@ -108,16 +106,7 @@ namespace ConsoleTesting.Database
         private void ConfiguringSideEffects(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<SideEffect>()
-                .UseTpcMappingStrategy()
-                .Property("Id").HasField("_Id");
-
-            modelBuilder
-                .Entity<EndingModifier>()
-                .UseTpcMappingStrategy();
-
-            modelBuilder
-                .Entity<Sequence>()
+                .Entity<StateModifier>()
                 .UseTpcMappingStrategy();
         }
 
@@ -178,6 +167,10 @@ namespace ConsoleTesting.Database
             modelBuilder
                 .Entity<StandardScene>()
                 .UseTpcMappingStrategy();
+
+            modelBuilder
+                .Entity<SpriteCharactersScene>()
+                .UseTpcMappingStrategy();
         }
 
         private void ConfiguringConditions(ModelBuilder modelBuilder)
@@ -192,7 +185,7 @@ namespace ConsoleTesting.Database
                 .UseTpcMappingStrategy();
 
             modelBuilder
-                .Entity<EndingPointsCondition>()
+                .Entity<StatePointsCondition>()
                 .UseTpcMappingStrategy()
                 .ToTable(b => b.HasCheckConstraint("Points_bigger_than_0", "PointsRequired > 0"));
         }
@@ -205,7 +198,7 @@ namespace ConsoleTesting.Database
                 .HasField("_Id");
         }
 
-        private void ConfiguringEnding(ModelBuilder modelBuilder)
+        private void ConfiguringState(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Entity<State>()
@@ -216,6 +209,11 @@ namespace ConsoleTesting.Database
                 .Entity<State>()
                 .HasIndex(e => e.Name)
                 .IsUnique();
+
+            modelBuilder
+                .Entity<StateModifier>()
+                .Property(c => c.Id)
+                .HasField("_Id");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

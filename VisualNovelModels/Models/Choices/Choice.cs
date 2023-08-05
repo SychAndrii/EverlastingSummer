@@ -1,12 +1,13 @@
 ﻿using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Scenes;
+using ConsoleTesting.Models.Transit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTesting.Models.Base
+namespace VisualNovelModels.Models.Choices
 {
     /// <summary>
     /// A choice made in choice scenes. Choice scenes are described by <see cref="Scenes.ChoiceScene"/> class.
@@ -28,7 +29,26 @@ namespace ConsoleTesting.Models.Base
         /// </summary>
         public IEnumerable<MadeChoicesCondition>? MadeChoicesConditions { get; set; }
 
+        /// <summary>
+        /// A choice may contain a state modifier, which influences current player's state. When a player 
+        /// selects a certain choice, its state modifiers update current player's state.
+        /// </summary>
+        /// <remarks>
+        /// To understand what a state modifer is, see <see cref="StateModifier"/>.
+        /// </remarks>
+        public IEnumerable<StateModifier>? StateModifiers { get; set; }
+
+
+        /// <summary>
+        /// This field is required for many-to-many relationship with Choices table in the
+        /// database described by <see cref="MadeChoicesCondition"/> class.
+        /// </summary>
         public ChoiceScene? ChoiceScene { get; set; }
+
+        /// <summary>
+        /// This field is required for many-to-many relationship with Choices table in the
+        /// database described by <see cref="MadeChoicesCondition"/> class.
+        /// </summary>
         public Guid? ChoiceSceneId { get; set; }
 
         public Choice(string text)

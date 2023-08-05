@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GameConsumer.Base
 {
-    internal abstract class SceneSwitchCanHappenStrategy<T>
+    interface SceneSwitchCanHappenStrategy<in T>
         where T : Scene
     {
         public abstract bool CanSwitch(string userInput, T scene);

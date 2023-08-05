@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DB.Models.Characters
 {
+    /// <summary>
+    /// Represents an author, who is displayed with the dialogue text.
+    /// </summary>
     public class DialogueCharacter
     {
         private readonly Guid _Id;

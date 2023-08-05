@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Models.Base;
 using GameBuilder;
+using VisualNovelModels.Models.Choices;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace GameBuilder

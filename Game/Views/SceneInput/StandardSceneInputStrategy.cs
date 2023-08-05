@@ -10,7 +10,7 @@ namespace GameConsumer.Views.SceneInput
 {
     internal class StandardSceneInputStrategy : SceneInputStrategy<StandardScene>
     {
-        public override string AskForInput(StandardScene scene)
+        public string AskForInput(StandardScene scene)
         {
             Console.Write("Press <ENTER> to continue: ");
             var input = Console.ReadLine();

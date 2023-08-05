@@ -8,6 +8,7 @@ using VisualNovelModels.Visitors;
 
 namespace GameBuilder
 {
+    // TODO: Write docs for everything.
     public class Consumer
     {
         public static void Main(string[] args)

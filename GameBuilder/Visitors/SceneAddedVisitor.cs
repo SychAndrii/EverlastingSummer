@@ -1,6 +1,7 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Scenes;
+using ConsoleTesting.Models.Transit;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -38,13 +39,18 @@ namespace GameBuilder.Visitors
             AvoidPossibleChoiceAddition(scene, context);
         }
 
-        private void AvoidPossibleChoiceAddition(Scene scene, ESContext context)
+        private void AvoidPossibleChoiceAddition(ChoiceScene scene, ESContext context)
         {
-            if (scene is ChoiceScene choiceScene)
+            foreach (var c in scene.Choices)
             {
-                foreach (var c in choiceScene.Choices)
+                context.Choices.Attach(c);
+                if(c.StateModifiers != null)
                 {
-                    context.Entry(c).State = EntityState.Modified;
+                    foreach (var modifier in c.StateModifiers)
+                    {
+                        context.StateModifiers.Attach(modifier);
+                        context.States.Attach(modifier.State);
+                    }
                 }
             }
         }

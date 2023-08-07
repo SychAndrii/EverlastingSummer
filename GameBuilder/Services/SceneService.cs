@@ -58,6 +58,10 @@ namespace ConsoleTesting.Services
 
             try
             {
+                if(scene is ChoiceScene)
+                {
+                    await Console.Out.WriteLineAsync();
+                }
                 eSContext.Scenes.Add(scene);
                 var sceneAddedVisitor = SceneAddedVisitor.Instance;
                 await scene.AcceptDBVisitor(sceneAddedVisitor, eSContext);

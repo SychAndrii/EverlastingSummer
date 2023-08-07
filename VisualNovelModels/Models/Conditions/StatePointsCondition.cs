@@ -1,4 +1,5 @@
-﻿using ConsoleTesting.Models.Base;
+﻿using ConsoleTesting.Database;
+using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Player;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Visitors;
 
 namespace ConsoleTesting.Models.Conditions
 {
@@ -26,6 +28,11 @@ namespace ConsoleTesting.Models.Conditions
         /// to move to the next scene.
         /// </summary>
         public State Ending { get; set; }
+
+        public override async Task AcceptDBVisitor(IConditionVisitorDB visitor, ESContext context)
+        {
+            await visitor.Visit(this, context);
+        }
 
         public override bool CanTransit(User player)
         {

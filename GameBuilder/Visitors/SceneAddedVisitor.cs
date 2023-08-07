@@ -36,14 +36,22 @@ namespace GameBuilder.Visitors
 
         public async Task Visit(ChoiceScene scene, ESContext context)
         {
-            AvoidPossibleChoiceAddition(scene, context);
+            try
+            {
+                await context.Choices.AddRangeAsync(scene.Choices);
+            }
+            catch (Exception)
+            {
+                await Console.Out.WriteLineAsync();
+                throw;
+            }
+            //AvoidPossibleStateModifiersAddition(scene, context);
         }
 
-        private void AvoidPossibleChoiceAddition(ChoiceScene scene, ESContext context)
+        private void AvoidPossibleStateModifiersAddition(ChoiceScene scene, ESContext context)
         {
             foreach (var c in scene.Choices)
             {
-                context.Choices.Attach(c);
                 if(c.StateModifiers != null)
                 {
                     foreach (var modifier in c.StateModifiers)

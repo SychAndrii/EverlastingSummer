@@ -3,11 +3,13 @@ using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using DB.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Choices;
 
 namespace GameBuilderAPI.Services
 {
@@ -40,13 +42,23 @@ namespace GameBuilderAPI.Services
             }
         }
 
-        public async Task<StateModifier?> AddStateModifier(StateModifier stateModifier)
+        public async Task<StateModifier?> AddStateModifier(Choice c, StateModifier stateModifier)
         {
             using ESContext context = new ESContext();
             try
             {
                 context.States.Attach(stateModifier.State);
+                context.Entry(c).State = EntityState.Modified;
+
                 await context.StateModifiers.AddAsync(stateModifier);
+                await context.SaveChangesAsync();
+
+                // Convert to list, modify, and reassign
+                var stateModifiersList = (c.StateModifiers ?? Enumerable.Empty<StateModifier>()).ToList();
+                stateModifiersList.Add(stateModifier);
+                c.StateModifiers = stateModifiersList;
+
+                context.Choices.Update(c);
                 await context.SaveChangesAsync();
                 return stateModifier;
             }

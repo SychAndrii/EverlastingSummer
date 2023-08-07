@@ -36,8 +36,8 @@ namespace GameBuilderAPI.ObjectFactories
         {
             return new StateModifier
             {
-                Points = points,
-                State = state
+                State = state,
+                Points = points
             };
         }
     }

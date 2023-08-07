@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
@@ -26,13 +27,6 @@ namespace GameBuilder
             context.Database.EnsureCreated();
         }
 
-        public static async Task<StateModifier?> CreateStateModifier(State state, int points)
-        {
-            return await GameBuilderController.AddStateModifier(
-                StateFactory.Instance.CreateStateModifier(state, points)
-            );
-        }
-
         public static async Task<State?> CreateState(string name)
         {
             return await GameBuilderController.AddState(
@@ -47,16 +41,15 @@ namespace GameBuilder
             );
         }
 
-        public static async Task<Choice?> CreateChoice(string text, params StateModifier[]? stateModifiers)
+        public static async Task<StateModifier?> AddStateModifier(Choice choice, State state, int points)
         {
-            if (stateModifiers.Length == 0)
-                stateModifiers = null;
-            return await GameBuilderController.AddChoice(
-                ChoiceFactory.Instance.CreateChoice(text, stateModifiers)
+            return await GameBuilderController.AddStateModifier(
+                choice,
+                StateFactory.Instance.CreateStateModifier(state, points)
             );
         }
 
-        public static async Task<ChoiceScene?> CreateChoiceScene(params Choice[] choices)
+        public static async Task<ChoiceScene?> CreateChoiceScene(params string[] choices)
         {
             return (ChoiceScene?)await GameBuilderController.AddScene(
                 SceneFactory.Instance.CreateChoiceScene(choices)
@@ -70,7 +63,7 @@ namespace GameBuilder
             );
         }
 
-        public static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, IEnumerable<Condition>? conditions = null)
+        public static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, params Condition[] conditions)
         {
             var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions);
             return await GameBuilderController.AddTransition(modifiableScene, transition);

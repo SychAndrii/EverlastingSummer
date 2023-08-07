@@ -25,8 +25,11 @@ namespace GameBuilder.ObjectFactories
             }
         }
 
-        public Transition CreateTransition(Scene sourceScene, Scene targetScene, IEnumerable<Condition>? conditions = null)
+        public Transition CreateTransition(Scene sourceScene, Scene targetScene, IEnumerable<Condition>? conditions)
         {
+            if (conditions?.Count() == 0)
+                conditions = null;
+
             return new Transition()
             {
                 SourceScene = sourceScene,

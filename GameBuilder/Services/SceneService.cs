@@ -62,7 +62,7 @@ namespace ConsoleTesting.Services
                 {
                     await Console.Out.WriteLineAsync();
                 }
-                eSContext.Scenes.Add(scene);
+                await eSContext.Scenes.AddAsync(scene);
                 var sceneAddedVisitor = SceneAddedVisitor.Instance;
                 await scene.AcceptDBVisitor(sceneAddedVisitor, eSContext);
                 await eSContext.SaveChangesAsync();

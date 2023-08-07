@@ -27,7 +27,7 @@ namespace VisualNovelModels.Models.Choices
         /// This field is required for many-to-many relationship with Choices table in the
         /// database described by <see cref="MadeChoicesCondition"/> class.
         /// </summary>
-        public IEnumerable<MadeChoicesCondition>? MadeChoicesConditions { get; set; }
+        public ICollection<MadeChoicesCondition>? MadeChoicesConditions { get; set; }
 
         /// <summary>
         /// A choice may contain a state modifier, which influences current player's state. When a player 

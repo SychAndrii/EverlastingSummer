@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using ConsoleTesting.Services;
@@ -22,10 +23,11 @@ namespace GameBuilder.Controllers
         private static SceneService SceneService = SceneService.Instance;
         private static ChoiceService ChoiceService = ChoiceService.Instance;
         private static StateService StateService = StateService.Instance;
+        private static ConditionService ConditionService = ConditionService.Instance;
 
-        public static async Task<StateModifier?> AddStateModifier(StateModifier stateModifier)
+        public static async Task<StateModifier?> AddStateModifier(Choice c, StateModifier stateModifier)
         {
-            return await StateService.AddStateModifier(stateModifier);
+            return await StateService.AddStateModifier(c, stateModifier);
         }
 
         public static async Task<State?> AddState(State state)
@@ -36,11 +38,6 @@ namespace GameBuilder.Controllers
         public static async Task<DialogueCharacter?> AddDialogueCharacter(DialogueCharacter dialogueCharacter)
         {
             return await DialogueCharactersService.AddCharacter(dialogueCharacter);
-        }
-
-        public static async Task<Choice?> AddChoice(Choice choice)
-        {
-            return await ChoiceService.AddChoice(choice);
         }
 
         public static async Task<Scene?> AddScene(Scene scene)
@@ -56,6 +53,11 @@ namespace GameBuilder.Controllers
         internal static async Task<Scene?> GetFirstScene()
         {
             return await SceneService.GetFirstScene();
+        }
+
+        internal static async Task<Condition?> AddCondition(Condition condition)
+        {
+            return await ConditionService.AddCondition(condition);
         }
     }
 }

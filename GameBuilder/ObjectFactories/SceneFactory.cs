@@ -1,6 +1,7 @@
 ﻿using ConsoleTesting.Models.Scenes;
 using DB.Models.Characters;
 using DB.Models.TextSwitcher;
+using GameBuilder.ObjectFactories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,11 +42,13 @@ namespace GameBuilder.Factories
             };
         }
 
-        public ChoiceScene CreateChoiceScene(IEnumerable<Choice> choices)
+        public ChoiceScene CreateChoiceScene(IEnumerable<string> choices)
         {
+            var choiceObjects = choices.Select(c => new Choice(c)).ToList();
+
             return new ChoiceScene
             {
-                Choices = choices
+                Choices = choiceObjects
             };
         }
     }

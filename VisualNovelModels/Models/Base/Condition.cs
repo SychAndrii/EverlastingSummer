@@ -1,4 +1,5 @@
-﻿using ConsoleTesting.Models.Conditions;
+﻿using ConsoleTesting.Database;
+using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Transit;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Visitors;
 
 namespace ConsoleTesting.Models.Base
 {
@@ -21,6 +23,7 @@ namespace ConsoleTesting.Models.Base
     { 
         private readonly Guid _Id;
         public Guid Id { get => _Id; }
+        public abstract Task AcceptDBVisitor(IConditionVisitorDB visitor, ESContext context);
 
         /// <summary>
         /// Returns true if a user can use the <see cref="Transit.Transition"/> class to move to the 

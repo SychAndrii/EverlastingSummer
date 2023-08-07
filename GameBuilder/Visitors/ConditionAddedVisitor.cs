@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Database;
+using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Scenes;
 using GameBuilder.Visitors;
@@ -32,7 +33,6 @@ namespace GameBuilderAPI.Visitors
         public Task Visit(MadeChoicesCondition condition, ESContext context)
         {
             AvoidChoicesAdditions(condition, context);
-
             return Task.CompletedTask;
         }
 
@@ -43,26 +43,7 @@ namespace GameBuilderAPI.Visitors
 
         private void AvoidChoicesAdditions(MadeChoicesCondition condition, ESContext context) 
         {
-            foreach (var choice in condition.Choices)
-            {
-                foreach (var modifier in choice.StateModifiers)
-                {
-                    context.StateModifiers.Attach(modifier);
-                }
-
-                context.Choices.Attach(choice);
-                context.ChoiceScenes.Attach(choice.ChoiceScene);
-
-                foreach (var c in choice.ChoiceScene.Choices)
-                {
-                    foreach (var modifier in c.StateModifiers)
-                    {
-                        context.StateModifiers.Attach(modifier);
-                        context.States.Attach(modifier.State);
-                    }
-                    context.Choices.Attach(c);
-                }
-            }
+            context.Choices.AttachRange(condition.Choices);
         }
 
     }

@@ -63,7 +63,7 @@ namespace GameBuilder
             );
         }
 
-        public static async Task<Scene?> AddTransition(Scene modifiableScene, Scene targetScene, params Condition[] conditions)
+        public static async Task<Transition?> AddTransition(Scene modifiableScene, Scene targetScene, params Condition[] conditions)
         {
             var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions);
             return await GameBuilderController.AddTransition(modifiableScene, transition);
@@ -73,6 +73,13 @@ namespace GameBuilder
         public static async Task<Scene?> GetFirstScene()
         {
             return await GameBuilderController.GetFirstScene();
+        }
+
+        public static async Task<Condition> CreateMadeChoicesCondition(params Choice[] Choices)
+        {
+            return await GameBuilderController.AddCondition(
+                ConditionFactory.Instance.CreateMadeChoicesCondition(Choices)
+            );
         }
     }
 }

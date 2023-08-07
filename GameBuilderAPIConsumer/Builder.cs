@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Scenes;
+using ConsoleTesting.Models.Transit;
 using GameBuilder;
 using VisualNovelModels.Models.Choices;
 using static System.Formats.Asn1.AsnWriter;
@@ -35,14 +36,22 @@ namespace GameBuilder
                 "That sounds fascinating, Mary. Tell me more.", 
                 "Interesting... But I'd like to know more about the city and its people."
             );
+            Choice scene6Choice1 = scene6.Choices.ElementAt(0);
+            Choice scene6Choice2 = scene6.Choices.ElementAt(1);
 
-            await GameBuilderAPI.AddStateModifier(scene6.Choices.ElementAt(0), mysticismInterest, 1);
-            await GameBuilderAPI.AddStateModifier(scene6.Choices.ElementAt(1), peopleInterest, 1);
-
-            //Condition scene6Condition1 = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice1);
-            //Condition scene6Condition2 = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice2);
+            await GameBuilderAPI.AddStateModifier(scene6Choice1, mysticismInterest, 1);
+            await GameBuilderAPI.AddStateModifier(scene6Choice2, peopleInterest, 1);
 
             await GameBuilderAPI.AddTransition(scene5!, scene6!);
+
+            Scene? scene7a = await GameBuilderAPI.CreateStandardScene("Decades ago, in the heart of the forest stood an abandoned house. It is said that this house was the home of one unfortunate ghost. People from the town heard strange sounds, singing songs of woe, coming from the house at night.", mary);
+            Scene? scene7b = await GameBuilderAPI.CreateStandardScene("Somber is a small but very old town. Every house, every street has its own story. Some of them are beautiful, others are dark and frightening. Our town knows many secrets that are waiting to be uncovered.", mary);
+
+            Condition scene6TransitionACondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice1);
+            Condition scene6TransitionBCondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice2);
+
+            Transition scene6TransitionA = await GameBuilderAPI.AddTransition(scene6!, scene7a!, scene6TransitionACondition);
+            Transition scene6TransitionB = await GameBuilderAPI.AddTransition(scene6!, scene7b!, scene6TransitionBCondition);
 
             return await GameBuilderAPI.GetFirstScene();
         }

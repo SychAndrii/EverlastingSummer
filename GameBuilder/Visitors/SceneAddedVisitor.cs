@@ -45,22 +45,6 @@ namespace GameBuilder.Visitors
                 await Console.Out.WriteLineAsync();
                 throw;
             }
-            //AvoidPossibleStateModifiersAddition(scene, context);
-        }
-
-        private void AvoidPossibleStateModifiersAddition(ChoiceScene scene, ESContext context)
-        {
-            foreach (var c in scene.Choices)
-            {
-                if(c.StateModifiers != null)
-                {
-                    foreach (var modifier in c.StateModifiers)
-                    {
-                        context.StateModifiers.Attach(modifier);
-                        context.States.Attach(modifier.State);
-                    }
-                }
-            }
         }
 
         private void AvoidPossibleCharacterAddition(Scene scene, ESContext context)

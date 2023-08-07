@@ -74,7 +74,7 @@ namespace ConsoleTesting.Services
             }
         }
 
-        public async Task<Scene?> AddTransition(Scene modifiedScene, Transition transition)
+        public async Task<Transition?> AddTransition(Scene modifiedScene, Transition transition)
         {
             using ESContext context = new ESContext();
 
@@ -91,7 +91,7 @@ namespace ConsoleTesting.Services
                     await AddFirstScene(modifiedScene, context);
                 }
 
-                return modifiedScene;
+                return transition;
             }
             catch (Exception e)
             {

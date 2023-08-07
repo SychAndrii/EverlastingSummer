@@ -33,9 +33,9 @@ namespace GameBuilderAPI.Services
             using ESContext context = new ESContext();
             try
             {
-                context.Conditions.Add(c);
                 var conditionAddedVisitor = ConditionAddedVisitor.Instance;
                 await c.AcceptDBVisitor(conditionAddedVisitor, context);
+                context.Conditions.Add(c);
                 await context.SaveChangesAsync();
                 return c;
             }

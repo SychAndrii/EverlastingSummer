@@ -9,6 +9,7 @@ using GameBuilder.Controllers;
 using GameBuilder.Factories;
 using GameBuilder.Helpers;
 using GameBuilder.ObjectFactories;
+using GameBuilderAPI.ObjectFactories;
 using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Linq;
@@ -25,6 +26,20 @@ namespace GameBuilder
             context.Database.EnsureCreated();
         }
 
+        public static async Task<StateModifier?> CreateStateModifier(State state, int points)
+        {
+            return await GameBuilderController.AddStateModifier(
+                StateFactory.Instance.CreateStateModifier(state, points)
+            );
+        }
+
+        public static async Task<State?> CreateState(string name)
+        {
+            return await GameBuilderController.AddState(
+                StateFactory.Instance.CreateState(name)  
+            );
+        }
+
         public static async Task<DialogueCharacter?> CreateCharacter(string name)
         {
             return await GameBuilderController.AddDialogueCharacter(
@@ -32,10 +47,12 @@ namespace GameBuilder
             );
         }
 
-        public static async Task<Choice?> CreateChoice(string text)
+        public static async Task<Choice?> CreateChoice(string text, params StateModifier[]? stateModifiers)
         {
+            if (stateModifiers.Length == 0)
+                stateModifiers = null;
             return await GameBuilderController.AddChoice(
-                ChoiceFactory.Instance.CreateChoice(text)
+                ChoiceFactory.Instance.CreateChoice(text, stateModifiers)
             );
         }
 

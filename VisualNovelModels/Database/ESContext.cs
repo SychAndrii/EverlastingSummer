@@ -34,7 +34,7 @@ namespace ConsoleTesting.Database
         public DbSet<StandardScene> StandardScenes { get; set; } = null!;
         public DbSet<Transition> Transitions { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
-        public DbSet<StateModifier> EndingModifiers { get; set; } = null!;
+        public DbSet<StateModifier> StateModifiers { get; set; } = null!;
         public DbSet<SceneColor> SceneColors { get; set; } = null!;
         public DbSet<DialogueCharacter> DialogueCharacters { get; set; } = null!;
         public DbSet<SpriteCharacter> SpriteCharacters { get; set; } = null!;
@@ -49,7 +49,6 @@ namespace ConsoleTesting.Database
             ConfiguringUsers(modelBuilder);
             ConfiguringTransitions(modelBuilder);
             ConfiguringScenes(modelBuilder);
-            ConfiguringSideEffects(modelBuilder);
             ConfiguringAnimation(modelBuilder);
             ConfiguringSceneParts(modelBuilder);
             ConfiguringFirstScene(modelBuilder);
@@ -100,13 +99,6 @@ namespace ConsoleTesting.Database
 
             modelBuilder
                 .Entity<SceneColor>()
-                .UseTpcMappingStrategy();
-        }
-
-        private void ConfiguringSideEffects(ModelBuilder modelBuilder)
-        {
-            modelBuilder
-                .Entity<StateModifier>()
                 .UseTpcMappingStrategy();
         }
 

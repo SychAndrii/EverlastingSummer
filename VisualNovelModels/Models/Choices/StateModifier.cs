@@ -17,6 +17,7 @@ namespace ConsoleTesting.Models.Transit
     {
         private Guid _Id;
         public Guid Id { get { return _Id; } }
+
         /// <summary>
         /// A state to update.
         /// </summary>

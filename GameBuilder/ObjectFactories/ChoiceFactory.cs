@@ -1,4 +1,5 @@
-﻿using DB.Models.Characters;
+﻿using ConsoleTesting.Models.Transit;
+using DB.Models.Characters;
 using GameBuilder.Factories;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,12 @@ namespace GameBuilder.ObjectFactories
         }
         private ChoiceFactory() { }
 
-        public Choice CreateChoice(string text)
+        public Choice CreateChoice(string text, IEnumerable<StateModifier>? stateModifiers = null)
         {
-            return new Choice(text);
+            return new Choice(text)
+            {
+                StateModifiers = stateModifiers
+            };
         }
     }
 }

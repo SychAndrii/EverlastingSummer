@@ -14,6 +14,9 @@ namespace GameBuilder
             var oldMan = await GameBuilderAPI.CreateCharacter("Old Man");
             var ghost = await GameBuilderAPI.CreateCharacter("Ghost");
 
+            var peopleInterest = await GameBuilderAPI.CreateState("People Interest");
+            var mysticismInterest = await GameBuilderAPI.CreateState("Mysticism Interest");
+
             Scene? scene1 = await GameBuilderAPI.CreateStandardScene(
                 "It's a small town called Somber. Always deserted streets, always the same faces. But today I'm the one who shows up."
             );
@@ -31,8 +34,11 @@ namespace GameBuilder
             await GameBuilderAPI.AddTransition(scene3!, scene4!);
             await GameBuilderAPI.AddTransition(scene4!, scene5!);
 
-            Choice scene6Choice1 = await GameBuilderAPI.CreateChoice("That sounds fascinating, Mary. Tell me more.");
-            Choice scene6Choice2 = await GameBuilderAPI.CreateChoice("Interesting... But I'd like to know more about the city and its people.");
+            var scene6Choice1Modifier = await GameBuilderAPI.CreateStateModifier(mysticismInterest, 1);
+            var scene6Choice2Modifier = await GameBuilderAPI.CreateStateModifier(peopleInterest, 1);
+
+            Choice scene6Choice1 = await GameBuilderAPI.CreateChoice("That sounds fascinating, Mary. Tell me more.", scene6Choice1Modifier);
+            Choice scene6Choice2 = await GameBuilderAPI.CreateChoice("Interesting... But I'd like to know more about the city and its people.", scene6Choice2Modifier);
 
             Scene? scene6 = await GameBuilderAPI.CreateChoiceScene(scene6Choice1, scene6Choice2);
 

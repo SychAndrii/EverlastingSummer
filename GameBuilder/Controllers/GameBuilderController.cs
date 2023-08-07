@@ -6,6 +6,7 @@ using DB.Models.Characters;
 using DB.Models.TextSwitcher;
 using DB.Services;
 using GameBuilder.Services;
+using GameBuilderAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,17 @@ namespace GameBuilder.Controllers
         private static CharacterService DialogueCharactersService = CharacterService.Instance;
         private static SceneService SceneService = SceneService.Instance;
         private static ChoiceService ChoiceService = ChoiceService.Instance;
+        private static StateService StateService = StateService.Instance;
+
+        public static async Task<StateModifier?> AddStateModifier(StateModifier stateModifier)
+        {
+            return await StateService.AddStateModifier(stateModifier);
+        }
+
+        public static async Task<State?> AddState(State state)
+        {
+            return await StateService.AddState(state);
+        }
 
         public static async Task<DialogueCharacter?> AddDialogueCharacter(DialogueCharacter dialogueCharacter)
         {

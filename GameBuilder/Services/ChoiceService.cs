@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Database;
+using ConsoleTesting.Models.Transit;
 using DB.Services;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,10 @@ namespace GameBuilder.Services
             using ESContext context = new ESContext();
             try
             {
+                foreach (var stateModifier in c.StateModifiers)
+                {
+                    context.StateModifiers.Attach(stateModifier);
+                }
                 await context.Choices.AddAsync(c);
                 await context.SaveChangesAsync();   
                 return c;

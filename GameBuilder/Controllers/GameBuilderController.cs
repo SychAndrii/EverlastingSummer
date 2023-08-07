@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Conditions;
+using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using ConsoleTesting.Services;
@@ -24,6 +25,7 @@ namespace GameBuilder.Controllers
         private static ChoiceService ChoiceService = ChoiceService.Instance;
         private static StateService StateService = StateService.Instance;
         private static ConditionService ConditionService = ConditionService.Instance;
+        private static UserService UserService = UserService.Instance;
 
         public static async Task<StateModifier?> AddStateModifier(Choice c, StateModifier stateModifier)
         {
@@ -58,6 +60,11 @@ namespace GameBuilder.Controllers
         internal static async Task<Condition?> AddCondition(Condition condition)
         {
             return await ConditionService.AddCondition(condition);
+        }
+
+        internal static async Task<User?> GetUser()
+        {
+            return await UserService.GetUser(); 
         }
     }
 }

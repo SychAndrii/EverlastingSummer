@@ -1,15 +1,25 @@
 ﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
-using GameBuilder;
 using VisualNovelModels.Models.Choices;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace GameBuilder
 {
     public class Builder
     {
-        public static async Task<Scene?> Build()
+
+        public static async Task<Scene?> GetFirstScene()
+        {
+            return await GameBuilderAPI.GetFirstScene();
+        }
+
+        public static async Task<User?> GetUser()
+        {
+            return await GameBuilderAPI.GetUser();
+        }
+
+        public static async Task Build()
         {
             var adrian = await GameBuilderAPI.CreateCharacter("Adrian");
             var mary = await GameBuilderAPI.CreateCharacter("Mary");
@@ -52,8 +62,6 @@ namespace GameBuilder
 
             Transition scene6TransitionA = await GameBuilderAPI.AddTransition(scene6!, scene7a!, scene6TransitionACondition);
             Transition scene6TransitionB = await GameBuilderAPI.AddTransition(scene6!, scene7b!, scene6TransitionBCondition);
-
-            return await GameBuilderAPI.GetFirstScene();
         }
     }
 }

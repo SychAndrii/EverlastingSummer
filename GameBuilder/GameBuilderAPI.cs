@@ -75,11 +75,16 @@ namespace GameBuilder
             return await GameBuilderController.GetFirstScene();
         }
 
-        public static async Task<Condition> CreateMadeChoicesCondition(params Choice[] Choices)
+        public static async Task<Condition?> CreateMadeChoicesCondition(params Choice[] Choices)
         {
             return await GameBuilderController.AddCondition(
                 ConditionFactory.Instance.CreateMadeChoicesCondition(Choices)
             );
+        }
+
+        public static async Task<User?> GetUser()
+        {
+            return await GameBuilderController.GetUser();
         }
     }
 }

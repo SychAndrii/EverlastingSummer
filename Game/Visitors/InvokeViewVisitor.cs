@@ -17,22 +17,23 @@ namespace GameConsumer.Visitors
 {
     internal class InvokeViewVisitor : ISceneVisitor
     {
-        public Task Visit(StandardScene scene)
+        public async Task Visit(StandardScene scene)
         {
             var sceneInputStrategy = new StandardSceneInputStrategy();
             var sceneShowStrategy = new StandardSceneShowStrategy();
             var sceneSwitchCanHappenStrategy = new StandardSceneSwitchCanHappen();
 
             var view = new View<StandardScene>(sceneSwitchCanHappenStrategy, sceneInputStrategy, sceneShowStrategy);
-            view.Show(scene);
-            return Task.CompletedTask;
+            await view.Show(scene);
         }
 
-        public Task Visit(ChoiceScene scene)
+        public async Task Visit(ChoiceScene scene)
         {
             var sceneInputStrategy = new ChoiceSceneInputStrategy();
             var sceneShowStrategy = new ChoiceSceneShowStrategy();
             var sceneSwitchCanHappenStrategy = new ChoiceSceneSwitchCanHappen();
+
+            scene.Choices = scene.Choices.OrderBy(c => c.Order).ToList();
 
             sceneSwitchCanHappenStrategy.OnChoiceMade += async (choice) =>
             {
@@ -43,8 +44,7 @@ namespace GameConsumer.Visitors
             };
 
             var view = new View<ChoiceScene>(sceneSwitchCanHappenStrategy, sceneInputStrategy, sceneShowStrategy);
-            view.Show(scene);
-            return Task.CompletedTask;
+            await view.Show(scene);
         }
     }
 }

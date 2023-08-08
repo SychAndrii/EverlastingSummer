@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Transit;
 using DB.Services;
 using GameBuilder.Visitors;
 using GameBuilderAPI.Visitors;
@@ -33,9 +34,11 @@ namespace GameBuilderAPI.Services
             using ESContext context = new ESContext();
             try
             {
+
                 var conditionAddedVisitor = ConditionAddedVisitor.Instance;
                 await c.AcceptDBVisitor(conditionAddedVisitor, context);
                 context.Conditions.Add(c);
+
                 await context.SaveChangesAsync();
                 return c;
             }

@@ -10,6 +10,6 @@ namespace GameConsumer.Base
     interface SceneSwitchCanHappenStrategy<in T>
         where T : Scene
     {
-        public abstract bool CanSwitch(string userInput, T scene);
+        public abstract Task<bool> CanSwitch(string userInput, T scene);
     }
 }

@@ -110,12 +110,13 @@ namespace ConsoleTesting.Services
         {
             var task1 = context.Scenes
                 .Include(s => s.Transitions)
-                .ThenInclude(t => t.TargetScene)
+                .ThenInclude(t => t.Conditions)
                 .ToListAsync();
 
             var task2 = context.ChoiceScenes
             .Include(s => s.Characters)
             .Include(s => s.Choices)
+            .Include(s => s.Transitions)
             .ToListAsync();
 
 
@@ -125,7 +126,11 @@ namespace ConsoleTesting.Services
                 .ThenInclude(d => d.Character)
                 .ToListAsync();
 
-            await Task.WhenAll(task1, task2, task3);
+            var task4 = context.MadeChoicesConditions
+                .Include(s => s.Choices)
+                .ToListAsync();
+
+            await Task.WhenAll(task1, task2, task3, task4);
 
         }
 

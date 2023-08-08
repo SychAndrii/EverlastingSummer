@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Player;
+using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using DB.Models.Characters;
 using System;
@@ -72,11 +73,12 @@ namespace ConsoleTesting.Models.Base
         /// <returns>A possible conditional transition</returns>
         private Transition? GetPossibleConditionalTransition(User user)
         {
-            return (from transition in Transitions
+            var res = (from transition in Transitions
                     from condition in transition.Conditions ?? Enumerable.Empty<Condition>()
                     where condition.CanTransit(user)
                     select transition)
                     .FirstOrDefault();
+            return res;
         }
 
         /// <summary>
@@ -89,10 +91,11 @@ namespace ConsoleTesting.Models.Base
         /// <returns>A possible general transition</returns>
         private Transition? GetPossibleGeneralTransition()
         {
-            return (from transition in Transitions
-                    where transition.Conditions == null
+            var res = (from transition in Transitions
+                    where transition?.Conditions?.Count() == 0
                     select transition)
                     .FirstOrDefault();
+            return res;
         }
 
         /// <summary>
@@ -106,7 +109,7 @@ namespace ConsoleTesting.Models.Base
         /// for more elaborate information. </returns>
         public Transition? GetPossibleTransition(User user)
         {
-            if(Transitions == null) 
+            if (Transitions == null) 
                 return null;
 
             return GetPossibleConditionalTransition(user) ?? GetPossibleGeneralTransition();

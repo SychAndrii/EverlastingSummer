@@ -32,6 +32,8 @@ namespace ConsoleTesting.Models.Conditions
 
         public override bool CanTransit(User player)
         {
+            if (player.Choices == null)
+                return false;
             return Choices.Intersect(player.Choices).Count() == player.Choices.Count();
         }
 

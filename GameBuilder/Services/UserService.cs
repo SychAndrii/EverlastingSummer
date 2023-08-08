@@ -31,6 +31,8 @@ namespace GameBuilder.Services
             if (user == null)
                 return await CreateUser(context);
 
+
+
             return user;
         }
 
@@ -46,6 +48,7 @@ namespace GameBuilder.Services
         {
             var scene = await context
                     .Users
+                    .Include(u => u.Choices)
                     .FirstOrDefaultAsync();
 
             return scene;
@@ -57,6 +60,7 @@ namespace GameBuilder.Services
             try
             {
                 context.Users.Attach(user);
+                context.Choices.Attach(c);
                 user.Choices = user.Choices ?? new List<Choice>();
                 user.Choices.Add(c);
                 context.Users.Update(user);

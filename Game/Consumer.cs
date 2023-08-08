@@ -6,6 +6,7 @@ using GameConsumer.Models;
 using GameConsumer.Visitors;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using VisualNovelModels.Visitors;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace GameBuilder
 {
@@ -14,14 +15,15 @@ namespace GameBuilder
     {
         public static void Main(string[] args)
         {
-            Scene? currentScene = null;
+            Scene? currentScene = SceneModel.GetFirstScene().Result;
             ISceneVisitor invokeViewVisitor = new InvokeViewVisitor();
 
-            while ((currentScene = SceneModel.GetNextScene()) != null)
+            while(currentScene != null)
             {
                 currentScene.AcceptVisitor(invokeViewVisitor);
+                Transition? transitionToNextScene = currentScene?.GetPossibleTransition(UserModel.CurrentUser);
+                currentScene = transitionToNextScene?.TargetScene;
             }
-
         }
     }
 }

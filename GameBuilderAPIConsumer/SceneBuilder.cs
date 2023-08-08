@@ -54,7 +54,7 @@ namespace GameBuilder
             Condition scene6TransitionACondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice1);
             Condition scene6TransitionBCondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice2);
 
-            await GameBuilderAPI.AddTransition(scene6!, scene7a!, scene6TransitionACondition);
+            var t1 = await GameBuilderAPI.AddTransition(scene6!, scene7a!, scene6TransitionACondition);
             await GameBuilderAPI.AddTransition(scene6!, scene7b!, scene6TransitionBCondition);
 
             Scene? scene8a = await GameBuilderAPI.CreateStandardScene("Adrian's eyes sparkle with interest.");
@@ -87,6 +87,7 @@ namespace GameBuilder
 
             await GameBuilderAPI.AddTransition(scene2_1!, scene2_2!);
             await GameBuilderAPI.AddTransition(scene2_2!, scene2_3!);
+        
         }
     }
 }

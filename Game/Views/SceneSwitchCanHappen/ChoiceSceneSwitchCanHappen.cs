@@ -12,8 +12,8 @@ namespace GameConsumer.Views.SceneSwitchCanHappen
 {
     internal class ChoiceSceneSwitchCanHappen : SceneSwitchCanHappenStrategy<ChoiceScene>
     {
-        public event Action<Choice> OnChoiceMade;
-        public bool CanSwitch(string userInput, ChoiceScene scene)
+        public event Func<Choice, Task> OnChoiceMade;
+        public async Task<bool> CanSwitch(string userInput, ChoiceScene scene)
         {
             if (int.TryParse(userInput, out int choiceNumber))
             {
@@ -21,7 +21,7 @@ namespace GameConsumer.Views.SceneSwitchCanHappen
 
                 if(canSwitch)
                 {
-                    OnChoiceMade?.Invoke(scene.Choices.ElementAt(choiceNumber - 1));
+                    await OnChoiceMade?.Invoke(scene.Choices.ElementAt(choiceNumber - 1));
                 }
 
                 return canSwitch;

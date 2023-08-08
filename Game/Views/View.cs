@@ -24,7 +24,7 @@ namespace GameConsumer.Views
             SceneSwitchCanHappenStrategy = sceneSwitchCanHappenStrategy;
         }
 
-        public void Show(T scene)
+        public async Task Show(T scene)
         {
             bool canSwitch = false;
             SceneShowStrategy?.Show(scene);
@@ -32,7 +32,7 @@ namespace GameConsumer.Views
             while (!canSwitch)
             {
                 string userInput = SceneInputStrategy.AskForInput(scene);
-                if (SceneSwitchCanHappenStrategy.CanSwitch(userInput, scene))
+                if (await SceneSwitchCanHappenStrategy.CanSwitch(userInput, scene))
                 {
                     Console.WriteLine("\n");
                     break;

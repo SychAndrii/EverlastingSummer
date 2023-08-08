@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VisualNovelModels.Models.Choices;
 
 namespace GameConsumer.Views
 {
-    class View<T>
+    class View<T> 
         where T : Scene
     {
         private SceneInputStrategy<T> SceneInputStrategy { get; }

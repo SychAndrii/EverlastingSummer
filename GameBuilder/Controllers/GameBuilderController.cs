@@ -62,9 +62,14 @@ namespace GameBuilder.Controllers
             return await ConditionService.AddCondition(condition);
         }
 
-        internal static async Task<User?> GetUser()
+        internal static async Task<User> GetUser()
         {
             return await UserService.GetUser(); 
+        }
+
+        internal static async Task<User?> AddMadeUserChoice(User user, Choice c)
+        {
+            return await UserService.AddMadeUserChoice(user, c);
         }
     }
 }

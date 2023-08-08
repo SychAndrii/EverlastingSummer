@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GameConsumer.Base
 {
-    interface IObservable
+    interface IObservable<T>
     {
         void NotifyObservers();
-        void AddObserver(IObserver observer);
-        void RemoveObserver(IObserver observer);
+        void AddObserver(IObserver<T> observer);
+        void RemoveObserver(IObserver<T> observer);
     }
 }

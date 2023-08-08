@@ -19,8 +19,8 @@ namespace ConsoleTesting.Models.Player
         /// </summary>
         public ICollection<Choice>? Choices { get; set; }
 
-        private readonly bool _Id;
-        public bool Id { get => _Id; }
+        private readonly Guid _Id;
+        public Guid Id { get => _Id; }
 
         /// <summary>
         /// Player's progress for various states. See <see cref="UserStateProgress"/> for more info.

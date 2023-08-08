@@ -1,6 +1,7 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Scenes;
 using GameConsumer.Base;
+using GameConsumer.Models;
 using GameConsumer.Views;
 using GameConsumer.Views.SceneInput;
 using GameConsumer.Views.SceneShow;
@@ -32,6 +33,14 @@ namespace GameConsumer.Visitors
             var sceneInputStrategy = new ChoiceSceneInputStrategy();
             var sceneShowStrategy = new ChoiceSceneShowStrategy();
             var sceneSwitchCanHappenStrategy = new ChoiceSceneSwitchCanHappen();
+
+            sceneSwitchCanHappenStrategy.OnChoiceMade += async (choice) =>
+            {
+                await UserModel.AddMadeChoice(
+                    UserModel.CurrentUser,
+                    choice
+                );
+            };
 
             var view = new View<ChoiceScene>(sceneSwitchCanHappenStrategy, sceneInputStrategy, sceneShowStrategy);
             view.Show(scene);

@@ -128,14 +128,6 @@ namespace ConsoleTesting.Database
                 .Property("Id")
                 .HasField("_Id");
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id)
-                    .HasDefaultValue(true)
-                    .ValueGeneratedNever();
-            });
-
             modelBuilder
                 .Entity<UserStateProgress>()
                 .HasKey(p => p.StateId);

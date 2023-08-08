@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameConsumer.Base
 {
-    interface IObserver
+    interface IObserver<T>
     {
-        void Update();
+        void Update(T data);
     }
 }

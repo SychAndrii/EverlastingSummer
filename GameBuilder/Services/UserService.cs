@@ -5,6 +5,7 @@ using ConsoleTesting.Models.Scenes;
 using GameBuilder.Visitors;
 using GameBuilderAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder.Services
 {
@@ -22,7 +23,7 @@ namespace GameBuilder.Services
         }
         private UserService() { }
 
-        public async Task<User?> GetUser()
+        public async Task<User> GetUser()
         {
             using ESContext context = new ESContext();
             var user = await FindUser(context);
@@ -45,11 +46,27 @@ namespace GameBuilder.Services
         {
             var scene = await context
                     .Users
-                    .FromSqlRaw("SELECT * FROM Users WHERE Id = 1")
-                    .Include(u => u.StateProgresses)
                     .FirstOrDefaultAsync();
 
             return scene;
+        }
+
+        internal async Task<User?> AddMadeUserChoice(User user, Choice c)
+        {
+            using ESContext context = new ESContext();
+            try
+            {
+                context.Users.Attach(user);
+                user.Choices = user.Choices ?? new List<Choice>();
+                user.Choices.Add(c);
+                context.Users.Update(user);
+                await context.SaveChangesAsync();
+                return user;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
     }
 }

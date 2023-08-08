@@ -82,9 +82,14 @@ namespace GameBuilder
             );
         }
 
-        public static async Task<User?> GetUser()
+        public static async Task<User> GetUser()
         {
             return await GameBuilderController.GetUser();
+        }
+
+        public static async Task<User?> AddMadeUserChoice(User user, Choice c)
+        {
+            return await GameBuilderController.AddMadeUserChoice(user, c);
         }
     }
 }

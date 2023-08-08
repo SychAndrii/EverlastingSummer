@@ -22,6 +22,7 @@ namespace VisualNovelModels.Models.Choices
 
         private readonly Guid _Id;
         public Guid Id { get => _Id; }
+        public int Order { get; set; }
 
         /// <summary>
         /// This field is required for many-to-many relationship with Choices table in the

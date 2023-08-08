@@ -44,7 +44,8 @@ namespace GameBuilder.Factories
 
         public ChoiceScene CreateChoiceScene(IEnumerable<string> choices)
         {
-            var choiceObjects = choices.Select(c => new Choice(c)).ToList();
+            int choiceOrder = 0;
+            var choiceObjects = choices.Select(c => new Choice(c) { Order = choiceOrder++ }).ToList();
 
             return new ChoiceScene
             {

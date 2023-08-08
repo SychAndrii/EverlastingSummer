@@ -24,9 +24,15 @@ namespace GameBuilderAPI.Visitors
 
         public async Task Visit(ChoiceScene scene, ESContext context)
         {
-            await context.ChoiceScenes
-                .Include(s => s.Choices)
-                .ToListAsync();
+            var choiceScenes = await context.ChoiceScenes.ToListAsync();
+
+            foreach (var s in choiceScenes)
+            {
+                scene.Choices = await context.Choices
+                                .Where(c => c.ChoiceSceneId == scene.Id)
+                                .OrderBy(c => c.Order)
+                                .ToListAsync();
+            }
         }
     }
 }

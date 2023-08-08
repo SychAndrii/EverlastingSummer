@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Player;
+using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using GameConsumer.Models;
 using GameConsumer.Visitors;

@@ -95,8 +95,8 @@ namespace GameBuilder
             Scene? scene2_6a = await GameBuilderAPI.CreateStandardScene("Adrian decides to go into the woods to search for the mysterious house.");
             Scene? scene2_6b = await GameBuilderAPI.CreateStandardScene("Adrian decides to explore more stories about the town and its people.");
 
-            await GameBuilderAPI.AddTransition(scene2_5!, scene2_6a!, scene2_5TransitionAConditionA);
-            await GameBuilderAPI.AddTransition(scene2_5!, scene2_6b!, scene2_5TransitionAConditionB);
+            var t1 = await GameBuilderAPI.AddTransition(scene2_5!, scene2_6a!, scene2_5TransitionAConditionA);
+            var t2 = await GameBuilderAPI.AddTransition(scene2_5!, scene2_6b!, scene2_5TransitionAConditionB);
         }
 
     }

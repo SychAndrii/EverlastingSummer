@@ -30,7 +30,7 @@ namespace GameBuilderAPI.Services
         }
         private ConditionService() { }
 
-        public Task LoadConditionsTask(ESContext context)
+        public Task LoadConditionDependenciesTask(ESContext context)
         {
             return context.MadeChoicesConditions
                 .Include(s => s.Choices)

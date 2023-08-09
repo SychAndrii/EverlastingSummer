@@ -98,5 +98,10 @@ namespace GameBuilder
                 ConditionFactory.Instance.CreateStatePointsCondition(state, minimumPointsRequired)
             );
         }
+
+        public static async Task<User?> UpdateUserStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
+        {
+            return await GameBuilderController.UpdateUserStateProgresses(currentUser, stateModifiers);
+        }
     }
 }

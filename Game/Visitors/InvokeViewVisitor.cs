@@ -41,6 +41,14 @@ namespace GameConsumer.Visitors
                     UserModel.CurrentUser,
                     choice
                 );
+
+                if(choice.StateModifiers != null)
+                {
+                    await UserModel.UpdateStateProgresses(
+                        UserModel.CurrentUser,
+                        choice.StateModifiers
+                    );
+                }
             };
 
             var view = new View<ChoiceScene>(sceneSwitchCanHappenStrategy, sceneInputStrategy, sceneShowStrategy);

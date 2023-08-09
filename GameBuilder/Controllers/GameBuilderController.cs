@@ -76,5 +76,10 @@ namespace GameBuilder.Controllers
         {
             return await ConditionService.Instance.AddCondition(statePointsCondition);
         }
+
+        internal static async Task<User?> UpdateUserStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
+        {
+            return await UserService.UpdateUserStateProgresses(currentUser, stateModifiers);
+        }
     }
 }

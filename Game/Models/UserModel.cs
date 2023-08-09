@@ -1,4 +1,5 @@
 ﻿using ConsoleTesting.Models.Player;
+using ConsoleTesting.Models.Transit;
 using GameBuilder;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,11 @@ namespace GameConsumer.Models
         public static async Task<User?> AddMadeChoice(User user, Choice c)
         {
             return await UserBuilder.AddMadeUserChoice(user, c);
+        }
+
+        internal static async Task<User?> UpdateStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
+        {
+            return await UserBuilder.UpdateUserStateProgresses(currentUser, stateModifiers);
         }
     }
 }

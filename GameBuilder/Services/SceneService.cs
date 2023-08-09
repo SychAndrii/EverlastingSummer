@@ -6,6 +6,7 @@ using ConsoleTesting.Models.Transit;
 using DB.Models.Characters;
 using DB.Models.TextSwitcher;
 using GameBuilder.Helpers;
+using GameBuilder.Services;
 using GameBuilder.Visitors;
 using GameBuilderAPI.Services;
 using GameBuilderAPI.Visitors;
@@ -129,9 +130,10 @@ namespace ConsoleTesting.Services
                 .ThenInclude(d => d.Character)
                 .ToListAsync();
 
-            var task4 = ConditionService.Instance.LoadConditionsTask(context);
+            var task4 = ChoiceService.Instance.LoadChoiceDependenciesTask(context);
+            var task5 = ConditionService.Instance.LoadConditionDependenciesTask(context);
 
-            await Task.WhenAll(task1, task2, task3, task4);
+            await Task.WhenAll(task1, task2, task3, task4, task5);
 
         }
 

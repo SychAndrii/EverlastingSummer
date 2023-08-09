@@ -2,6 +2,7 @@
 using ConsoleTesting.Models.Base;
 using ConsoleTesting.Models.Player;
 using ConsoleTesting.Models.Scenes;
+using ConsoleTesting.Models.Transit;
 using GameBuilder.Visitors;
 using GameBuilderAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -68,6 +69,48 @@ namespace GameBuilder.Services
                 return user;
             }
             catch(Exception)
+            {
+                return null;
+            }
+        }
+
+        internal async Task<User?> UpdateUserStateProgresses(User user, IEnumerable<StateModifier> stateModifiers)
+        {
+            using ESContext context = new ESContext();
+            try
+            {
+                var states = (from sm in stateModifiers
+                              select sm.State).ToList();
+                context.States.AttachRange(states);
+                context.Users.Attach(user);
+
+                user.StateProgresses = user.StateProgresses ?? new List<UserStateProgress>();
+
+                foreach (var sm in stateModifiers)
+                {
+                    UserStateProgress? userStateProgress = null;
+                    if ((userStateProgress = user.StateProgresses.FirstOrDefault(sp => sp.State == sm.State))
+                        != null)
+                    {
+                        userStateProgress.CurrentPoints += sm.Points;
+                    }
+                    else
+                    {
+                        user.StateProgresses.Add(
+                            new UserStateProgress 
+                            { 
+                                CurrentPoints = sm.Points, 
+                                State = sm.State 
+                            }
+                        );
+                    }
+                }
+
+                context.Users.Update(user);
+                await context.SaveChangesAsync();
+                return user;
+            }
+            catch (Exception)
             {
                 return null;
             }

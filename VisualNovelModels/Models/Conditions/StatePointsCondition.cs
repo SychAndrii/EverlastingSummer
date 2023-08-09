@@ -36,6 +36,9 @@ namespace ConsoleTesting.Models.Conditions
 
         public override bool CanTransit(User player)
         {
+            if(player.StateProgresses == null)
+                return false;
+
             var playerProgressOfEnding = player.StateProgresses.Where(ep => ep.State == State).FirstOrDefault();
             if (playerProgressOfEnding != null)
             {

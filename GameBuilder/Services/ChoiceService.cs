@@ -1,6 +1,7 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Transit;
 using DB.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,14 @@ namespace GameBuilder.Services
             {
                 return null;
             }
+        }
+
+        public Task LoadChoiceDependenciesTask(ESContext context)
+        {
+            return context.Choices
+                    .Include(c => c.StateModifiers)
+                        .ThenInclude(sm => sm.State) // Include the State property within each StateModifier
+                    .ToListAsync();
         }
     }
 }

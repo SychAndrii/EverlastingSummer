@@ -23,80 +23,94 @@ namespace GameBuilder
             var peopleInterest = await GameBuilderAPI.CreateState("People Interest");
             var mysticismInterest = await GameBuilderAPI.CreateState("Mysticism Interest");
 
-            Scene? scene1 = await GameBuilderAPI.CreateStandardScene(
-                "It's a small town called Somber. Always deserted streets, always the same faces. But today I'm the one who shows up."
+            Scene? scene1_1 = await GameBuilderAPI.CreateStandardScene("I'm Adrian, a weary programmer who decided to take a break from the draining city life. Driven by a feeling of exhaustion and curiosity, I've come to the small town of Somber. It's where my sister Mary has been living for years. Today, I'm finally going to see her.");
+            Scene? scene1_2 = await GameBuilderAPI.CreateStandardScene("Mary's chosen a quaint little café for our meeting. The place exudes a comforting charm that seems to be a reflection of the town itself. The door chimes, announcing my entrance. I spot Mary, and her face lights up with a warm, sisterly smile.");
+            Scene? scene1_3 = await GameBuilderAPI.CreateStandardScene("Adrian! It's so good to see you! Come, sit down. You must be tired from the journey. You'll love Somber, I promise.", mary);
+            Scene? scene1_4 = await GameBuilderAPI.CreateStandardScene("I hug Mary, feeling a connection to family that's been missing for too long.");
+            Scene? scene1_5 = await GameBuilderAPI.CreateStandardScene("It's good to see you too, Mary. This town seems like just what I need.", adrian);
+            Scene? scene1_6 = await GameBuilderAPI.CreateStandardScene("Over cups of tea, Mary and I begin to catch up. We talk about our lives, and the unique sense of community here. The conversation flows naturally, with the familiarity that only siblings share.");
+            Scene? scene1_7 = await GameBuilderAPI.CreateStandardScene("Have you ever heard about Somber's history? This town has some intriguing legends and secrets, some of them are even mysterious. It's what makes Somber unique.", mary);
+
+            await GameBuilderAPI.AddTransition(scene1_1!, scene1_2!);
+            await GameBuilderAPI.AddTransition(scene1_2!, scene1_3!);
+            await GameBuilderAPI.AddTransition(scene1_3!, scene1_4!);
+            await GameBuilderAPI.AddTransition(scene1_4!, scene1_5!);
+            await GameBuilderAPI.AddTransition(scene1_5!, scene1_6!);
+            await GameBuilderAPI.AddTransition(scene1_6!, scene1_7!);
+
+            ChoiceScene? choiceScene1 = await GameBuilderAPI.CreateChoiceScene(
+                "Secrets? What do you mean?",
+                "You know, I've noticed something different about the vibe here. It's cozy here, but in a peculiar way."
             );
-            Scene? scene2 = await GameBuilderAPI.CreateStandardScene("Hello, young man. My name is Mary. Welcome to Somber.", mary);
-            Scene? scene3 = await GameBuilderAPI.CreateStandardScene("Hello, Mary. I'm Adrian. Nice to meet you.", adrian);
-            Scene? scene4 = await GameBuilderAPI.CreateStandardScene("Mary, with genuine interest, begins to tell a story about a house that no one can find.");
-            Scene? scene5 = await GameBuilderAPI.CreateStandardScene("You know, Adrian, there's a story about a house that lurks in the woods. Some say it's cursed...", mary);
 
-            await GameBuilderAPI.AddTransition(scene1!, scene2!);
-            await GameBuilderAPI.AddTransition(scene2!, scene3!);
-            await GameBuilderAPI.AddTransition(scene3!, scene4!);
-            await GameBuilderAPI.AddTransition(scene4!, scene5!);
-           
-            ChoiceScene? scene6 = await GameBuilderAPI.CreateChoiceScene(
-                "That sounds fascinating, Mary. Tell me more.", 
-                "Interesting... But I'd like to know more about the city and its people."
+            Choice choiceScene1_choice_1 = choiceScene1.Choices.ElementAt(0);
+            Choice choiceScene1_choice_2 = choiceScene1.Choices.ElementAt(1);
+
+            await GameBuilderAPI.AddStateModifier(choiceScene1_choice_1, mysticismInterest, 1);
+            await GameBuilderAPI.AddStateModifier(choiceScene1_choice_2, peopleInterest, 1);
+
+            await GameBuilderAPI.AddTransition(scene1_7!, choiceScene1!);
+
+            Scene? scene2_1a = await GameBuilderAPI.CreateStandardScene("Well, there's one house in particular that no one seems to find. Some say it's cursed, others think it's a gateway to another world. It's become a part of the town's identity.", mary);
+            Scene? scene2_1b = await GameBuilderAPI.CreateStandardScene("It's the very essence of Somber. We have our own mysteries, our charm. But the one thing that's always fascinated me is the tale of a hidden house in the woods. Some say it's haunted; others think it's a gateway to something else entirely.", mary);
+
+            Condition choiceScene1_conditionA = await GameBuilderAPI.CreateMadeChoicesCondition(choiceScene1_choice_1);
+            Condition choiceScene1_conditionB = await GameBuilderAPI.CreateMadeChoicesCondition(choiceScene1_choice_2);
+
+            await GameBuilderAPI.AddTransition(choiceScene1!, scene2_1a!, choiceScene1_conditionA);
+            await GameBuilderAPI.AddTransition(choiceScene1!, scene2_1b!, choiceScene1_conditionB);
+
+            Scene? scene2_2a = await GameBuilderAPI.CreateStandardScene("A cursed house, you say? Now that's something I want to know more about. Tell me everything.", adrian);
+            Scene? scene2_3a = await GameBuilderAPI.CreateStandardScene("It's a tale that has fascinated me since I moved here. Some say it appears and disappears at will, others that it's home to otherworldly creatures. It's a place of wonder and fear, enchanting yet dangerous.", mary);
+            Scene? scene2_4a = await GameBuilderAPI.CreateStandardScene("Mary's words ignite a spark of mystique in my mind. The house seems to call to me, an unexplored enigma in this small, quiet town. That night, I find myself poring over local maps, planning my journey into the woods.");
+
+            await GameBuilderAPI.AddTransition(scene2_1a!, scene2_2a!);
+            await GameBuilderAPI.AddTransition(scene2_2a!, scene2_3a!);
+            await GameBuilderAPI.AddTransition(scene2_3a!, scene2_4a!);
+
+            Scene? scene2_2b = await GameBuilderAPI.CreateStandardScene("A hidden house? That sounds intriguing. How can a house be hidden?", adrian);
+            Scene? scene2_3b = await GameBuilderAPI.CreateStandardScene("That's where the legend comes into play. They say the house appears only to those who seek it, with a true purpose or desire. Many have gone looking for it, but not all have found it. It's a mystery that's always enchanted me.", mary);
+            Scene? scene2_4b = await GameBuilderAPI.CreateStandardScene("Even though I like staying in Somber, the mysterious house grabs my attention. I spend the night in my room, the story stirring my thoughts. A restless curiosity grows within me, and I realize that I need to explore the house myself.");
+
+            await GameBuilderAPI.AddTransition(scene2_1b!, scene2_2b!);
+            await GameBuilderAPI.AddTransition(scene2_2b!, scene2_3b!);
+            await GameBuilderAPI.AddTransition(scene2_3b!, scene2_4b!);
+
+            Scene? scene2_5 = await GameBuilderAPI.CreateStandardScene("The following morning, I wake with a sense of purpose. Whether it's the allure of the unknown or a need to escape the mundane, I know that I must visit the house. I pack my bag, bid Mary farewell, and set off for the woods, a mixture of excitement and trepidation in my heart.");
+
+            await GameBuilderAPI.AddTransition(scene2_4a!, scene2_5!);
+            await GameBuilderAPI.AddTransition(scene2_4b!, scene2_5!);
+            
+            Scene? scene2_6 = await GameBuilderAPI.CreateStandardScene("Having spent the entire night reading different legends about a haunted house in the local woods, I decided to visit it myself.");
+            Scene? scene2_7 = await GameBuilderAPI.CreateStandardScene("The sunset paints the sky over the forest in golden and pink hues. I stand at the entrance, feeling something pulling me inward. The wind whispers to me, calling from the depth of the trees.");
+            Scene? scene2_8 = await GameBuilderAPI.CreateStandardScene("There are two paths: the well-trodden trail taken by many, and a lesser-known path that seems mysterious and inviting. What should I choose?");
+
+            await GameBuilderAPI.AddTransition(scene2_5!, scene2_6!);
+            await GameBuilderAPI.AddTransition(scene2_6!, scene2_7!);
+            await GameBuilderAPI.AddTransition(scene2_7!, scene2_8!);
+
+            ChoiceScene? choiceScene2 = await GameBuilderAPI.CreateChoiceScene(
+                "Walk down the well-trodden trail",
+                "Explore the lesser-known path"
             );
-            Choice scene6Choice1 = scene6.Choices.ElementAt(0);
-            Choice scene6Choice2 = scene6.Choices.ElementAt(1);
 
-            await GameBuilderAPI.AddStateModifier(scene6Choice1, mysticismInterest, 1);
-            await GameBuilderAPI.AddStateModifier(scene6Choice2, peopleInterest, 1);
-            await GameBuilderAPI.AddTransition(scene5!, scene6!);
+            await GameBuilderAPI.AddTransition(scene2_8!, choiceScene2!);
 
-            Scene? scene7a = await GameBuilderAPI.CreateStandardScene("Decades ago, in the heart of the forest stood an abandoned house. It is said that this house was the home of one unfortunate ghost. People from the town heard strange sounds, singing songs of woe, coming from the house at night.", mary);
-            Scene? scene7b = await GameBuilderAPI.CreateStandardScene("Mary nods.");
+            Choice choiceScene2_choice_1 = choiceScene2.Choices.ElementAt(0);
+            Choice choiceScene2_choice_2 = choiceScene2.Choices.ElementAt(1);
 
-            Condition scene6TransitionACondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice1);
-            Condition scene6TransitionBCondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice2);
+            await GameBuilderAPI.AddStateModifier(choiceScene2_choice_1, peopleInterest, 1);
+            await GameBuilderAPI.AddStateModifier(choiceScene2_choice_2, mysticismInterest, 1);
 
-            await GameBuilderAPI.AddTransition(scene6!, scene7a!, scene6TransitionACondition);
-            await GameBuilderAPI.AddTransition(scene6!, scene7b!, scene6TransitionBCondition);
+            Condition choiceScene2_conditionA = await GameBuilderAPI.CreateMadeChoicesCondition(choiceScene2_choice_1);
+            Condition choiceScene2_conditionB = await GameBuilderAPI.CreateMadeChoicesCondition(choiceScene2_choice_2);
 
-            Scene? scene8a = await GameBuilderAPI.CreateStandardScene("Adrian's eyes sparkle with interest.");
-            Scene? scene9a = await GameBuilderAPI.CreateStandardScene("And how can I find it?", adrian);
-            Scene? scene10a = await GameBuilderAPI.CreateStandardScene("Legend has it that whoever truly believes in magic will be able to see the house.", mary);
+            Scene? scene3_1a = await GameBuilderAPI.CreateStandardScene("I choose the well-trodden trail. It's the path many have taken, and I feel it leading me to something familiar and comforting.");
+            Scene? scene3_1b = await GameBuilderAPI.CreateStandardScene("This path beckons me with its unexplored nature. I feel there's something here that deserves my attention. It's unusual, but I'm ready to go.");
 
-            await GameBuilderAPI.AddTransition(scene7a!, scene8a!);
-            await GameBuilderAPI.AddTransition(scene8a!, scene9a!);
-            await GameBuilderAPI.AddTransition(scene9a!, scene10a!);
-
-            Scene? scene8b = await GameBuilderAPI.CreateStandardScene("Somber is a small but very old town. Every house, every street has its own story. Some of them are beautiful, others are dark and frightening. Our town knows many secrets that are waiting to be uncovered.", mary);
-            Scene? scene9b = await GameBuilderAPI.CreateStandardScene("You talk about him as if Somber is a living organism.", adrian);
-            Scene? scene10b = await GameBuilderAPI.CreateStandardScene("For many of us, that's exactly what it is. We were born and grew up here, and the city has become a part of us.", mary);
-            Scene? scene11b = await GameBuilderAPI.CreateStandardScene("Thank you, Mary. Your town is indeed an interesting place.", adrian);
-
-            await GameBuilderAPI.AddTransition(scene7b!, scene8b!);
-            await GameBuilderAPI.AddTransition(scene8b!, scene9b!);
-            await GameBuilderAPI.AddTransition(scene9b!, scene10b!);
-            await GameBuilderAPI.AddTransition(scene10b!, scene11b!);
-
-            Scene? scene2_1 = await GameBuilderAPI.CreateStandardScene("Good night, Mary.", adrian);
-
-            await GameBuilderAPI.AddTransition(scene10a!, scene2_1!);
-            await GameBuilderAPI.AddTransition(scene11b!, scene2_1!);
-
-            Scene? scene2_2 = await GameBuilderAPI.CreateStandardScene("Sweet dreams, young man.", mary);
-            Scene? scene2_3 = await GameBuilderAPI.CreateStandardScene("Back in his room, Adrian feels excited from the anticipation of tomorrow.");
-            Scene? scene2_4 = await GameBuilderAPI.CreateStandardScene("Day 2");
-            Scene? scene2_5 = await GameBuilderAPI.CreateStandardScene("Sunrise greeted Adrian, his eyes sparkling with excitement. Everything he'd heard yesterday seemed so alive and real.");
-
-            await GameBuilderAPI.AddTransition(scene2_1!, scene2_2!);
-            await GameBuilderAPI.AddTransition(scene2_2!, scene2_3!);
-            await GameBuilderAPI.AddTransition(scene2_3!, scene2_4!);
-            await GameBuilderAPI.AddTransition(scene2_4!, scene2_5!);
-
-            Condition? scene2_5TransitionAConditionA = await GameBuilderAPI.CreateStatePointsCondition(mysticismInterest, 1);
-            Condition? scene2_5TransitionAConditionB = await GameBuilderAPI.CreateStatePointsCondition(peopleInterest, 1);
-
-            Scene? scene2_6a = await GameBuilderAPI.CreateStandardScene("Adrian decides to go into the woods to search for the mysterious house.");
-            Scene? scene2_6b = await GameBuilderAPI.CreateStandardScene("Adrian decides to explore more stories about the town and its people.");
-
-            var t1 = await GameBuilderAPI.AddTransition(scene2_5!, scene2_6a!, scene2_5TransitionAConditionA);
-            var t2 = await GameBuilderAPI.AddTransition(scene2_5!, scene2_6b!, scene2_5TransitionAConditionB);
+            var t = await GameBuilderAPI.AddTransition(choiceScene2!, scene3_1a!, choiceScene2_conditionA);
+            var tt = await GameBuilderAPI.AddTransition(choiceScene2!, scene3_1b!, choiceScene2_conditionB);
+            
         }
 
     }

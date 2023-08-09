@@ -34,7 +34,7 @@ namespace ConsoleTesting.Models.Conditions
         {
             if (player.Choices == null)
                 return false;
-            return Choices.Intersect(player.Choices).Count() == player.Choices.Count();
+            return !Choices.Except(player.Choices).Any();
         }
 
         public override async Task AcceptDBVisitor(IConditionVisitorDB visitor, ESContext context)

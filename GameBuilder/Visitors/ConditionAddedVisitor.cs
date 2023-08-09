@@ -38,7 +38,13 @@ namespace GameBuilderAPI.Visitors
 
         public Task Visit(StatePointsCondition condition, ESContext context)
         {
-            throw new NotImplementedException();
+            AvoidStatesAdditions(condition, context);
+            return Task.CompletedTask;
+        }
+
+        private void AvoidStatesAdditions(StatePointsCondition condition, ESContext context)
+        {
+            context.States.Attach(condition.State);
         }
 
         private void AvoidChoicesAdditions(MadeChoicesCondition condition, ESContext context) 

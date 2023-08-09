@@ -1,5 +1,6 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Transit;
 using DB.Services;
 using GameBuilder.Visitors;
@@ -29,12 +30,20 @@ namespace GameBuilderAPI.Services
         }
         private ConditionService() { }
 
+        public Task LoadConditionsTask(ESContext context)
+        {
+            return context.MadeChoicesConditions
+                .Include(s => s.Choices)
+                .ToListAsync();
+        }
+
         public async Task<Condition?> AddCondition(Condition c)
         {
             using ESContext context = new ESContext();
             try
             {
-
+                if(c is StatePointsCondition)
+                    await Console.Out.WriteLineAsync();
                 var conditionAddedVisitor = ConditionAddedVisitor.Instance;
                 await c.AcceptDBVisitor(conditionAddedVisitor, context);
                 context.Conditions.Add(c);

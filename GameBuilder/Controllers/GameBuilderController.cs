@@ -71,5 +71,10 @@ namespace GameBuilder.Controllers
         {
             return await UserService.AddMadeUserChoice(user, c);
         }
+
+        internal static async Task<Condition?> AddStatePointsCondition(StatePointsCondition statePointsCondition)
+        {
+            return await ConditionService.Instance.AddCondition(statePointsCondition);
+        }
     }
 }

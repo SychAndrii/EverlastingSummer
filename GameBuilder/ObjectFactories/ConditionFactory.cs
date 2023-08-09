@@ -1,4 +1,5 @@
-﻿using ConsoleTesting.Models.Conditions;
+﻿using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Conditions;
 using DB.Models.Characters;
 using GameBuilder.Factories;
 using System;
@@ -29,6 +30,15 @@ namespace GameBuilderAPI.ObjectFactories
             return new MadeChoicesCondition
             {
                 Choices = choices,
+            };
+        }
+
+        public StatePointsCondition CreateStatePointsCondition(State state, int pointsRequired)
+        {
+            return new StatePointsCondition()
+            {
+                State = state,
+                PointsRequired = pointsRequired
             };
         }
     }

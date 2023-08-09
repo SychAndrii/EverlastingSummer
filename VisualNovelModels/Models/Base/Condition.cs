@@ -21,7 +21,7 @@ namespace ConsoleTesting.Models.Base
     /// </example>
     public abstract class Condition
     { 
-        private readonly Guid _Id = Guid.NewGuid();
+        private readonly Guid _Id;
         public Guid Id { get => _Id; }
         public abstract Task AcceptDBVisitor(IConditionVisitorDB visitor, ESContext context);
 

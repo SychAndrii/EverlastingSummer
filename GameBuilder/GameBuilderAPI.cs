@@ -91,5 +91,12 @@ namespace GameBuilder
         {
             return await GameBuilderController.AddMadeUserChoice(user, c);
         }
+
+        public static async Task<Condition?> CreateStatePointsCondition(State state, int minimumPointsRequired)
+        {
+            return await GameBuilderController.AddStatePointsCondition(
+                ConditionFactory.Instance.CreateStatePointsCondition(state, minimumPointsRequired)
+            );
+        }
     }
 }

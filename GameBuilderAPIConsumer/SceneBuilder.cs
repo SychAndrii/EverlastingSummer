@@ -45,7 +45,6 @@ namespace GameBuilder
 
             await GameBuilderAPI.AddStateModifier(scene6Choice1, mysticismInterest, 1);
             await GameBuilderAPI.AddStateModifier(scene6Choice2, peopleInterest, 1);
-
             await GameBuilderAPI.AddTransition(scene5!, scene6!);
 
             Scene? scene7a = await GameBuilderAPI.CreateStandardScene("Decades ago, in the heart of the forest stood an abandoned house. It is said that this house was the home of one unfortunate ghost. People from the town heard strange sounds, singing songs of woe, coming from the house at night.", mary);
@@ -77,15 +76,28 @@ namespace GameBuilder
 
             Scene? scene2_1 = await GameBuilderAPI.CreateStandardScene("Good night, Mary.", adrian);
 
-            var t2 = await GameBuilderAPI.AddTransition(scene10a!, scene2_1!);
-            var t = await GameBuilderAPI.AddTransition(scene11b!, scene2_1!);
+            await GameBuilderAPI.AddTransition(scene10a!, scene2_1!);
+            await GameBuilderAPI.AddTransition(scene11b!, scene2_1!);
 
             Scene? scene2_2 = await GameBuilderAPI.CreateStandardScene("Sweet dreams, young man.", mary);
             Scene? scene2_3 = await GameBuilderAPI.CreateStandardScene("Back in his room, Adrian feels excited from the anticipation of tomorrow.");
+            Scene? scene2_4 = await GameBuilderAPI.CreateStandardScene("Day 2");
+            Scene? scene2_5 = await GameBuilderAPI.CreateStandardScene("Sunrise greeted Adrian, his eyes sparkling with excitement. Everything he'd heard yesterday seemed so alive and real.");
 
             await GameBuilderAPI.AddTransition(scene2_1!, scene2_2!);
             await GameBuilderAPI.AddTransition(scene2_2!, scene2_3!);
-        
+            await GameBuilderAPI.AddTransition(scene2_3!, scene2_4!);
+            await GameBuilderAPI.AddTransition(scene2_4!, scene2_5!);
+
+            Condition? scene2_5TransitionAConditionA = await GameBuilderAPI.CreateStatePointsCondition(mysticismInterest, 1);
+            Condition? scene2_5TransitionAConditionB = await GameBuilderAPI.CreateStatePointsCondition(peopleInterest, 1);
+
+            Scene? scene2_6a = await GameBuilderAPI.CreateStandardScene("Adrian decides to go into the woods to search for the mysterious house.");
+            Scene? scene2_6b = await GameBuilderAPI.CreateStandardScene("Adrian decides to explore more stories about the town and its people.");
+
+            await GameBuilderAPI.AddTransition(scene2_5!, scene2_6a!, scene2_5TransitionAConditionA);
+            await GameBuilderAPI.AddTransition(scene2_5!, scene2_6b!, scene2_5TransitionAConditionB);
         }
+
     }
 }

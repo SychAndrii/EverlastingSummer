@@ -27,7 +27,7 @@ namespace ConsoleTesting.Models.Conditions
         /// Player must collect at least <see cref="PointsRequired"/> points for this ending
         /// to move to the next scene.
         /// </summary>
-        public State Ending { get; set; }
+        public State State { get; set; }
 
         public override async Task AcceptDBVisitor(IConditionVisitorDB visitor, ESContext context)
         {
@@ -36,10 +36,10 @@ namespace ConsoleTesting.Models.Conditions
 
         public override bool CanTransit(User player)
         {
-            var playerProgressOfEnding = player.StateProgresses.Where(ep => ep.State == Ending).FirstOrDefault();
+            var playerProgressOfEnding = player.StateProgresses.Where(ep => ep.State == State).FirstOrDefault();
             if (playerProgressOfEnding != null)
             {
-                return playerProgressOfEnding.CurrentPoints == PointsRequired;
+                return playerProgressOfEnding.CurrentPoints >= PointsRequired;
             }
             return false;
         }

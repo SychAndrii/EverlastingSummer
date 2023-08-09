@@ -1,11 +1,13 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Base;
+using ConsoleTesting.Models.Conditions;
 using ConsoleTesting.Models.Scenes;
 using ConsoleTesting.Models.Transit;
 using DB.Models.Characters;
 using DB.Models.TextSwitcher;
 using GameBuilder.Helpers;
 using GameBuilder.Visitors;
+using GameBuilderAPI.Services;
 using GameBuilderAPI.Visitors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -76,11 +78,11 @@ namespace ConsoleTesting.Services
 
             try
             {
+                if(transition.Conditions != null)
+                    context.Conditions.AttachRange(transition.Conditions);
                 context.Scenes.Attach(modifiedScene);
                 context.Scenes.Attach(transition.TargetScene);
                 await context.Transitions.AddAsync(transition);
-                if(modifiedScene is StandardScene ss && ss.Dialogue.Text.StartsWith("Thank you, Mary."))
-                    await Console.Out.WriteLineAsync();
                 await context.SaveChangesAsync();
 
                 var firstScene = await FindFirstScene(context);
@@ -118,7 +120,6 @@ namespace ConsoleTesting.Services
             var task2 = context.ChoiceScenes
             .Include(s => s.Characters)
             .Include(s => s.Choices)
-            .Include(s => s.Transitions)
             .ToListAsync();
 
 
@@ -128,9 +129,7 @@ namespace ConsoleTesting.Services
                 .ThenInclude(d => d.Character)
                 .ToListAsync();
 
-            var task4 = context.MadeChoicesConditions
-                .Include(s => s.Choices)
-                .ToListAsync();
+            var task4 = ConditionService.Instance.LoadConditionsTask(context);
 
             await Task.WhenAll(task1, task2, task3, task4);
 

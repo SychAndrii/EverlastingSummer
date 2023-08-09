@@ -112,13 +112,13 @@ namespace ConsoleTesting.Database
                 .HasOne(t => t.SourceScene)
                 .WithMany(s => s.Transitions)
                 .HasForeignKey(t => t.SourceSceneId)
-                .OnDelete(DeleteBehavior.Restrict); // Необходимо для предотвращения циклических зависимостей при удалении
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Transition>()
                 .HasOne(t => t.TargetScene)
-                .WithOne() // Указываем, что у целевой сцены нет обратной связи
-                .HasForeignKey<Transition>(t => t.TargetSceneId)
-                .OnDelete(DeleteBehavior.Restrict); // Необходимо для предотвращения циклических зависимостей при удалении
+                .WithMany() 
+                .HasForeignKey(t => t.TargetSceneId)
+                .OnDelete(DeleteBehavior.Restrict); 
         }
 
         private void ConfiguringUsers(ModelBuilder modelBuilder)

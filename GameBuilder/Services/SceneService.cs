@@ -79,6 +79,8 @@ namespace ConsoleTesting.Services
                 context.Scenes.Attach(modifiedScene);
                 context.Scenes.Attach(transition.TargetScene);
                 await context.Transitions.AddAsync(transition);
+                if(modifiedScene is StandardScene ss && ss.Dialogue.Text.StartsWith("Thank you, Mary."))
+                    await Console.Out.WriteLineAsync();
                 await context.SaveChangesAsync();
 
                 var firstScene = await FindFirstScene(context);

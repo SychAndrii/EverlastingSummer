@@ -49,12 +49,12 @@ namespace GameBuilder
             await GameBuilderAPI.AddTransition(scene5!, scene6!);
 
             Scene? scene7a = await GameBuilderAPI.CreateStandardScene("Decades ago, in the heart of the forest stood an abandoned house. It is said that this house was the home of one unfortunate ghost. People from the town heard strange sounds, singing songs of woe, coming from the house at night.", mary);
-            Scene? scene7b = await GameBuilderAPI.CreateStandardScene("Somber is a small but very old town. Every house, every street has its own story. Some of them are beautiful, others are dark and frightening. Our town knows many secrets that are waiting to be uncovered.", mary);
+            Scene? scene7b = await GameBuilderAPI.CreateStandardScene("Mary nods.");
 
             Condition scene6TransitionACondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice1);
             Condition scene6TransitionBCondition = await GameBuilderAPI.CreateMadeChoicesCondition(scene6Choice2);
 
-            var t1 = await GameBuilderAPI.AddTransition(scene6!, scene7a!, scene6TransitionACondition);
+            await GameBuilderAPI.AddTransition(scene6!, scene7a!, scene6TransitionACondition);
             await GameBuilderAPI.AddTransition(scene6!, scene7b!, scene6TransitionBCondition);
 
             Scene? scene8a = await GameBuilderAPI.CreateStandardScene("Adrian's eyes sparkle with interest.");
@@ -65,22 +65,20 @@ namespace GameBuilder
             await GameBuilderAPI.AddTransition(scene8a!, scene9a!);
             await GameBuilderAPI.AddTransition(scene9a!, scene10a!);
 
-            Scene? scene8b = await GameBuilderAPI.CreateStandardScene("Mary nods.");
-            Scene? scene9b = await GameBuilderAPI.CreateStandardScene("Somber is a small but very old town. Every house, every street has its own story. Some of them are beautiful, others are dark and frightening. Our town knows many secrets that are waiting to be uncovered.", mary);
-            Scene? scene10b = await GameBuilderAPI.CreateStandardScene("You talk about him as if Somber is a living organism.", adrian);
-            Scene? scene11b = await GameBuilderAPI.CreateStandardScene("For many of us, that's exactly what it is. We were born and grew up here, and the city has become a part of us.", mary);
-            Scene? scene12b = await GameBuilderAPI.CreateStandardScene("Thank you, Mary. Your town is indeed an interesting place.", adrian);
+            Scene? scene8b = await GameBuilderAPI.CreateStandardScene("Somber is a small but very old town. Every house, every street has its own story. Some of them are beautiful, others are dark and frightening. Our town knows many secrets that are waiting to be uncovered.", mary);
+            Scene? scene9b = await GameBuilderAPI.CreateStandardScene("You talk about him as if Somber is a living organism.", adrian);
+            Scene? scene10b = await GameBuilderAPI.CreateStandardScene("For many of us, that's exactly what it is. We were born and grew up here, and the city has become a part of us.", mary);
+            Scene? scene11b = await GameBuilderAPI.CreateStandardScene("Thank you, Mary. Your town is indeed an interesting place.", adrian);
 
             await GameBuilderAPI.AddTransition(scene7b!, scene8b!);
             await GameBuilderAPI.AddTransition(scene8b!, scene9b!);
             await GameBuilderAPI.AddTransition(scene9b!, scene10b!);
             await GameBuilderAPI.AddTransition(scene10b!, scene11b!);
-            await GameBuilderAPI.AddTransition(scene11b!, scene12b!);
 
             Scene? scene2_1 = await GameBuilderAPI.CreateStandardScene("Good night, Mary.", adrian);
 
-            await GameBuilderAPI.AddTransition(scene10a!, scene2_1!);
-            await GameBuilderAPI.AddTransition(scene12b!, scene2_1!);
+            var t2 = await GameBuilderAPI.AddTransition(scene10a!, scene2_1!);
+            var t = await GameBuilderAPI.AddTransition(scene11b!, scene2_1!);
 
             Scene? scene2_2 = await GameBuilderAPI.CreateStandardScene("Sweet dreams, young man.", mary);
             Scene? scene2_3 = await GameBuilderAPI.CreateStandardScene("Back in his room, Adrian feels excited from the anticipation of tomorrow.");

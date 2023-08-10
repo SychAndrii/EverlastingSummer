@@ -65,7 +65,7 @@ namespace GameBuilder
 
         public static async Task<Transition?> AddTransition(Scene modifiableScene, Scene targetScene, params Condition[] conditions)
         {
-            var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions);
+            var transition = TransitionFactory.Instance.CreateTransition(modifiableScene, targetScene, conditions.ToList());
             return await GameBuilderController.AddTransition(modifiableScene, transition);
 
         }

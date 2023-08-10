@@ -76,7 +76,6 @@ namespace ConsoleTesting.Services
         public async Task<Transition?> AddTransition(Scene modifiedScene, Transition transition)
         {
             using ESContext context = new ESContext();
-
             try
             {
                 if(transition.Conditions != null)

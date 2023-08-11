@@ -42,8 +42,6 @@ namespace GameBuilderAPI.Services
             using ESContext context = new ESContext();
             try
             {
-                if(c is StatePointsCondition)
-                    await Console.Out.WriteLineAsync();
                 var conditionAddedVisitor = ConditionAddedVisitor.Instance;
                 await c.AcceptDBVisitor(conditionAddedVisitor, context);
                 context.Conditions.Add(c);

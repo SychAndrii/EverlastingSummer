@@ -322,11 +322,12 @@ namespace GameBuilder
 
             #region Ending1(Mysticism)
 
-            Condition mysticismInterestHigh = await GameBuilderAPI.CreateStatePointsCondition(mysticismInterest, 2);
+            Condition mysticismInterestHigh1 = await GameBuilderAPI.CreateStatePointsCondition(mysticismInterest, 2);
+            Condition mysticismInterestHigh2 = await GameBuilderAPI.CreateStatePointsCondition(mysticismInterest, 2);
 
             Scene? scene4_15a_1a = await GameBuilderAPI.CreateStandardScene("Power? What do you mean?", adrian);
 
-            await GameBuilderAPI.AddTransition(scene4_18a!, scene4_15a_1a!, mysticismInterestHigh);
+            await GameBuilderAPI.AddTransition(scene4_18a!, scene4_15a_1a!, mysticismInterestHigh1);
 
             Scene? scene4_15a_2a = await GameBuilderAPI.CreateStandardScene("The amulet you hold, it binds me but can also be the key. I can show you the way to realms you've never imagined, mysteries beyond comprehension", specter);
             Scene? scene4_15a_3a = await GameBuilderAPI.CreateStandardScene("But I must return to my world.", specter);
@@ -353,7 +354,7 @@ namespace GameBuilder
             Scene? scene4_15a_21a = await GameBuilderAPI.CreateStandardScene("A burden has indeed been lifted, but in its place, an exhilarating challenge beckons. I know that I've been changed too, granted the knowledge to traverse the very fabric of existence.");
             Scene? scene4_15a_22a = await GameBuilderAPI.CreateStandardScene("The path to other dimensions has opened before me, and I'm eager, yet humbled, to explore it further. The specter's world, once a distant mystery, now feels within reach.");
 
-            await GameBuilderAPI.AddTransition(scene4_15a_1a!, scene4_15a_2a!);
+            Transition t = await GameBuilderAPI.AddTransition(scene4_15a_1a!, scene4_15a_2a!);
             await GameBuilderAPI.AddTransition(scene4_15a_2a!, scene4_15a_3a!);
             await GameBuilderAPI.AddTransition(scene4_15a_3a!, scene4_15a_4a!);
             await GameBuilderAPI.AddTransition(scene4_15a_4a!, scene4_15a_5a!);
@@ -368,7 +369,7 @@ namespace GameBuilder
             await GameBuilderAPI.AddTransition(scene4_15a_13a!, scene4_15a_14a!);
             await GameBuilderAPI.AddTransition(scene4_15a_14a!, scene4_15a_15a!);
             await GameBuilderAPI.AddTransition(scene4_15a_15a!, ritual_1!);
-            await GameBuilderAPI.AddTransition(ritual_8!, scene4_15a_16a!, mysticismInterestHigh);
+            await GameBuilderAPI.AddTransition(ritual_8!, scene4_15a_16a!, mysticismInterestHigh2);
             await GameBuilderAPI.AddTransition(scene4_15a_16a!, scene4_15a_17a!);
             await GameBuilderAPI.AddTransition(scene4_15a_17a!, scene4_15a_18a!);
             await GameBuilderAPI.AddTransition(scene4_15a_18a!, scene4_15a_19a!);
@@ -380,11 +381,12 @@ namespace GameBuilder
 
             #region Ending2(People)
 
-            Condition peopleInterestHigh = await GameBuilderAPI.CreateStatePointsCondition(peopleInterest, 2);
+            Condition peopleInterestHigh1 = await GameBuilderAPI.CreateStatePointsCondition(peopleInterest, 2);
+            Condition peopleInterestHigh2 = await GameBuilderAPI.CreateStatePointsCondition(peopleInterest, 2);
 
             Scene? scene4_15a_1b = await GameBuilderAPI.CreateStandardScene("Why did the owners of the house lock you in this basement?", adrian);
 
-            await GameBuilderAPI.AddTransition(scene4_18a!, scene4_15a_1b!, peopleInterestHigh);
+            await GameBuilderAPI.AddTransition(scene4_18a!, scene4_15a_1b!, peopleInterestHigh1);
 
             Scene? scene4_15a_2b = await GameBuilderAPI.CreateStandardScene("When I first arrived in your world, I was trapped in this cellar out of fear and misunderstanding. I'm not a monster; I'm a being from another dimension.", specter);
             Scene? scene4_15a_3b = await GameBuilderAPI.CreateStandardScene("I long to return to my family, my friends... a life I left behind.", specter);
@@ -428,7 +430,7 @@ namespace GameBuilder
             await GameBuilderAPI.AddTransition(scene4_15a_5b!, scene4_15a_6b!);
             await GameBuilderAPI.AddTransition(scene4_15a_6b!, scene4_15a_7b!);
             await GameBuilderAPI.AddTransition(scene4_15a_7b!, ritual_1!);
-            await GameBuilderAPI.AddTransition(ritual_8!, scene4_15a_8b!, peopleInterestHigh);
+            await GameBuilderAPI.AddTransition(ritual_8!, scene4_15a_8b!, peopleInterestHigh2);
             await GameBuilderAPI.AddTransition(scene4_15a_8b!, scene4_15a_9b!);
             await GameBuilderAPI.AddTransition(scene4_15a_9b!, scene4_15a_10b!);
             await GameBuilderAPI.AddTransition(scene4_15a_10b!, scene4_15a_11b!);
@@ -546,47 +548,46 @@ namespace GameBuilder
 
 
             #region Ending4(People)
-            Scene? scene4_15b_1b = await GameBuilderAPI.CreateStandardScene("");
+            Scene? scene4_15b_1b = await GameBuilderAPI.CreateStandardScene("Who are you? Why are you helping me?", adrian);
 
             Condition highPeopleInterestState = await GameBuilderAPI.CreateStatePointsCondition(peopleInterest, 2);
 
             await GameBuilderAPI.AddTransition(scene4_14b, scene4_15b_1b, highPeopleInterestState);
 
 
-            Scene? scene4_15b_2b = await GameBuilderAPI.CreateStandardScene("Who are you? Why are you helping me?", adrian);
-            Scene? scene4_15b_3b = await GameBuilderAPI.CreateStandardScene("I have been waiting for someone who might understand this place and its mysteries.", oldMan);
-            Scene? scene4_15b_4b = await GameBuilderAPI.CreateStandardScene("What do you mean? I am just a programmer, and this house caught my attention. How are you connected to it?", adrian);
-            Scene? scene4_15b_5b = await GameBuilderAPI.CreateStandardScene("Old man sighs deeply.");
-            Scene? scene4_15b_6b = await GameBuilderAPI.CreateStandardScene("The story is long and tragic.");
-            Scene? scene4_15b_7b = await GameBuilderAPI.CreateStandardScene("My friend Edward and I were fascinated by the idea of using the energy of another world to cure human diseases.", oldMan);
-            Scene? scene4_15b_8b = await GameBuilderAPI.CreateStandardScene("Edward's wife was struggling with an incurable illness, and we sought to find a solution.", oldMan);
-            Scene? scene4_15b_9b = await GameBuilderAPI.CreateStandardScene("You speak of healing through mysticism? Is that really possible?", adrian);
-            Scene? scene4_15b_10b = await GameBuilderAPI.CreateStandardScene("Yes, but our path was fraught with mistakes and suffering. One of our rituals got out of control, and now this house is bound to a ghost that we summoned.", oldMan);
-            Scene? scene4_15b_11b = await GameBuilderAPI.CreateStandardScene("What happened to Edward and his wife?", adrian);
-            Scene? scene4_15b_12b = await GameBuilderAPI.CreateStandardScene("Margaret died because she could not suffer any longer. Edward went into exile, full of guilt and despair. I remained here, living with the guilt that I couldn't stop him.", oldMan);
-            Scene? scene4_15b_13b = await GameBuilderAPI.CreateStandardScene("I have been looking for someone who might help me correct the mistake and possibly use our discoveries for the good of humanity.", oldMan);
-            Scene? scene4_15b_14b = await GameBuilderAPI.CreateStandardScene("I'm willing to try to help.", adrian);
-            Scene? scene4_15b_15b = await GameBuilderAPI.CreateStandardScene("Thank you, my friend.", oldMan);
-            Scene? scene4_15b_16b = await GameBuilderAPI.CreateStandardScene("I feel that together we can accomplish something great.", oldMan);
-            Scene? scene4_15b_17b = await GameBuilderAPI.CreateStandardScene("We enter the house together. The Old Man leads me through dimly lit corridors, filled with relics of past mystic experiments, until we reach a hidden door.");
-            Scene? scene4_15b_18b = await GameBuilderAPI.CreateStandardScene("Behind it lies the laboratory where he and Edward once worked.");
-            Scene? scene4_15b_19b = await GameBuilderAPI.CreateStandardScene("This place is amazing! What were you working on?", adrian);
-            Scene? scene4_15b_20b = await GameBuilderAPI.CreateStandardScene("We were trying to contact other realms, seeking to understand them, and utilize their energy for healing. This mechanism was our creation.", oldMan);
-            Scene? scene4_15b_21b = await GameBuilderAPI.CreateStandardScene("Old man points to a complex device combining mystical symbols with modern technology.");
-            Scene? scene4_15b_22b = await GameBuilderAPI.CreateStandardScene("How does it work?", adrian);
-            Scene? scene4_15b_23b = await GameBuilderAPI.CreateStandardScene("It creates a stable channel with the other world. But we lost control, and the specter fell into our world, so we trapped him in the basement.", oldMan);
-            Scene? scene4_15b_24b = await GameBuilderAPI.CreateStandardScene("We need to understand it, find a way to harness its energy.", oldMan);
-            Scene? scene4_15b_25b = await GameBuilderAPI.CreateStandardScene("Days passed as we immersed in research and experimentation.");
-            Scene? scene4_15b_26b = await GameBuilderAPI.CreateStandardScene("We pore over Edward's old journals, recreated experiments, and made adjustments to the mechanism.");
-            Scene? scene4_15b_27b = await GameBuilderAPI.CreateStandardScene("Finally, after endless trial and error, they initiate the mechanism.");
-            Scene? scene4_15b_28b = await GameBuilderAPI.CreateStandardScene("A hum fills the air as the device powers up, and we watch in awe as it establishes a connection with the other world.");
-            Scene? scene4_15b_29b = await GameBuilderAPI.CreateStandardScene("I can see tears in old man's eyes.");
-            Scene? scene4_15b_30b = await GameBuilderAPI.CreateStandardScene("We've done it, Adrian! We've reestablished the link.", oldMan);
-            Scene? scene4_15b_31b = await GameBuilderAPI.CreateStandardScene("And the specter's energy... It can be harnessed! Transformed into something we can use!", adrian);
-            Scene? scene4_15b_32b = await GameBuilderAPI.CreateStandardScene("It's a limitless source. We must ensure it's used responsibly.", oldMan);
-            Scene? scene4_15b_33b = await GameBuilderAPI.CreateStandardScene("Months later, we have not only understood the specter but have also developed a way to safely convert its energy. We know we have discovered something that could change the world.");
-            Scene? scene4_15b_34b = await GameBuilderAPI.CreateStandardScene("The house, once a place of tragedy, has become a symbol of hope. The guilt that burdened the Old Man has been lifted, replaced with pride and fulfillment.");
-            Scene? scene4_15b_35b = await GameBuilderAPI.CreateStandardScene("We vow to continue our work together, knowing that they we only just begun to unlock the mysteries of the other world, driven by a shared vision of healing and endless possibility.");
+            Scene? scene4_15b_2b = await GameBuilderAPI.CreateStandardScene("I have been waiting for someone who might understand this place and its mysteries.", oldMan);
+            Scene? scene4_15b_3b = await GameBuilderAPI.CreateStandardScene("What do you mean? I am just a programmer, and this house caught my attention. How are you connected to it?", adrian);
+            Scene? scene4_15b_4b = await GameBuilderAPI.CreateStandardScene("Old man sighs deeply.");
+            Scene? scene4_15b_5b = await GameBuilderAPI.CreateStandardScene("The story is long and tragic.", oldMan);
+            Scene? scene4_15b_6b = await GameBuilderAPI.CreateStandardScene("My friend Edward and I were fascinated by the idea of using the energy of another world to cure human diseases.", oldMan);
+            Scene? scene4_15b_7b = await GameBuilderAPI.CreateStandardScene("Edward's wife was struggling with an incurable illness, and we sought to find a solution.", oldMan);
+            Scene? scene4_15b_8b = await GameBuilderAPI.CreateStandardScene("You speak of healing through mysticism? Is that really possible?", adrian);
+            Scene? scene4_15b_9b = await GameBuilderAPI.CreateStandardScene("Yes, but our path was fraught with mistakes and suffering. One of our rituals got out of control, and now this house is bound to a ghost that we summoned.", oldMan);
+            Scene? scene4_15b_10b = await GameBuilderAPI.CreateStandardScene("What happened to Edward and his wife?", adrian);
+            Scene? scene4_15b_11b = await GameBuilderAPI.CreateStandardScene("Margaret died because she could not suffer any longer. Edward went into exile, full of guilt and despair. I remained here, living with the guilt that I couldn't stop him.", oldMan);
+            Scene? scene4_15b_12b = await GameBuilderAPI.CreateStandardScene("I have been looking for someone who might help me correct the mistake and possibly use our discoveries for the good of humanity.", oldMan);
+            Scene? scene4_15b_13b = await GameBuilderAPI.CreateStandardScene("I'm willing to try to help.", adrian);
+            Scene? scene4_15b_14b = await GameBuilderAPI.CreateStandardScene("Thank you, my friend.", oldMan);
+            Scene? scene4_15b_15b = await GameBuilderAPI.CreateStandardScene("I feel that together we can accomplish something great.", oldMan);
+            Scene? scene4_15b_16b = await GameBuilderAPI.CreateStandardScene("We enter the house together. The Old Man leads me through dimly lit corridors, filled with relics of past mystic experiments, until we reach a hidden door.");
+            Scene? scene4_15b_17b = await GameBuilderAPI.CreateStandardScene("Behind it lies the laboratory where he and Edward once worked.");
+            Scene? scene4_15b_18b = await GameBuilderAPI.CreateStandardScene("This place is amazing! What were you working on?", adrian);
+            Scene? scene4_15b_19b = await GameBuilderAPI.CreateStandardScene("We were trying to contact other realms, seeking to understand them, and utilize their energy for healing. This mechanism was our creation.", oldMan);
+            Scene? scene4_15b_20b = await GameBuilderAPI.CreateStandardScene("Old man points to a complex device combining mystical symbols with modern technology.");
+            Scene? scene4_15b_21b = await GameBuilderAPI.CreateStandardScene("How does it work?", adrian);
+            Scene? scene4_15b_22b = await GameBuilderAPI.CreateStandardScene("It creates a stable channel with the other world. But we lost control, and the specter fell into our world, so we trapped him in the basement.", oldMan);
+            Scene? scene4_15b_23b = await GameBuilderAPI.CreateStandardScene("We need to understand it, find a way to harness its energy.", oldMan);
+            Scene? scene4_15b_24b = await GameBuilderAPI.CreateStandardScene("Days passed as we immersed in research and experimentation.");
+            Scene? scene4_15b_25b = await GameBuilderAPI.CreateStandardScene("We pore over Edward's old journals, recreated experiments, and made adjustments to the mechanism.");
+            Scene? scene4_15b_26b = await GameBuilderAPI.CreateStandardScene("Finally, after endless trial and error, they initiate the mechanism.");
+            Scene? scene4_15b_27b = await GameBuilderAPI.CreateStandardScene("A hum fills the air as the device powers up, and we watch in awe as it establishes a connection with the other world.");
+            Scene? scene4_15b_28b = await GameBuilderAPI.CreateStandardScene("I can see tears in old man's eyes.");
+            Scene? scene4_15b_29b = await GameBuilderAPI.CreateStandardScene("We've done it, Adrian! We've reestablished the link.", oldMan);
+            Scene? scene4_15b_30b = await GameBuilderAPI.CreateStandardScene("And the specter's energy... It can be harnessed! Transformed into something we can use!", adrian);
+            Scene? scene4_15b_31b = await GameBuilderAPI.CreateStandardScene("It's a limitless source. We must ensure it's used responsibly.", oldMan);
+            Scene? scene4_15b_32b = await GameBuilderAPI.CreateStandardScene("Months later, we have not only understood the specter but have also developed a way to safely convert its energy. We know we have discovered something that could change the world.");
+            Scene? scene4_15b_33b = await GameBuilderAPI.CreateStandardScene("The house, once a place of tragedy, has become a symbol of hope. The guilt that burdened the Old Man has been lifted, replaced with pride and fulfillment.");
+            Scene? scene4_15b_34b = await GameBuilderAPI.CreateStandardScene("We vow to continue our work together, knowing that they we only just begun to unlock the mysteries of the other world, driven by a shared vision of healing and endless possibility.");
 
             await GameBuilderAPI.AddTransition(scene4_15b_1b!, scene4_15b_2b!);
             await GameBuilderAPI.AddTransition(scene4_15b_2b!, scene4_15b_3b!);
@@ -621,7 +622,6 @@ namespace GameBuilder
             await GameBuilderAPI.AddTransition(scene4_15b_31b!, scene4_15b_32b!);
             await GameBuilderAPI.AddTransition(scene4_15b_32b!, scene4_15b_33b!);
             await GameBuilderAPI.AddTransition(scene4_15b_33b!, scene4_15b_34b!);
-            await GameBuilderAPI.AddTransition(scene4_15b_34b!, scene4_15b_35b!);
             
             #endregion
 

@@ -78,10 +78,11 @@ namespace ConsoleTesting.Services
             using ESContext context = new ESContext();
             try
             {
-                if(transition.Conditions != null)
-                    context.Conditions.AttachRange(transition.Conditions);
                 context.Scenes.Attach(modifiedScene);
                 context.Scenes.Attach(transition.TargetScene);
+                if (transition.Conditions != null)
+                    context.Conditions.AttachRange(transition.Conditions);
+
                 await context.Transitions.AddAsync(transition);
                 await context.SaveChangesAsync();
 

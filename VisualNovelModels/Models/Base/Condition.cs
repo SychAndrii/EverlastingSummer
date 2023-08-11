@@ -23,6 +23,8 @@ namespace ConsoleTesting.Models.Base
     { 
         private readonly Guid _Id;
         public Guid Id { get => _Id; }
+        public Transition Transition { get; set; }
+        public Guid? TransitionId { get; set; }
         public abstract Task AcceptDBVisitor(IConditionVisitorDB visitor, ESContext context);
 
         /// <summary>

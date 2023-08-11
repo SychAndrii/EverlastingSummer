@@ -180,6 +180,7 @@ namespace ConsoleTesting.Database
                 .Entity<StatePointsCondition>()
                 .UseTpcMappingStrategy()
                 .ToTable(b => b.HasCheckConstraint("Points_bigger_than_0", "PointsRequired > 0"));
+
         }
 
         private void ConfiguringChoice(ModelBuilder modelBuilder)

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameBuilder\GameBuilderAPI.csproj" />
+    <ProjectReference Include="..\GameBuilderAPI\GameBuilderAPI.csproj" />
     <ProjectReference Include="..\VisualNovelModels\VisualNovelModels.csproj" />
   </ItemGroup>
 

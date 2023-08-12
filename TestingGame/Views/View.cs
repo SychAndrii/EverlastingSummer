@@ -34,7 +34,7 @@ namespace GameConsumer.Views
                 string userInput = SceneInputStrategy.AskForInput(scene);
                 if (await SceneSwitchCanHappenStrategy.CanSwitch(userInput, scene))
                 {
-                    Console.WriteLine("\n");
+                    Console.Clear();
                     break;
                 }
             }

@@ -1,0 +1,23 @@
+﻿<Application x:Class="Testing.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Testing"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="LightThemeBackgroundColor"
+                         Color="#F5F5F5" />
+
+        <RotateTransform x:Key="RhombusTransform"
+                         Angle="-45" />
+
+        <Style TargetType="Window" x:Key="WindowStyle">
+            <Setter Property="Background"
+                    Value="{StaticResource LightThemeBackgroundColor}" />
+        </Style>
+
+        <Style TargetType="Menu">
+            <Setter Property="Padding"
+                    Value="5" />
+        </Style>
+    </Application.Resources>
+</Application>

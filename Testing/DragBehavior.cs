@@ -9,6 +9,7 @@ using System.Windows.Interactivity;
 using System.Windows;
 using System.Xml;
 using System.Windows.Markup;
+using System.Windows.Controls;
 
 namespace Testing
 {
@@ -30,6 +31,10 @@ namespace Testing
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
+                if((AssociatedObject as FrameworkElement).Parent is Canvas canvas)
+                {
+                    canvas.Children.Remove(AssociatedObject);
+                }
                 DragDrop.DoDragDrop(AssociatedObject, new DataObject("Element", CopyFrameworkElement(AssociatedObject)), DragDropEffects.Move);
             }
         }

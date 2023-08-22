@@ -36,9 +36,19 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" MinWidth="240" />
+                <ColumnDefinition Width="3" />
                 <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1"
+                          Width="2"
+                          Background="#37474F"
+                          HorizontalAlignment="Stretch" />
+            <GridSplitter Grid.Column="3"
+                          Width="2"
+                          Background="#37474F"
+                          HorizontalAlignment="Stretch" />
             <GroupBox Header="Elements"
                       Padding="5 15">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -60,21 +70,22 @@
                 </ScrollViewer>
             </GroupBox>
             <GroupBox Header="Story Designer"
-                      Grid.Column="1">
+                      Grid.Column="2">
                 <Grid>
-                    <ScrollViewer VerticalScrollBarVisibility="Visible" 
-                                  HorizontalScrollBarVisibility="Visible">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                                  HorizontalScrollBarVisibility="Auto">
                         <Canvas x:Name="canvas"
                                 AllowDrop="True"
                                 DragOver="canvas_DragOver"
                                 Drop="canvas_Drop"
                                 Background="{StaticResource LightThemeBackgroundColor}">
+                            
                         </Canvas>
                     </ScrollViewer>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Scene Details"
-                      Grid.Column="2">
+                      Grid.Column="4">
 
             </GroupBox>
         </Grid>

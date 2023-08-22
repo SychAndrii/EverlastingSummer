@@ -28,15 +28,14 @@ namespace GameBuilder
     {
         private readonly GameBuilderController controller;
 
-        public GameBuilderAPI(IServiceProvider serviceProvider)
+        public GameBuilderAPI(IServiceProvider serviceProvider, ESContext context)
         {
-            RecreateDatabase();
+            RecreateDatabase(context);
             controller = serviceProvider.GetRequiredService<GameBuilderController>();
         }
 
-        private static void RecreateDatabase()
+        private static void RecreateDatabase(ESContext context)
         {
-            using ESContext context = new ESContext();
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }

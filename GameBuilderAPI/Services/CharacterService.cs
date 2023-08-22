@@ -3,6 +3,7 @@ using ConsoleTesting.Models.Base;
 using ConsoleTesting.Services;
 using DB.Models.Characters;
 using DB.Models.TextSwitcher;
+using GameBuilderAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,10 @@ using System.Threading.Tasks;
 
 namespace DB.Services
 {
-    internal class CharacterService
+    internal class CharacterService : DBService
     {
+        public CharacterService(ESContext context) : base(context) { }
+
         /// <summary>
         /// Tries to add a character to the database. If not successful, returns null.
         /// </summary>
@@ -21,15 +24,14 @@ namespace DB.Services
         /// <returns>null if unsuccessful, character (passed as parameter) otherwise.</returns>
         public async Task<DialogueCharacter?> AddCharacter(DialogueCharacter character)
         {
-            using ESContext eSContext = new ESContext();
-            var sameExistingCharacter = await eSContext.DialogueCharacters
+            var sameExistingCharacter = await context.DialogueCharacters
                 .Where(existingCharacter => existingCharacter.Name == character.Name)
                 .FirstOrDefaultAsync();
 
             if (sameExistingCharacter == null)
             {
-                await eSContext.DialogueCharacters.AddAsync(character);
-                var res = await eSContext.SaveChangesAsync();
+                await context.DialogueCharacters.AddAsync(character);
+                var res = await context.SaveChangesAsync();
                 return character;
             }
             return null;

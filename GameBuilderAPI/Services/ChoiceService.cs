@@ -1,6 +1,7 @@
 ﻿using ConsoleTesting.Database;
 using ConsoleTesting.Models.Transit;
 using DB.Services;
+using GameBuilderAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,14 @@ using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder.Services
 {
-    internal class ChoiceService
+    internal class ChoiceService : DBService
     {
+        public ChoiceService(ESContext context) : base(context)
+        {
+        }
+
         public async Task<Choice?> AddChoice(Choice c)
         {
-            using ESContext context = new ESContext();
             try
             {
                 foreach (var stateModifier in c.StateModifiers)
@@ -32,7 +36,7 @@ namespace GameBuilder.Services
             }
         }
 
-        public Task LoadChoiceDependenciesTask(ESContext context)
+        public Task LoadChoiceDependenciesTask()
         {
             return context.Choices
                     .Include(c => c.StateModifiers)

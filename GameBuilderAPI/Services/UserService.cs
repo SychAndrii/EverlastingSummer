@@ -10,22 +10,23 @@ using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder.Services
 {
-    internal class UserService
+    internal class UserService : DBService
     {
+        public UserService(ESContext context) : base(context)
+        {
+        }
+
         public async Task<User> GetUser()
         {
-            using ESContext context = new ESContext();
-            var user = await FindUser(context);
+            var user = await FindUser();
 
             if (user == null)
-                return await CreateUser(context);
-
-
+                return await CreateUser();
 
             return user;
         }
 
-        private async Task<User?> CreateUser(ESContext context)
+        private async Task<User?> CreateUser()
         {
             var user = new User();
             context.Users.Add(user);
@@ -33,7 +34,7 @@ namespace GameBuilder.Services
             return user;
         }
 
-        private async Task<User?> FindUser(ESContext context)
+        private async Task<User?> FindUser()
         {
             var scene = await context
                     .Users
@@ -45,7 +46,6 @@ namespace GameBuilder.Services
 
         internal async Task<User?> AddMadeUserChoice(User user, Choice c)
         {
-            using ESContext context = new ESContext();
             try
             {
                 context.Users.Attach(user);
@@ -64,7 +64,6 @@ namespace GameBuilder.Services
 
         internal async Task<User?> UpdateUserStateProgresses(User user, IEnumerable<StateModifier> stateModifiers)
         {
-            using ESContext context = new ESContext();
             try
             {
                 var states = (from sm in stateModifiers

@@ -13,11 +13,14 @@ using VisualNovelModels.Models.Choices;
 
 namespace GameBuilderAPI.Services
 {
-    internal class StateService
+    internal class StateService : DBService
     {
+        public StateService(ESContext context) : base(context)
+        {
+        }
+
         public async Task<State?> AddState(State state)
         {
-            using ESContext context = new ESContext();
             try
             {
                 await context.States.AddAsync(state);
@@ -32,7 +35,6 @@ namespace GameBuilderAPI.Services
 
         public async Task<StateModifier?> AddStateModifier(Choice c, StateModifier stateModifier)
         {
-            using ESContext context = new ESContext();
             try
             {
                 context.States.Attach(stateModifier.State);

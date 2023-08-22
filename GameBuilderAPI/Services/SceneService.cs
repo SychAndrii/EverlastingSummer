@@ -23,7 +23,7 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace ConsoleTesting.Services
 {
-    internal class SceneService
+    internal class SceneService : DBService
     {
         private readonly ChoiceService choiceService;
         private readonly ConditionService conditionService;
@@ -46,7 +46,7 @@ namespace ConsoleTesting.Services
             }
         }
 
-        public SceneService(ChoiceService choiceService, ConditionService conditionService) 
+        public SceneService(ChoiceService choiceService, ConditionService conditionService, ESContext context) : base(context) 
         { 
             this.choiceService = choiceService;
             this.conditionService = conditionService;
@@ -54,14 +54,12 @@ namespace ConsoleTesting.Services
 
         public async Task<Scene?> AddScene(Scene scene)
         {
-            using ESContext eSContext = new ESContext();
-
             try
             {
-                await eSContext.Scenes.AddAsync(scene);
+                await context.Scenes.AddAsync(scene);
                 var sceneAddedVisitor = SceneAddedVisitor.Instance;
-                await scene.AcceptDBVisitor(sceneAddedVisitor, eSContext);
-                await eSContext.SaveChangesAsync();
+                await scene.AcceptDBVisitor(sceneAddedVisitor, context);
+                await context.SaveChangesAsync();
                 return scene;
             }
             catch (Exception)
@@ -72,7 +70,6 @@ namespace ConsoleTesting.Services
 
         public async Task<Transition?> AddTransition(Scene modifiedScene, Transition transition)
         {
-            using ESContext context = new ESContext();
             try
             {
                 context.Scenes.Attach(modifiedScene);
@@ -83,7 +80,7 @@ namespace ConsoleTesting.Services
                 await context.Transitions.AddAsync(transition);
                 await context.SaveChangesAsync();
 
-                var firstScene = await FindFirstScene(context);
+                var firstScene = await FindFirstScene();
                 if (firstScene == null)
                 {
                     await AddFirstScene(modifiedScene, context);
@@ -97,7 +94,7 @@ namespace ConsoleTesting.Services
             }
         }
 
-        private async Task<Scene?> FindFirstScene(ESContext context)
+        private async Task<Scene?> FindFirstScene()
         {
             var scene = (await context
                     .FirstScene
@@ -108,7 +105,7 @@ namespace ConsoleTesting.Services
             return scene;
         }
 
-        private async Task LoadSceneDependencies(ESContext context)
+        private async Task LoadSceneDependencies()
         {
             var task1 = context.Scenes
                 .Include(s => s.Transitions)
@@ -127,8 +124,8 @@ namespace ConsoleTesting.Services
                 .ThenInclude(d => d.Character)
                 .ToListAsync();
 
-            var task4 = choiceService.LoadChoiceDependenciesTask(context);
-            var task5 = conditionService.LoadConditionDependenciesTask(context);
+            var task4 = choiceService.LoadChoiceDependenciesTask();
+            var task5 = conditionService.LoadConditionDependenciesTask();
 
             await Task.WhenAll(task1, task2, task3, task4, task5);
 
@@ -136,10 +133,8 @@ namespace ConsoleTesting.Services
 
         internal async Task<Scene?> GetFirstScene()
         {
-            using ESContext context = new ESContext();
-
-            await LoadSceneDependencies(context);
-            var scene = await FindFirstScene(context);
+            await LoadSceneDependencies();
+            var scene = await FindFirstScene();
 
             if (scene == null)
                 return null;

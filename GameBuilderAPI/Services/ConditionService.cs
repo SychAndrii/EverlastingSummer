@@ -16,9 +16,13 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace GameBuilderAPI.Services
 {
-    internal class ConditionService
+    internal class ConditionService : DBService
     {
-        public Task LoadConditionDependenciesTask(ESContext context)
+        public ConditionService(ESContext context) : base(context)
+        {
+        }
+
+        public Task LoadConditionDependenciesTask()
         {
             return context.MadeChoicesConditions
                 .Include(s => s.Choices)
@@ -27,7 +31,6 @@ namespace GameBuilderAPI.Services
 
         public async Task<Condition?> AddCondition(Condition c)
         {
-            using ESContext context = new ESContext();
             try
             {
                 var conditionAddedVisitor = ConditionAddedVisitor.Instance;

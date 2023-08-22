@@ -1,4 +1,5 @@
-﻿using ConsoleTesting.Services;
+﻿using ConsoleTesting.Database;
+using ConsoleTesting.Services;
 using DB.Services;
 using GameBuilder.Controllers;
 using GameBuilder.Services;
@@ -27,6 +28,7 @@ namespace GameBuilder.Helpers
                 services.AddSingleton<SceneService>();
                 services.AddSingleton<StateService>();
                 services.AddSingleton<UserService>();
+                services.AddDbContext<ESContext>();
             });
 
             return builder;

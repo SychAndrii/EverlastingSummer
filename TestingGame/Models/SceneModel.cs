@@ -11,16 +11,22 @@ using System.Threading.Tasks;
 
 namespace GameConsumer.Models
 {
-    internal static class SceneModel
+    internal class SceneModel
     {
-        static SceneModel()
+        private SceneBuilder SceneBuilder { get; }
+        public SceneModel(SceneBuilder sceneBuilder)
         {
-            SceneBuilder.Build().Wait();
+            SceneBuilder = sceneBuilder;
         }
 
-        public async static Task<Scene?> GetFirstScene()
+        public async Task<Scene?> GetFirstScene()
         {
             return await SceneBuilder.GetFirstScene();
+        }
+
+        public async Task BuildScenes()
+        {
+            await SceneBuilder.Build();
         }
     }
 }

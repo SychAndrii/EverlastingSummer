@@ -18,66 +18,76 @@ using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder.Controllers
 {
-    internal static class GameBuilderController
+    internal class GameBuilderController
     {
-        private static CharacterService DialogueCharactersService = CharacterService.Instance;
-        private static SceneService SceneService = SceneService.Instance;
-        private static ChoiceService ChoiceService = ChoiceService.Instance;
-        private static StateService StateService = StateService.Instance;
-        private static ConditionService ConditionService = ConditionService.Instance;
-        private static UserService UserService = UserService.Instance;
+        private readonly CharacterService CharactersService;
+        private readonly SceneService SceneService;
+        private readonly ChoiceService ChoiceService;
+        private readonly StateService StateService;
+        private readonly ConditionService ConditionService;
+        private readonly UserService UserService;
 
-        public static async Task<StateModifier?> AddStateModifier(Choice c, StateModifier stateModifier)
+        public GameBuilderController(CharacterService charactersService, SceneService sceneService, ChoiceService choiceService, StateService stateService, ConditionService conditionService, UserService userService)
+        {
+            CharactersService = charactersService;
+            SceneService = sceneService;
+            ChoiceService = choiceService;
+            StateService = stateService;
+            ConditionService = conditionService;
+            UserService = userService;
+        }
+
+        public async Task<StateModifier?> AddStateModifier(Choice c, StateModifier stateModifier)
         {
             return await StateService.AddStateModifier(c, stateModifier);
         }
 
-        public static async Task<State?> AddState(State state)
+        public async Task<State?> AddState(State state)
         {
             return await StateService.AddState(state);
         }
 
-        public static async Task<DialogueCharacter?> AddDialogueCharacter(DialogueCharacter dialogueCharacter)
+        public async Task<DialogueCharacter?> AddDialogueCharacter(DialogueCharacter dialogueCharacter)
         {
-            return await DialogueCharactersService.AddCharacter(dialogueCharacter);
+            return await CharactersService.AddCharacter(dialogueCharacter);
         }
 
-        public static async Task<Scene?> AddScene(Scene scene)
+        public async Task<Scene?> AddScene(Scene scene)
         {
             return await SceneService.AddScene(scene);
         }
 
-        public static async Task<Transition?> AddTransition(Scene scene, Transition transition)
+        public async Task<Transition?> AddTransition(Scene scene, Transition transition)
         {
             return await SceneService.AddTransition(scene, transition);
         }
 
-        internal static async Task<Scene?> GetFirstScene()
+        internal async Task<Scene?> GetFirstScene()
         {
             return await SceneService.GetFirstScene();
         }
 
-        internal static async Task<Condition?> AddCondition(Condition condition)
+        internal async Task<Condition?> AddCondition(Condition condition)
         {
             return await ConditionService.AddCondition(condition);
         }
 
-        internal static async Task<User> GetUser()
+        internal async Task<User> GetUser()
         {
             return await UserService.GetUser(); 
         }
 
-        internal static async Task<User?> AddMadeUserChoice(User user, Choice c)
+        internal async Task<User?> AddMadeUserChoice(User user, Choice c)
         {
             return await UserService.AddMadeUserChoice(user, c);
         }
 
-        internal static async Task<Condition?> AddStatePointsCondition(StatePointsCondition statePointsCondition)
+        internal async Task<Condition?> AddStatePointsCondition(StatePointsCondition statePointsCondition)
         {
-            return await ConditionService.Instance.AddCondition(statePointsCondition);
+            return await ConditionService.AddCondition(statePointsCondition);
         }
 
-        internal static async Task<User?> UpdateUserStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
+        internal async Task<User?> UpdateUserStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
         {
             return await UserService.UpdateUserStateProgresses(currentUser, stateModifiers);
         }

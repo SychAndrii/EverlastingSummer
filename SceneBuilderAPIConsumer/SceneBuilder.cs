@@ -8,12 +8,18 @@ namespace GameBuilder
 {
     public class SceneBuilder
     {
-        public static async Task<Scene?> GetFirstScene()
+        private GameBuilderAPI GameBuilderAPI { get; }
+        public async Task<Scene?> GetFirstScene()
         {
             return await GameBuilderAPI.GetFirstScene();
         }
 
-        public static async Task Build()
+        public SceneBuilder(GameBuilderAPI api)
+        {
+            GameBuilderAPI = api;
+        }
+
+        public async Task Build()
         {
             #region CharactersCreatiton
             var adrian = await GameBuilderAPI.CreateCharacter("Adrian");

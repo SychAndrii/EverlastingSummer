@@ -13,18 +13,6 @@ namespace GameBuilder.Services
 {
     internal class ChoiceService
     {
-        private static ChoiceService _Instance;
-        public static ChoiceService Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                    _Instance = new ChoiceService();
-                return _Instance;
-            }
-        }
-        private ChoiceService() { }
-
         public async Task<Choice?> AddChoice(Choice c)
         {
             using ESContext context = new ESContext();

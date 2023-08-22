@@ -12,20 +12,8 @@ using System.Threading.Tasks;
 
 namespace DB.Services
 {
-    public class CharacterService
+    internal class CharacterService
     {
-        private static CharacterService _Instance;
-        public static CharacterService Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                    _Instance = new CharacterService();
-                return _Instance;
-            }
-        }
-        private CharacterService() { }
-
         /// <summary>
         /// Tries to add a character to the database. If not successful, returns null.
         /// </summary>

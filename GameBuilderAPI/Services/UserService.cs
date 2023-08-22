@@ -12,18 +12,6 @@ namespace GameBuilder.Services
 {
     internal class UserService
     {
-        private static UserService _Instance;
-        public static UserService Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                    _Instance = new UserService();
-                return _Instance;
-            }
-        }
-        private UserService() { }
-
         public async Task<User> GetUser()
         {
             using ESContext context = new ESContext();

@@ -4,19 +4,24 @@ using VisualNovelModels.Models.Choices;
 
 namespace GameBuilder
 {
-    public static class UserBuilder
+    public class UserBuilder
     {
-        public static async Task<User> GetUser()
+        private GameBuilderAPI GameBuilderAPI { get; }
+        public UserBuilder(GameBuilderAPI api)
+        {
+            GameBuilderAPI = api;
+        }
+        public async Task<User> GetUser()
         {
             return await GameBuilderAPI.GetUser();
         }
 
-        public static async Task<User?> AddMadeUserChoice(User user, Choice c)
+        public async Task<User?> AddMadeUserChoice(User user, Choice c)
         {
             return await GameBuilderAPI.AddMadeUserChoice(user, c);
         }
 
-        public static async Task<User?> UpdateUserStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
+        public async Task<User?> UpdateUserStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
         {
             return await GameBuilderAPI.UpdateUserStateProgresses(currentUser, stateModifiers);
         }

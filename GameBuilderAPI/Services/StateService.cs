@@ -15,18 +15,6 @@ namespace GameBuilderAPI.Services
 {
     internal class StateService
     {
-        private static StateService _Instance;
-        public static StateService Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                    _Instance = new StateService();
-                return _Instance;
-            }
-        }
-        private StateService() { }
-
         public async Task<State?> AddState(State state)
         {
             using ESContext context = new ESContext();

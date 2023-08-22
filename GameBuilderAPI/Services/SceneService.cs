@@ -25,17 +25,8 @@ namespace ConsoleTesting.Services
 {
     internal class SceneService
     {
-        private static SceneService _Instance;
-        public static SceneService Instance
-        {
-            get
-            {
-                if(_Instance == null )
-                    _Instance = new SceneService();
-                return _Instance;
-            }
-        }
-
+        private readonly ChoiceService choiceService;
+        private readonly ConditionService conditionService;
         private async Task<Scene?> AddFirstScene(Scene scene, ESContext context)
         {
             try
@@ -53,6 +44,12 @@ namespace ConsoleTesting.Services
             {
                 return null;
             }
+        }
+
+        public SceneService(ChoiceService choiceService, ConditionService conditionService) 
+        { 
+            this.choiceService = choiceService;
+            this.conditionService = conditionService;
         }
 
         public async Task<Scene?> AddScene(Scene scene)
@@ -130,8 +127,8 @@ namespace ConsoleTesting.Services
                 .ThenInclude(d => d.Character)
                 .ToListAsync();
 
-            var task4 = ChoiceService.Instance.LoadChoiceDependenciesTask(context);
-            var task5 = ConditionService.Instance.LoadConditionDependenciesTask(context);
+            var task4 = choiceService.LoadChoiceDependenciesTask(context);
+            var task5 = conditionService.LoadConditionDependenciesTask(context);
 
             await Task.WhenAll(task1, task2, task3, task4, task5);
 

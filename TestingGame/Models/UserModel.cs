@@ -10,10 +10,11 @@ using VisualNovelModels.Models.Choices;
 
 namespace GameConsumer.Models
 {
-    internal static class UserModel
+    internal class UserModel
     {
         private static User? _CurrentUser;
-        public static User CurrentUser 
+        private UserBuilder UserBuilder { get; }
+        public User CurrentUser 
         { 
             get
             {
@@ -25,12 +26,17 @@ namespace GameConsumer.Models
             }
         }
 
-        public static async Task<User?> AddMadeChoice(User user, Choice c)
+        public UserModel(UserBuilder userBuilder)
+        {
+            UserBuilder = userBuilder;
+        }
+
+        public async Task<User?> AddMadeChoice(User user, Choice c)
         {
             return await UserBuilder.AddMadeUserChoice(user, c);
         }
 
-        internal static async Task<User?> UpdateStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
+        internal async Task<User?> UpdateStateProgresses(User currentUser, IEnumerable<StateModifier> stateModifiers)
         {
             return await UserBuilder.UpdateUserStateProgresses(currentUser, stateModifiers);
         }

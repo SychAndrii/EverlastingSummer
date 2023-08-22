@@ -18,18 +18,6 @@ namespace GameBuilderAPI.Services
 {
     internal class ConditionService
     {
-        private static ConditionService _Instance;
-        public static ConditionService Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                    _Instance = new ConditionService();
-                return _Instance;
-            }
-        }
-        private ConditionService() { }
-
         public Task LoadConditionDependenciesTask(ESContext context)
         {
             return context.MadeChoicesConditions

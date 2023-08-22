@@ -17,6 +17,7 @@ namespace GameConsumer.Visitors
 {
     internal class InvokeViewVisitor : ISceneVisitor
     {
+        private readonly UserModel UserModel;
         public async Task Visit(StandardScene scene)
         {
             var sceneInputStrategy = new StandardSceneInputStrategy();
@@ -25,6 +26,11 @@ namespace GameConsumer.Visitors
 
             var view = new View<StandardScene>(sceneSwitchCanHappenStrategy, sceneInputStrategy, sceneShowStrategy);
             await view.Show(scene);
+        }
+
+        public InvokeViewVisitor(UserModel userModel)
+        {
+            UserModel = userModel;
         }
 
         public async Task Visit(ChoiceScene scene)

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Testing"
+        xmlns:elements="clr-namespace:Testing.Elements"
         mc:Ignorable="d"
         Title="MainWindow"
         Height="450"
@@ -34,7 +35,7 @@
         </StatusBar>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" MinWidth="240" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
@@ -48,52 +49,29 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Border Background="#E5F8EE"
-                                Height="110"
-                                CornerRadius="5"
-                                Grid.Row="0">
-                            <TextBlock TextAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="Standard Scene" />
-                        </Border>
+                        <elements:StandardScene Grid.Row="0" />
 
-                        <Border Background="#E3F2FF"
-                                Height="110"
-                                CornerRadius="5"
-                                Margin="0 10"
-                                Grid.Row="1">
-                            <TextBlock TextAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Text="Choice Scene" />
-                        </Border>
+                        <elements:ChoiceScene Grid.Row="1" />
 
-                        <Border Grid.Row="2"
-                                Width="110"
-                                Height="110"
-                                Background="#F9F4D1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top">
-                            <Border.LayoutTransform>
-                                <RotateTransform Angle="45" />
-                            </Border.LayoutTransform>
-
-                            <!-- Inner Grid to counteract the rotation -->
-                            <Grid>
-                                <Grid.LayoutTransform>
-                                    <RotateTransform Angle="-45" />
-                                </Grid.LayoutTransform>
-
-                                <TextBlock TextAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Text="Condition" />
-                            </Grid>
-                        </Border>
+                        <elements:Condition Grid.Row="2"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top" />
                     </Grid>
                 </ScrollViewer>
             </GroupBox>
             <GroupBox Header="Story Designer"
                       Grid.Column="1">
-                
+                <Grid>
+                    <ScrollViewer VerticalScrollBarVisibility="Visible" 
+                                  HorizontalScrollBarVisibility="Visible">
+                        <Canvas x:Name="canvas"
+                                AllowDrop="True"
+                                DragOver="canvas_DragOver"
+                                Drop="canvas_Drop"
+                                Background="{StaticResource LightThemeBackgroundColor}">
+                        </Canvas>
+                    </ScrollViewer>
+                </Grid>
             </GroupBox>
             <GroupBox Header="Scene Details"
                       Grid.Column="2">

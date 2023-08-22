@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Testing.Elements.Condition"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Testing"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <i:Interaction.Behaviors>
+        <local:DragBehavior />
+    </i:Interaction.Behaviors>
+    <Border Width="110"
+            Height="110"
+            Background="#F9F4D1">
+        <Border.LayoutTransform>
+            <RotateTransform Angle="45" />
+        </Border.LayoutTransform>
+
+        <!-- Inner Grid to counteract the rotation -->
+        <Grid>
+            <Grid.LayoutTransform>
+                <RotateTransform Angle="-45" />
+            </Grid.LayoutTransform>
+
+            <TextBlock TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="Condition" />
+        </Grid>
+    </Border>
+</UserControl>

@@ -12,10 +12,10 @@ namespace Testing.Base
 {
     public class ElementBase : UserControl
     {
-        public ElementBase() 
+        public ElementBase(StoryDesignerElementFactory factory) 
         { 
             Interaction.GetBehaviors(this).Add(new ElementDragBehavior(
-                new ChoiceSceneStoryDesignerElementFactory()         
+                factory       
             ));
         }
     }

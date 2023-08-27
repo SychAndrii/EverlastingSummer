@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Testing.Base;
+using Testing.StoryDesignerElements.Factories;
 
 namespace Testing.Elements
 {
@@ -21,7 +22,7 @@ namespace Testing.Elements
     /// </summary>
     public partial class ConditionElement : ElementBase
     {
-        public ConditionElement()
+        public ConditionElement() : base(new ConditionStoryDesignerElementFactory())
         {
             InitializeComponent();
         }

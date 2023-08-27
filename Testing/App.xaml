@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Helpers.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Elements.xaml" />
+                <ResourceDictionary Source="Resources/Styles/StoryDesignerElements.xaml" />
                 <ResourceDictionary>
                     <SolidColorBrush x:Key="LightThemeBackgroundColor" Color="#F5F5F5" />
 

@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
 using Testing.Base;
+using Testing.StoryDesignerElements.Factories;
 
 namespace Testing.Elements
 {
@@ -24,7 +25,7 @@ namespace Testing.Elements
     /// </summary>
     public partial class StandardSceneElement : ElementBase
     {
-        public StandardSceneElement()
+        public StandardSceneElement() : base(new StandardSceneStoryDesignerElementFactory())
         {
             InitializeComponent();
         }

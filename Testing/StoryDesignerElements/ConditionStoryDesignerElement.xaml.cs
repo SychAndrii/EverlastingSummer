@@ -17,11 +17,11 @@ using Testing.Base;
 namespace Testing.StoryDesignerElements
 {
     /// <summary>
-    /// Interaction logic for StandardSceneStoryDesignerElement.xaml
+    /// Interaction logic for ConditionStoryDesignerElement.xaml
     /// </summary>
-    public partial class StandardSceneStoryDesignerElement : StoryDesignerElementBase
+    public partial class ConditionStoryDesignerElement : StoryDesignerElementBase
     {
-        public StandardSceneStoryDesignerElement()
+        public ConditionStoryDesignerElement()
         {
             InitializeComponent();
         }

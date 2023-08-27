@@ -55,7 +55,7 @@
 
                         <elements:StandardSceneElement Grid.Row="0" />
 
-                        <elements:ChoiceSceneElement Grid.Row="1" />
+                        <elements:ChoiceSceneElement Grid.Row="1" Margin="0,10" />
 
                         <elements:ConditionElement
                             Grid.Row="2"

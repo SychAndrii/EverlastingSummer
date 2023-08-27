@@ -10,24 +10,14 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Border
-        Width="110"
-        Height="110"
-        Background="#F9F4D1">
-        <Border.LayoutTransform>
-            <RotateTransform Angle="45" />
-        </Border.LayoutTransform>
-
+    <Border Style="{StaticResource ConditionElement}">
         <!--  Inner Grid to counteract the rotation  -->
         <Grid>
             <Grid.LayoutTransform>
                 <RotateTransform Angle="-45" />
             </Grid.LayoutTransform>
 
-            <TextBlock
-                VerticalAlignment="Center"
-                Text="Condition"
-                TextAlignment="Center" />
+            <TextBlock Style="{StaticResource ElementHeader}" Text="Condition" />
         </Grid>
     </Border>
 </base:ElementBase>

@@ -29,7 +29,7 @@ namespace Testing.Behaviors
         {
             if (e.LeftButton == MouseButtonState.Pressed && sender is DependencyObject dependencyObjSender)
             {
-                System.Windows.Point startDragPoint = e.GetPosition(sender as UIElement);
+                Point startDragPoint = e.GetPosition(sender as UIElement);
                 DragStartPositionProperties.SetDragStartX(dependencyObjSender, startDragPoint.X);
                 DragStartPositionProperties.SetDragStartY(dependencyObjSender, startDragPoint.Y);
 

@@ -14,11 +14,11 @@ namespace Testing.Behaviors
 {
     public class ElementDragBehavior : Behavior<UIElement>
     {
-        private readonly StoryDesignerElementBase storyDesignerElement;
+        private readonly StoryDesignerElementFactory storyDesignerElementFactory;
 
         public ElementDragBehavior(StoryDesignerElementFactory factory)
         {
-            storyDesignerElement = factory.Create();
+            storyDesignerElementFactory = factory;
         }
 
         protected override void OnAttached()
@@ -32,9 +32,9 @@ namespace Testing.Behaviors
         {
             if (e.LeftButton == MouseButtonState.Pressed && sender is DependencyObject dependencyObjSender)
             {
+                var elem = storyDesignerElementFactory.Create();
                 DragDrop.DoDragDrop(dependencyObjSender, 
-                    new DataObject(typeof(StoryDesignerElementBase), storyDesignerElement),
-                    DragDropEffects.Move);
+                    new DataObject(typeof(StoryDesignerElementBase), elem), DragDropEffects.Move);
             }
         }
 

@@ -29,9 +29,14 @@ namespace Testing.Behaviors
         {
             if (e.LeftButton == MouseButtonState.Pressed && sender is DependencyObject dependencyObjSender)
             {
-                DragDrop.DoDragDrop(dependencyObjSender,
-                    new DataObject(typeof(StoryDesignerElementBase), dependencyObjSender),
-                    DragDropEffects.Move);
+                System.Windows.Point startDragPoint = e.GetPosition(sender as UIElement);
+                DragStartPositionProperties.SetDragStartX(dependencyObjSender, startDragPoint.X);
+                DragStartPositionProperties.SetDragStartY(dependencyObjSender, startDragPoint.Y);
+
+                var dataObject = new DataObject();
+                dataObject.SetData(typeof(StoryDesignerElementBase), dependencyObjSender);
+
+                DragDrop.DoDragDrop(dependencyObjSender, dataObject, DragDropEffects.Move);
             }
         }
 

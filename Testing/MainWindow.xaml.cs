@@ -28,6 +28,7 @@ namespace Testing
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool hasDropped = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,25 +37,29 @@ namespace Testing
         private void canvas_DragOver(object sender, DragEventArgs e)
         {
             var dataObject = e.Data;
-            if(dataObject.GetDataPresent(typeof(StoryDesignerElementBase)))
+            var storyDesignElement = dataObject.GetData(typeof(StoryDesignerElementBase)) as StoryDesignerElementBase;
+
+            if (storyDesignElement != null)
             {
-                var data = e.Data.GetData(typeof(StoryDesignerElementBase)) as StoryDesignerElementBase;
+                var elementStartingPointX = DragStartPositionProperties.GetDragStartX(storyDesignElement);
+                var elementStartingPointY = DragStartPositionProperties.GetDragStartY(storyDesignElement);
+
                 var position = e.GetPosition(StoryDesignerCanvas);
 
-                if(StoryDesignerCanvas.Children.Contains(data))
+                if (StoryDesignerCanvas.Children.Contains(storyDesignElement))
                 {
-                    StoryDesignerCanvas.Children.Remove(data);
+                    StoryDesignerCanvas.Children.Remove(storyDesignElement);
                 }
 
-                StoryDesignerCanvas.Children.Add(data);
-                Canvas.SetTop(data, position.Y);
-                Canvas.SetLeft(data, position.X);
+                StoryDesignerCanvas.Children.Add(storyDesignElement);
+                Canvas.SetTop(storyDesignElement, position.Y - elementStartingPointY);
+                Canvas.SetLeft(storyDesignElement, position.X - elementStartingPointX);
             }
         }
 
         private void canvas_Drop(object sender, DragEventArgs e)
         {
-
+            hasDropped = true;
         }
     }
 }

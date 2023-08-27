@@ -9,6 +9,7 @@
     Title="MainWindow"
     Width="800"
     Height="450"
+    MouseLeftButtonUp="Window_MouseLeftButtonUp"
     Style="{StaticResource WindowStyle}"
     mc:Ignorable="d">
     <DockPanel>

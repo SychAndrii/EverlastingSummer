@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    MouseLeftButtonUp="StoryDesignerElementBase_MouseLeftButtonUp_1"
     Style="{StaticResource StandardSceneStoryDesignerElement}"
     mc:Ignorable="d">
     <Border>

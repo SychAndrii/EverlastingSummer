@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.Xml;
@@ -29,9 +30,11 @@ namespace Testing
     public partial class MainWindow : Window
     {
         bool hasDropped = false;
+        public readonly ObservableCollection<StoryDesignerElementBase> CurrentStoryDesignerElements;
         public MainWindow()
         {
             InitializeComponent();
+            CurrentStoryDesignerElements = new ObservableCollection<StoryDesignerElementBase>();
         }
 
         private void canvas_DragOver(object sender, DragEventArgs e)
@@ -60,6 +63,37 @@ namespace Testing
         private void canvas_Drop(object sender, DragEventArgs e)
         {
             hasDropped = true;
+        }
+
+        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private bool IsChildOf(DependencyObject child, DependencyObject parent)
+        {
+            while (child != null)
+            {
+                if (child == parent)
+                    return true;
+                child = VisualTreeHelper.GetParent(child);
+            }
+            return false;
+        }
+
+        private void RemoveAdorners(UIElement element)
+        {
+            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(element);
+            if (adornerLayer != null)
+            {
+                Adorner[] adorners = adornerLayer.GetAdorners(element);
+                if (adorners != null)
+                {
+                    foreach (Adorner adorner in adorners)
+                    {
+                        adornerLayer.Remove(adorner);
+                    }
+                }
+            }
         }
     }
 }

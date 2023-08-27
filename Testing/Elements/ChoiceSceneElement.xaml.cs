@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Testing.Base;
 
-namespace Testing.StoryDesignerElements
+namespace Testing.Elements
 {
     /// <summary>
     /// Interaction logic for ChoiceScene.xaml
     /// </summary>
-    public partial class ChoiceScene : UserControl
+    public partial class ChoiceSceneElement : ElementBase
     {
-        public ChoiceScene()
+        public ChoiceSceneElement()
         {
             InitializeComponent();
         }

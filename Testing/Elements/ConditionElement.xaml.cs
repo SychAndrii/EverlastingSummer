@@ -12,15 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Testing.Base;
 
 namespace Testing.Elements
 {
     /// <summary>
     /// Interaction logic for Condition.xaml
     /// </summary>
-    public partial class Condition : UserControl
+    public partial class ConditionElement : ElementBase
     {
-        public Condition()
+        public ConditionElement()
         {
             InitializeComponent();
         }

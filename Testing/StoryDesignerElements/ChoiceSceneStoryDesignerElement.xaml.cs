@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Testing.Base;
+using Testing.StoryDesignerElements.Strategies;
 
 namespace Testing.StoryDesignerElements
 {
@@ -21,7 +22,7 @@ namespace Testing.StoryDesignerElements
     /// </summary>
     public partial class ChoiceSceneStoryDesignerElement : StoryDesignerElementBase
     {
-        public ChoiceSceneStoryDesignerElement()
+        public ChoiceSceneStoryDesignerElement() : base(new DrawRectAdorners())
         {
             InitializeComponent();
         }

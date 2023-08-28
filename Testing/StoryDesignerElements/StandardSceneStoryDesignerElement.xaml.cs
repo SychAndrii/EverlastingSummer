@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Testing.Adorners;
 using Testing.Base;
+using Testing.StoryDesignerElements.Strategies;
 
 namespace Testing.StoryDesignerElements
 {
@@ -23,19 +24,9 @@ namespace Testing.StoryDesignerElements
     /// </summary>
     public partial class StandardSceneStoryDesignerElement : StoryDesignerElementBase
     {
-        public ObservableCollection<StoryDesignerElementBase> CurrentStoryDesignElements { get; set; }
-        public StandardSceneStoryDesignerElement()
+        public StandardSceneStoryDesignerElement() : base(new DrawRectAdorners())
         {
             InitializeComponent();
-        }
-
-        private void StoryDesignerElementBase_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
-        {
-            var adornerLayer = AdornerLayer.GetAdornerLayer(this);
-            if (adornerLayer != null)
-            {
-                adornerLayer.Add(new FourCirclesAdorner(this));
-            }
         }
     }
 }

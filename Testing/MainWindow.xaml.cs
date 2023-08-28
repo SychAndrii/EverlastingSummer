@@ -29,12 +29,13 @@ namespace Testing
     /// </summary>
     public partial class MainWindow : Window
     {
-        bool hasDropped = false;
         public readonly ObservableCollection<StoryDesignerElementBase> CurrentStoryDesignerElements;
+        public readonly ObservableCollection<StoryDesignerElementBase> CurrentlySelectedStoryDesignerElements;
         public MainWindow()
         {
             InitializeComponent();
             CurrentStoryDesignerElements = new ObservableCollection<StoryDesignerElementBase>();
+            CurrentlySelectedStoryDesignerElements = new ObservableCollection<StoryDesignerElementBase>();
         }
 
         private void canvas_DragOver(object sender, DragEventArgs e)
@@ -62,22 +63,52 @@ namespace Testing
 
         private void canvas_Drop(object sender, DragEventArgs e)
         {
-            hasDropped = true;
+            var dataObject = e.Data;
+            if (dataObject.GetDataPresent(typeof(StoryDesignerElementBase)))
+            {
+                var storyDesignElement = dataObject.GetData(typeof(StoryDesignerElementBase)) as StoryDesignerElementBase;
+                CurrentStoryDesignerElements.Add(storyDesignElement);
+            }
         }
 
         private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (e.OriginalSource is DependencyObject d)
+            {
+                StoryDesignerElementBase? storyDesignElement = FindStoryDesignElementParent(d);
+
+                if (storyDesignElement != null && !CurrentlySelectedStoryDesignerElements.Contains(storyDesignElement))
+                {
+                    CurrentlySelectedStoryDesignerElements.Add(storyDesignElement);
+                }
+                else
+                {
+                    foreach (var element in CurrentlySelectedStoryDesignerElements)
+                    {
+                        var adorneredLayer = AdornerLayer.GetAdornerLayer(element);
+                        var adorners = adorneredLayer.GetAdorners(element);
+                        if (adorners != null)
+                        {
+                            foreach (var adorner in adorners)
+                            {
+                                adorneredLayer.Remove(adorner);
+                            }
+                        }
+                    }
+                    CurrentlySelectedStoryDesignerElements.Clear();
+                }
+            }
         }
 
-        private bool IsChildOf(DependencyObject child, DependencyObject parent)
+        private StoryDesignerElementBase? FindStoryDesignElementParent(DependencyObject child)
         {
             while (child != null)
             {
-                if (child == parent)
-                    return true;
+                if (child is StoryDesignerElementBase storyDesignElement)
+                    return storyDesignElement;
                 child = VisualTreeHelper.GetParent(child);
             }
-            return false;
+            return null;
         }
 
         private void RemoveAdorners(UIElement element)

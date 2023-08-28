@@ -6,6 +6,7 @@
     xmlns:elements="clr-namespace:Testing.Elements"
     xmlns:local="clr-namespace:Testing"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="wdw"
     Title="MainWindow"
     Width="800"
     Height="450"

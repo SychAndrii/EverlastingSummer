@@ -27,7 +27,6 @@ namespace Testing.StoryDesignerElements
         public StandardSceneStoryDesignerElement()
         {
             InitializeComponent();
-            DataContext = this;
         }
 
         private void StoryDesignerElementBase_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)

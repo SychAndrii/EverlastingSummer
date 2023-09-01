@@ -12,7 +12,8 @@ namespace Testing.Base
     {
         protected readonly Brush brush = new SolidColorBrush(Colors.Green) { Opacity = 0.2 };
         protected readonly Pen pen = new Pen(new SolidColorBrush(Colors.Navy), 1.5);
-        protected readonly double circleRadius = 3.0;
+        public double CircleRadius { get; } = 3.0;
+        public List<Point> CirclePositions { get; } = new List<Point>();
         public abstract void Draw(DrawingContext drawingContext, FrameworkElement adornedElement);
     }
 }

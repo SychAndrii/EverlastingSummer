@@ -23,10 +23,10 @@ namespace Testing.StoryDesignerElements.Strategies
             Point rightCenter = new Point(width, 0);
 
             // Draw the circles
-            drawingContext.DrawEllipse(brush, pen, topCenter, circleRadius, circleRadius);
-            drawingContext.DrawEllipse(brush, pen, bottomCenter, circleRadius, circleRadius);
-            drawingContext.DrawEllipse(brush, pen, leftCenter, circleRadius, circleRadius);
-            drawingContext.DrawEllipse(brush, pen, rightCenter, circleRadius, circleRadius);
+            drawingContext.DrawEllipse(brush, pen, topCenter, CircleRadius, CircleRadius);
+            drawingContext.DrawEllipse(brush, pen, bottomCenter, CircleRadius, CircleRadius);
+            drawingContext.DrawEllipse(brush, pen, leftCenter, CircleRadius, CircleRadius);
+            drawingContext.DrawEllipse(brush, pen, rightCenter, CircleRadius, CircleRadius);
         }
     }
 }

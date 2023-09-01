@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml;
+using Testing.Adorners;
 using Testing.Base;
-using Testing.Elements;
-using Testing.StoryDesignerElements;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Testing
 {
@@ -41,6 +26,8 @@ namespace Testing
         private void canvas_DragOver(object sender, DragEventArgs e)
         {
             var dataObject = e.Data;
+            var cursorPosition = e.GetPosition(StoryDesignerCanvas);
+
             var storyDesignElement = dataObject.GetData(typeof(StoryDesignerElementBase)) as StoryDesignerElementBase;
 
             if (storyDesignElement != null)
@@ -58,6 +45,18 @@ namespace Testing
                 StoryDesignerCanvas.Children.Add(storyDesignElement);
                 Canvas.SetTop(storyDesignElement, position.Y - elementStartingPointY);
                 Canvas.SetLeft(storyDesignElement, position.X - elementStartingPointX);
+            }
+            else
+            {
+                var arrow = dataObject.GetData(typeof(StoryDesignerArrowAdorner)) as StoryDesignerArrowAdorner;
+                var storyDesignElement2 = dataObject.GetData(typeof(string)) as StoryDesignerElementBase;
+
+                var elementX = Canvas.GetLeft(storyDesignElement2);
+                var elementY = Canvas.GetTop(storyDesignElement2);
+
+                var shift = new Point(cursorPosition.X - elementX, cursorPosition.Y - elementY);
+                arrow.EndPoint = shift;
+                arrow.InvalidateVisual();
             }
         }
 
@@ -79,25 +78,31 @@ namespace Testing
 
                 if (storyDesignElement != null && !CurrentlySelectedStoryDesignerElements.Contains(storyDesignElement))
                 {
+                    UnselectAllSelectedElements();
                     CurrentlySelectedStoryDesignerElements.Add(storyDesignElement);
                 }
                 else
                 {
-                    foreach (var element in CurrentlySelectedStoryDesignerElements)
-                    {
-                        var adorneredLayer = AdornerLayer.GetAdornerLayer(element);
-                        var adorners = adorneredLayer.GetAdorners(element);
-                        if (adorners != null)
-                        {
-                            foreach (var adorner in adorners)
-                            {
-                                adorneredLayer.Remove(adorner);
-                            }
-                        }
-                    }
-                    CurrentlySelectedStoryDesignerElements.Clear();
+                    UnselectAllSelectedElements();
                 }
             }
+        }
+
+        private void UnselectAllSelectedElements()
+        {
+            foreach (var element in CurrentlySelectedStoryDesignerElements)
+            {
+                var adorneredLayer = AdornerLayer.GetAdornerLayer(element);
+                var adorners = adorneredLayer.GetAdorners(element);
+                if (adorners != null)
+                {
+                    foreach (var adorner in adorners)
+                    {
+                        adorneredLayer.Remove(adorner);
+                    }
+                }
+            }
+            CurrentlySelectedStoryDesignerElements.Clear();
         }
 
         private StoryDesignerElementBase? FindStoryDesignElementParent(DependencyObject child)
@@ -109,22 +114,6 @@ namespace Testing
                 child = VisualTreeHelper.GetParent(child);
             }
             return null;
-        }
-
-        private void RemoveAdorners(UIElement element)
-        {
-            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(element);
-            if (adornerLayer != null)
-            {
-                Adorner[] adorners = adornerLayer.GetAdorners(element);
-                if (adorners != null)
-                {
-                    foreach (Adorner adorner in adorners)
-                    {
-                        adornerLayer.Remove(adorner);
-                    }
-                }
-            }
         }
     }
 }
